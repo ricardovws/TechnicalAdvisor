@@ -6,17 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Models.ViewModels;
+using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
 {
     public class DealersController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
+        private readonly DealerService _dealerService;
+        private readonly UserService _userService;
 
-        public DealersController(TechnicalAdvisorContext context)
+        public DealersController(TechnicalAdvisorContext context, DealerService dealerService, UserService userService)
         {
             _context = context;
+            _dealerService = dealerService;
+            _userService = userService;
         }
+
+
+
 
         // GET: Dealers
         public async Task<IActionResult> Index()
@@ -45,6 +54,7 @@ namespace TechnicalAdvisor.Controllers
         // GET: Dealers/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -57,6 +67,7 @@ namespace TechnicalAdvisor.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(dealer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -147,6 +158,33 @@ namespace TechnicalAdvisor.Controllers
         private bool DealerExists(int id)
         {
             return _context.Dealer.Any(e => e.Id == id);
+        }
+
+        public IActionResult CreateUser(int id)
+        {
+
+            UserFormViewModel formUser = new UserFormViewModel
+            {
+                Id = id
+            };
+            return View(formUser);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateUser(UserFormViewModel formUser, int id)
+        {
+
+            User user = new User();
+            var dealer = _dealerService.FindDealerById(id);
+            user.Name = formUser.Name;
+            user.Email = formUser.Email;
+            user.Password = formUser.Password;
+            user.Dealer = dealer;
+            _context.User.Add(user);
+            _context.SaveChanges();
+            
+            return RedirectToAction(nameof(Index));
         }
     }
 }

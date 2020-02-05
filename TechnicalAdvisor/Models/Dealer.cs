@@ -10,9 +10,8 @@ namespace TechnicalAdvisor.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Company Company { get; set; }
-
-        public ICollection<User> Users { get; set; } = new List<User>();
-
+        
+        
         public Dealer()
         {
         }
@@ -23,5 +22,7 @@ namespace TechnicalAdvisor.Models
             Name = name;
             Company = company;
         }
+
+        
     }
 }

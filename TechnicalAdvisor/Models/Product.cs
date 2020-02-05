@@ -18,13 +18,13 @@ namespace TechnicalAdvisor.Models
         {
         }
 
-        public Product(int id, string name, string typeOfProduct, string publicationCode, double publicationVersion, Company company)
+        public Product(int id, string name, string typeOfProduct, string publicationCode, Company company)
         {
             Id = id;
             Name = name;
             TypeOfProduct = typeOfProduct;
             PublicationCode = publicationCode;
-            PublicationVersion = publicationVersion;
+            PublicationVersion = 0.0;
             Company = company;
         }
     }

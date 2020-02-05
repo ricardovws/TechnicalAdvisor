@@ -9,9 +9,7 @@ namespace TechnicalAdvisor.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public ICollection<Dealer> Dealers { get; set; } = new List<Dealer>();
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        
 
         public Company()
         {

@@ -1,7 +1,7 @@
 ﻿@model TechnicalAdvisor.Models.ViewModels.DealerFormViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "CreateDealer";
 }
 
 <h2>Create</h2>
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateDealer">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -18,11 +18,11 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-          
+
 
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="CreateDealer" class="btn btn-default" />
             </div>
         </form>
     </div>

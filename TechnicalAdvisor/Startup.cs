@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor
 {
@@ -38,6 +39,12 @@ namespace TechnicalAdvisor
 
             services.AddDbContext<TechnicalAdvisorContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddScoped<DealerService>();
+            services.AddScoped<CompanyService>();
+            services.AddScoped<ProductService>();
+            services.AddScoped<UserService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

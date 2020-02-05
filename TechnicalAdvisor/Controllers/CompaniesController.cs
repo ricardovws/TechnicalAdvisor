@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Models.ViewModels;
 
 namespace TechnicalAdvisor.Controllers
 {
@@ -13,10 +14,23 @@ namespace TechnicalAdvisor.Controllers
     {
         private readonly TechnicalAdvisorContext _context;
 
-        public CompaniesController(TechnicalAdvisorContext context)
+        private readonly DealerService _dealerService;
+
+        private readonly CompanyService _companyService;
+
+        private readonly ProductService _productService;
+
+        public CompaniesController(TechnicalAdvisorContext context, DealerService dealerService, CompanyService companyService, ProductService productService)
         {
             _context = context;
+            _dealerService = dealerService;
+            _companyService = companyService;
+            _productService = productService;
         }
+
+
+
+
 
         // GET: Companies
         public async Task<IActionResult> Index()
@@ -147,6 +161,61 @@ namespace TechnicalAdvisor.Controllers
         private bool CompanyExists(int id)
         {
             return _context.Company.Any(e => e.Id == id);
+        }
+
+
+        public IActionResult CreateDealer(int id)
+        {
+
+            DealerFormViewModel formDealer = new DealerFormViewModel
+            {
+                IdCompany = id
+            };
+            return View(formDealer);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateDealer(DealerFormViewModel formDealer, int id)
+        {
+
+            Dealer dealer = new Dealer();
+            formDealer.IdCompany = id;
+            var company = _companyService.FindCompanyById(id);
+            dealer.Name = formDealer.Name;
+            dealer.Company = company;
+            _dealerService.AddDealer(dealer);
+            
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult CreateProduct(int id)
+        {
+
+            ProductFormViewModel formProduct = new ProductFormViewModel
+            {
+                IdCompany = id
+            };
+            return View(formProduct);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateProduct(ProductFormViewModel formProduct, int id)
+        {
+
+            Product product = new Product();
+            formProduct.IdCompany = id;
+            var company = _companyService.FindCompanyById(id);
+            product.Name = formProduct.Name;
+            product.Company = company;
+            product.TypeOfProduct = formProduct.TypeOfProduct;
+            product.PublicationCode = formProduct.PublicationCode;
+            _productService.AddProduct(product);
+           
+            return RedirectToAction(nameof(Index));
         }
     }
 }
