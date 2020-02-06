@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
 {
+    [Authorize]
     public class DealersController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
@@ -179,7 +181,6 @@ namespace TechnicalAdvisor.Controllers
             var dealer = _dealerService.FindDealerById(id);
             user.Name = formUser.Name;
             user.Email = formUser.Email;
-            user.Password = formUser.Password;
             user.Dealer = dealer;
             _context.User.Add(user);
             _context.SaveChanges();

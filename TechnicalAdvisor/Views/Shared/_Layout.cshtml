@@ -28,7 +28,9 @@
                 </button>
                 <a asp-area="" asp-controller="Companies" asp-action="Index" class="navbar-brand">TechnicalAdvisor</a>
             </div>
+
             <div class="navbar-collapse collapse">
+                <partial name="_LoginPartial"/>
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
                     <li><a asp-area="" asp-controller="Dealers" asp-action="Index">Dealers</a></li>
