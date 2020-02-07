@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,35 @@ namespace TechnicalAdvisor.Controllers
     public class UsersController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UsersController(TechnicalAdvisorContext context)
+        public UsersController(TechnicalAdvisorContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        public async Task<IActionResult> FirstView()
+        {
+
+            var user = await _userManager.GetUserAsync(this.User);
+            var emailToConfirm = user.Email;
+            var test = _context.User.Where(u => u.Email == emailToConfirm);
+            bool door = test == null;
+            if(true)
+            {
+                Test();
+            }
+            
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult Test()
+        {
+            return View();
+        }
+
 
         // GET: Users
         public async Task<IActionResult> Index()
@@ -150,5 +175,9 @@ namespace TechnicalAdvisor.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
+
+
+
+        
     }
 }

@@ -182,7 +182,7 @@ namespace TechnicalAdvisor.Controllers
             user.Name = formUser.Name;
             user.Email = formUser.Email;
             user.Dealer = dealer;
-            _context.User.Add(user);
+            _userService.AddUser(user);
             _context.SaveChanges();
             
             return RedirectToAction(nameof(Index));

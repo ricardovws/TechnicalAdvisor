@@ -69,8 +69,10 @@ namespace TechnicalAdvisor
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Companies}/{action=Index}/{id?}");
+                    template: "{controller=Users}/{action=Index}/{id?}");
             });
+
+            
         }
     }
 }
