@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TechnicalAdvisor.Areas.Identity.Data;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
 {
@@ -15,27 +19,30 @@ namespace TechnicalAdvisor.Controllers
     public class UsersController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly AppIdentityContext _appIdentityContext;
+        private readonly UserService _userService;
 
-        public UsersController(TechnicalAdvisorContext context, UserManager<IdentityUser> userManager)
+        public UsersController(TechnicalAdvisorContext context, AppIdentityContext appIdentityContext, UserService userService)
         {
             _context = context;
-            _userManager = userManager;
+            _appIdentityContext = appIdentityContext;
+            _userService = userService;
         }
 
-        public async Task<IActionResult> FirstView()
+        public async Task<IActionResult> Index()
         {
 
-            var user = await _userManager.GetUserAsync(this.User);
-            var emailToConfirm = user.Email;
-            var test = _context.User.Where(u => u.Email == emailToConfirm);
-            bool door = test == null;
-            if(true)
-            {
-                Test();
-            }
+
+            var emailToConfirm = this.User.Identity.Name;
+            //Inserir um if mandando pra algum outro local caso o user não for identificado!!!
+            //var emailChecked = _userService.CheckAccessLevel(emailToConfirm);
+            //if (emailChecked == true)
+            //{
+            //    return RedirectToAction(nameof(Test));
+            //}
+
+            return View(await _context.User.ToListAsync());
             
-            return RedirectToAction(nameof(Index));
         }
 
 
@@ -45,11 +52,11 @@ namespace TechnicalAdvisor.Controllers
         }
 
 
-        // GET: Users
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.User.ToListAsync());
-        }
+        //// GET: Users
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.User.ToListAsync());
+        //}
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -178,6 +185,6 @@ namespace TechnicalAdvisor.Controllers
 
 
 
-        
+
     }
 }

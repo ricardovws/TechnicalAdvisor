@@ -25,6 +25,22 @@ namespace TechnicalAdvisor.Services
             _context.SaveChanges();
         }
 
+        public bool CheckAccessLevel(string emailToConfirm)
+        {
+            var test = _context.User.First(u => u.Email == emailToConfirm);
+            if(test == null)
+            {
+                return false;
+            }
+            if (test.Email == emailToConfirm)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        
+
       
     }
 }
