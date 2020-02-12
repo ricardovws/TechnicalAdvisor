@@ -21,25 +21,19 @@ namespace TechnicalAdvisor.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AppIdentityContextConnection")));
 
-
-                services.AddDefaultIdentity<AppIdentityUser>(options =>
+                services.AddIdentity<AppIdentityUser, IdentityRole>()
+                    .AddRoleManager<RoleManager<IdentityRole>>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders()
+                    .AddEntityFrameworkStores<AppIdentityContext>();
+                
+                services.AddAuthentication(options =>
                 {
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = 6;
-                    
-                })
-                .AddEntityFrameworkStores<AppIdentityContext>();
-                
-                
-
-
-            });
-            
-
-        }
-
-        
+                    options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                });
+            });           
+        }        
     }
 }

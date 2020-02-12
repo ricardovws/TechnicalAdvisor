@@ -15,7 +15,7 @@ using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
@@ -35,11 +35,11 @@ namespace TechnicalAdvisor.Controllers
 
             var emailToConfirm = this.User.Identity.Name;
             //Inserir um if mandando pra algum outro local caso o user não for identificado!!!
-            //var emailChecked = _userService.CheckAccessLevel(emailToConfirm);
-            //if (emailChecked == true)
-            //{
-            //    return RedirectToAction(nameof(Test));
-            //}
+            var emailChecked = _userService.CheckAccessLevel(emailToConfirm);
+            if (emailChecked == null)
+            {
+                return RedirectToAction("Sorry", "ProductsController"); // arrumar essa página, tá dando erro!
+            }
 
             return View(await _context.User.ToListAsync());
             

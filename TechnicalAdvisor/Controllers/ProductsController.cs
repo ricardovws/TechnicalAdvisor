@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TechnicalAdvisor.Areas.Identity.Data;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
 {
@@ -14,16 +17,38 @@ namespace TechnicalAdvisor.Controllers
     public class ProductsController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
+        private readonly UserService _userService;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public ProductsController(TechnicalAdvisorContext context)
+        public ProductsController(TechnicalAdvisorContext context, UserService userService, UserManager<AppIdentityUser> userManager)
         {
             _context = context;
+            _userService = userService;
+            _userManager = userManager;
         }
 
-        // GET: Products
+        
+        // GET: Products <-- Lista com todos os produtos disponíveis para o usuário visualizar os manuais.
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            //var emailToConfirm = this.User.Identity.Name;
+
+            //var user = _userService.CheckAccessLevel(emailToConfirm);
+
+            //var company = user.Dealer.Company;
+
+            //try
+            //{
+            //    return View(await _context.Product.Where(p => p.Company == company).ToListAsync());
+            //}
+            //catch
+            //{
+            //    return RedirectToAction(nameof(Sorry)); // arrumar essa página, tá dando erro!
+
+            //}
+
+             return View(await _context.Product.ToListAsync());
+
         }
 
         // GET: Products/Details/5
@@ -149,6 +174,11 @@ namespace TechnicalAdvisor.Controllers
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.Id == id);
+        }
+
+        public IActionResult Sorry()
+        {
+            return View();
         }
     }
 }

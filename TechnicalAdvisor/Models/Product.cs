@@ -18,6 +18,14 @@ namespace TechnicalAdvisor.Models
         {
         }
 
+        public Product(string name, string typeOfProduct, string publicationCode, Company company)
+        {
+            Name = name;
+            TypeOfProduct = typeOfProduct;
+            PublicationCode = publicationCode;
+            Company = company;
+        }
+
         public Product(int id, string name, string typeOfProduct, string publicationCode, Company company)
         {
             Id = id;

@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using TechnicalAdvisor.Models;
 using TechnicalAdvisor.Services;
+using TechnicalAdvisor.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace TechnicalAdvisor
 {
@@ -44,15 +46,19 @@ namespace TechnicalAdvisor
             services.AddScoped<CompanyService>();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
+            services.AddScoped<SeedingService>();
+            services.AddScoped<AppIdentityContext>();
 
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else
             {
@@ -69,7 +75,7 @@ namespace TechnicalAdvisor
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Users}/{action=Index}/{id?}");
+                    template: "{controller=Products}/{action=Index}/{id?}");
             });
 
             

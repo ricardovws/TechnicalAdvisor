@@ -11,7 +11,7 @@ using TechnicalAdvisor.Models.ViewModels;
 
 namespace TechnicalAdvisor.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CompaniesController : Controller
     {
         private readonly TechnicalAdvisorContext _context;

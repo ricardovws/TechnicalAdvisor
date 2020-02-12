@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechnicalAdvisor.Models;
 
 namespace TechnicalAdvisor.Migrations
 {
     [DbContext(typeof(TechnicalAdvisorContext))]
-    partial class TechnicalAdvisorContextModelSnapshot : ModelSnapshot
+    [Migration("20200210235719_doing progress")]
+    partial class doingprogress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,13 +40,13 @@ namespace TechnicalAdvisor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyID");
+                    b.Property<int?>("CompanyId");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyID");
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Dealer");
                 });
@@ -95,8 +97,7 @@ namespace TechnicalAdvisor.Migrations
                 {
                     b.HasOne("TechnicalAdvisor.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompanyId");
                 });
 
             modelBuilder.Entity("TechnicalAdvisor.Models.Product", b =>

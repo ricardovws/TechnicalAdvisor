@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using TechnicalAdvisor.Areas.Identity.Data;
+using TechnicalAdvisor.Models;
 
 namespace TechnicalAdvisor.Areas.Identity.Pages.Account
 {
@@ -20,17 +21,16 @@ namespace TechnicalAdvisor.Areas.Identity.Pages.Account
         private readonly UserManager<AppIdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RegisterModel(
-            UserManager<AppIdentityUser> userManager,
-            SignInManager<AppIdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+
+        public RegisterModel(SignInManager<AppIdentityUser> signInManager, UserManager<AppIdentityUser> userManager, ILogger<RegisterModel> logger, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -68,9 +68,24 @@ namespace TechnicalAdvisor.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new AppIdentityUser { UserName = Input.Email, Email = Input.Email };
+                string roleName = "User";
+
+                //await _appIdentityContext.CreateRole(roleName);
+
+                //await _userManager.AddToRoleAsync(user, roleName);
+
+                IdentityRole identityRole = new IdentityRole(roleName);
+
+
+                await _roleManager.CreateAsync(identityRole);
+
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, roleName);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -12,7 +12,7 @@ using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class DealersController : Controller
     {
         private readonly TechnicalAdvisorContext _context;
@@ -25,9 +25,6 @@ namespace TechnicalAdvisor.Controllers
             _dealerService = dealerService;
             _userService = userService;
         }
-
-
-
 
         // GET: Dealers
         public async Task<IActionResult> Index()

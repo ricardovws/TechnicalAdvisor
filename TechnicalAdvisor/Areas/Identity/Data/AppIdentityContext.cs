@@ -27,12 +27,30 @@ namespace TechnicalAdvisor.Models
         }
 
         public readonly UserManager<IdentityUser> _userManager;
+        public readonly RoleManager<IdentityRole> _roleManager;
 
-        public AppIdentityContext(UserManager<IdentityUser> userManager)
+        public AppIdentityContext(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
-    
+        //public async  Task<IdentityResult> CreateRole(string roleName)
+        //{
+
+        //    IdentityRole identityRole = new IdentityRole(roleName);
+
+            
+
+        //   var resultix = await _roleManager.CreateAsync(identityRole);
+
+        //    return resultix;
+
+        //}
+        
+
+
+
+
     }
 }

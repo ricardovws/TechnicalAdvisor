@@ -9,11 +9,18 @@ namespace TechnicalAdvisor.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CompanyID { get; set; }
         public Company Company { get; set; }
         
         
         public Dealer()
         {
+        }
+
+        public Dealer(string name, Company company)
+        {
+            Name = name;
+            Company = company;
         }
 
         public Dealer(int id, string name, Company company)
