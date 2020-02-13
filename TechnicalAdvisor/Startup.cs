@@ -46,6 +46,7 @@ namespace TechnicalAdvisor
             services.AddScoped<CompanyService>();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
+            services.AddScoped<XMLService>();
             services.AddScoped<SeedingService>();
             services.AddScoped<AppIdentityContext>();
 

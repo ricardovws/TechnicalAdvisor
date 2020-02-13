@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechnicalAdvisor.Areas.Identity.Data;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Models.ViewModels;
 using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor.Controllers
@@ -19,15 +20,19 @@ namespace TechnicalAdvisor.Controllers
         private readonly TechnicalAdvisorContext _context;
         private readonly UserService _userService;
         private readonly UserManager<AppIdentityUser> _userManager;
+        private readonly ProductService _productService;
 
-        public ProductsController(TechnicalAdvisorContext context, UserService userService, UserManager<AppIdentityUser> userManager)
+        public ProductsController(TechnicalAdvisorContext context, UserService userService, UserManager<AppIdentityUser> userManager, ProductService productService)
         {
             _context = context;
             _userService = userService;
             _userManager = userManager;
+            _productService = productService;
         }
 
-        
+
+
+
         // GET: Products <-- Lista com todos os produtos disponíveis para o usuário visualizar os manuais.
         public async Task<IActionResult> Index()
         {
@@ -180,5 +185,23 @@ namespace TechnicalAdvisor.Controllers
         {
             return View();
         }
+
+
+        //GET
+        public IActionResult ViewXML()
+        {
+            //_productService.LoadXML();
+
+            return View(_context.XmlProduct.ToList());
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ViewXML(int id)
+        {
+            return View(_context.XmlProduct.ToList());
+        }
+
     }
 }

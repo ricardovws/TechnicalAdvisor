@@ -22,5 +22,7 @@ namespace TechnicalAdvisor.Models
 
         public DbSet<User> User { get; set; }
 
+        public DbSet<XmlProduct> XmlProduct { get; set; }
+
     }
 }
