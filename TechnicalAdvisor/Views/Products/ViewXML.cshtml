@@ -1,33 +1,93 @@
-﻿@model IEnumerable<TechnicalAdvisor.Models.XmlProduct>
+﻿@model TechnicalAdvisor.Models.ViewModels.PublicationProductViewModel
 @{
     ViewData["Title"] = "ViewXML";
 }
 
-<h1>Here you'll see XML stuff.</h1>
+<h1>Infos</h1>
 
 
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-                 
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-             
 
-            </tr>
-        }
-    </tbody>
-</table>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProductId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TituloDoBloco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TituloDoBloco)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InfosDiversas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InfosDiversas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkDaImagem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LinkDaImagem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaisInfos)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaisInfos)
+        </dd>
+    </dl>
+</div>
+<div></div>
+
+    @*<table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FileName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AlgumTextoBemAleatorio)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlgumTextoBemAleatorio)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>*@
 

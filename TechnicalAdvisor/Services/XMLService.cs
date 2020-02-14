@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,10 +23,13 @@ namespace TechnicalAdvisor.Services
             _context.Add(xmlproduct);
             _context.SaveChanges();
         }
-
- 
-       
-
+        
+        public XmlProduct XmlObjectByProductId(int productId)
+        {
+            var xmlProduct=_context.XmlProduct.First(x => x.ProductId == productId);
+            return xmlProduct;
+        }
+        
 
     }
 }

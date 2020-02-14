@@ -21,14 +21,23 @@ namespace TechnicalAdvisor.Controllers
         private readonly UserService _userService;
         private readonly UserManager<AppIdentityUser> _userManager;
         private readonly ProductService _productService;
+        private readonly XMLService _xMLService;
 
-        public ProductsController(TechnicalAdvisorContext context, UserService userService, UserManager<AppIdentityUser> userManager, ProductService productService)
+        public ProductsController(
+            TechnicalAdvisorContext context, 
+            UserService userService, 
+            UserManager<AppIdentityUser> userManager, 
+            ProductService productService, 
+            XMLService xMLService)
         {
             _context = context;
             _userService = userService;
             _userManager = userManager;
             _productService = productService;
+            _xMLService = xMLService;
         }
+
+
 
 
 
@@ -188,20 +197,74 @@ namespace TechnicalAdvisor.Controllers
 
 
         //GET
-        public IActionResult ViewXML()
-        {
-            //_productService.LoadXML();
-
-            return View(_context.XmlProduct.ToList());
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ViewXML(int id)
         {
-            return View(_context.XmlProduct.ToList());
+
+            var product =_context.Product.First(x => x.Id == id); //Procurar no DB o produto que tenha esse id
+            var productXML =_context.XmlProduct.First(x => x.ProductId == id); //Procurar no DB um xml que seja relativo ao produto que tenha esse id
+            PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel(); //Criar uma viewmodel para inserir os dados tanto do produto, quanto do XML relativo a ele.
+
+            //Agora vou associar os dados dos 2 objetos na viewmodel, e passar eles pra view
+            publicationProductViewModel.FileName = productXML.FileName;
+            publicationProductViewModel.ProductId = productXML.ProductId;
+            publicationProductViewModel.TituloDoBloco = productXML.TituloDoBloco;
+            publicationProductViewModel.InfosDiversas = productXML.InfosDiversas;
+            publicationProductViewModel.LinkDaImagem = productXML.LinkDaImagem;
+            publicationProductViewModel.MaisInfos = productXML.MaisInfos;
+            
+            return View(publicationProductViewModel);
         }
+
+        ////POST
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ViewXML(int productId)
+        //{
+        //    var list = _xMLService.ListOfXmlsPerProduct(productId);
+
+        //    return View();
+        //}
+
+        //GET
+        public IActionResult LoadXML(int productId)
+        {
+
+            //Gera view para colocar os dados do produto e carregar o xml
+            
+            LoadProductXMLFormViewModel loadProductXMLFormViewModel = new LoadProductXMLFormViewModel {
+                ID = productId,
+               
+            };
+
+            return View(loadProductXMLFormViewModel);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LoadXML(LoadProductXMLFormViewModel loadProductXMLFormViewModel, string xmlName)
+        {
+
+
+          
+            //Método para encontrar produto por id
+
+            var product = _productService.FindProductById(loadProductXMLFormViewModel.ID);
+
+            //Pega arquivo xml e carrega infos pro banco
+
+            _productService.LoadXML(loadProductXMLFormViewModel.ID, xmlName);
+
+            //Adiciona o objeto do xml no objeto do produto
+
+            var productID =loadProductXMLFormViewModel.ID;
+            _productService.AddXmlToProduct(productID);
+
+            //Redireciona para a página index de produtos
+            return RedirectToAction(nameof(Index));
+            
+        }
+
 
     }
 }

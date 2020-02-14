@@ -13,6 +13,8 @@ namespace TechnicalAdvisor.Models
         public string PublicationCode { get; set; }
         public double PublicationVersion { get; set; }
         public Company Company { get; set; }
+        public int XmlProductId { get; set; }
+        public XmlProduct XMLInfo { get; set; }
 
         public Product()
         {

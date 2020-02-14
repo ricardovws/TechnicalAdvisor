@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechnicalAdvisor.Models;
 
 namespace TechnicalAdvisor.Migrations
 {
     [DbContext(typeof(TechnicalAdvisorContext))]
-    partial class TechnicalAdvisorContextModelSnapshot : ModelSnapshot
+    [Migration("20200214135522_continuando nas implementacoes do XML")]
+    partial class continuandonasimplementacoesdoXML
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,15 +67,11 @@ namespace TechnicalAdvisor.Migrations
 
                     b.Property<string>("TypeOfProduct");
 
-                    b.Property<int?>("XMLInfoId");
-
                     b.Property<int>("XmlProductId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("XMLInfoId");
 
                     b.ToTable("Product");
                 });
@@ -133,10 +131,6 @@ namespace TechnicalAdvisor.Migrations
                     b.HasOne("TechnicalAdvisor.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
-
-                    b.HasOne("TechnicalAdvisor.Models.XmlProduct", "XMLInfo")
-                        .WithMany()
-                        .HasForeignKey("XMLInfoId");
                 });
 
             modelBuilder.Entity("TechnicalAdvisor.Models.User", b =>

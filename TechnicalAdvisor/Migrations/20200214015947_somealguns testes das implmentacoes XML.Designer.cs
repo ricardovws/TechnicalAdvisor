@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechnicalAdvisor.Models;
 
 namespace TechnicalAdvisor.Migrations
 {
     [DbContext(typeof(TechnicalAdvisorContext))]
-    partial class TechnicalAdvisorContextModelSnapshot : ModelSnapshot
+    [Migration("20200214015947_somealguns testes das implmentacoes XML")]
+    partial class somealgunstestesdasimplmentacoesXML
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,15 +67,9 @@ namespace TechnicalAdvisor.Migrations
 
                     b.Property<string>("TypeOfProduct");
 
-                    b.Property<int?>("XMLInfoId");
-
-                    b.Property<int>("XmlProductId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("XMLInfoId");
 
                     b.ToTable("Product");
                 });
@@ -103,19 +99,16 @@ namespace TechnicalAdvisor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AlgumTextoBemAleatorio");
+
                     b.Property<string>("FileName");
-
-                    b.Property<string>("InfosDiversas");
-
-                    b.Property<string>("LinkDaImagem");
-
-                    b.Property<string>("MaisInfos");
 
                     b.Property<int>("ProductId");
 
-                    b.Property<string>("TituloDoBloco");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("XmlProduct");
                 });
@@ -133,10 +126,6 @@ namespace TechnicalAdvisor.Migrations
                     b.HasOne("TechnicalAdvisor.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
-
-                    b.HasOne("TechnicalAdvisor.Models.XmlProduct", "XMLInfo")
-                        .WithMany()
-                        .HasForeignKey("XMLInfoId");
                 });
 
             modelBuilder.Entity("TechnicalAdvisor.Models.User", b =>
@@ -144,6 +133,14 @@ namespace TechnicalAdvisor.Migrations
                     b.HasOne("TechnicalAdvisor.Models.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TechnicalAdvisor.Models.XmlProduct", b =>
+                {
+                    b.HasOne("TechnicalAdvisor.Models.Product")
+                        .WithOne("XmlProduct")
+                        .HasForeignKey("TechnicalAdvisor.Models.XmlProduct", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

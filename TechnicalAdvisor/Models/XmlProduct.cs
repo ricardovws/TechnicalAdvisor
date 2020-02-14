@@ -7,22 +7,58 @@ namespace TechnicalAdvisor.Models
 {
     public class XmlProduct
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public string FileName { get; set; }
+        public int ProductId { get; set; }
+
+
+        public string TituloDoBloco { get; set; }
+        public string InfosDiversas { get; set; }
+        public string LinkDaImagem { get; set; }
+        public string MaisInfos { get; set; }
+
+        public XmlProduct(int id, string fileName, int productId, string tituloDoBloco, string infosDiversas, string linkDaImagem, string maisInfos) : this(id, fileName, productId)
+        {
+            TituloDoBloco = tituloDoBloco;
+            InfosDiversas = infosDiversas;
+            LinkDaImagem = linkDaImagem;
+            MaisInfos = maisInfos;
+        }
 
         public XmlProduct()
         {
         }
 
-        public XmlProduct(string name)
+        public XmlProduct(string fileName, int productId)
         {
-            Name = name;
+            FileName = fileName;
+            ProductId = productId;
         }
 
-        public XmlProduct(int iD, string name)
+        public XmlProduct(int id, string fileName, int productId)
         {
-            ID = iD;
-            Name = name;
+            Id = id;
+            FileName = fileName;
+            ProductId = productId;
         }
+
+
+        //Caso quando eu der um update no DB, e não criar a tabela do XmlProduct, o script pra criar ele no DB é:
+
+//        CREATE TABLE[dbo].[XmlProduct]
+//        (
+
+//   [Id] INT            NOT NULL,
+//    [FileName] NVARCHAR(MAX) NULL,
+//    [ProductId] INT NOT NULL,
+//    [TituloDoBloco] NVARCHAR(MAX) NULL,
+//    [InfosDiversas] NVARCHAR(MAX) NULL,
+//    [LinkDaImagem] NVARCHAR(MAX) NULL,
+//    [MaisInfos] NVARCHAR(MAX) NULL,
+//    CONSTRAINT[PK_XmlProduct] PRIMARY KEY CLUSTERED([Id] ASC)
+//);
+
+
+      
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechnicalAdvisor.Models;
 
 namespace TechnicalAdvisor.Migrations
 {
     [DbContext(typeof(TechnicalAdvisorContext))]
-    partial class TechnicalAdvisorContextModelSnapshot : ModelSnapshot
+    [Migration("20200214035618_tentando resolver problemas com XML")]
+    partial class tentandoresolverproblemascomXML
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,15 +67,15 @@ namespace TechnicalAdvisor.Migrations
 
                     b.Property<string>("TypeOfProduct");
 
-                    b.Property<int?>("XMLInfoId");
-
                     b.Property<int>("XmlProductId");
+
+                    b.Property<int?>("XmlProductId1");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("XMLInfoId");
+                    b.HasIndex("XmlProductId1");
 
                     b.ToTable("Product");
                 });
@@ -103,17 +105,11 @@ namespace TechnicalAdvisor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AlgumTextoBemAleatorio");
+
                     b.Property<string>("FileName");
 
-                    b.Property<string>("InfosDiversas");
-
-                    b.Property<string>("LinkDaImagem");
-
-                    b.Property<string>("MaisInfos");
-
                     b.Property<int>("ProductId");
-
-                    b.Property<string>("TituloDoBloco");
 
                     b.HasKey("Id");
 
@@ -134,9 +130,9 @@ namespace TechnicalAdvisor.Migrations
                         .WithMany()
                         .HasForeignKey("CompanyId");
 
-                    b.HasOne("TechnicalAdvisor.Models.XmlProduct", "XMLInfo")
+                    b.HasOne("TechnicalAdvisor.Models.XmlProduct", "XmlProduct")
                         .WithMany()
-                        .HasForeignKey("XMLInfoId");
+                        .HasForeignKey("XmlProductId1");
                 });
 
             modelBuilder.Entity("TechnicalAdvisor.Models.User", b =>
