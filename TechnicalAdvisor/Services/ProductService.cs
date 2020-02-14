@@ -38,8 +38,10 @@ namespace TechnicalAdvisor
 
             XElement root = XElement.Load(fullXMLPath);
 
+            List<XmlProduct> xmlProducts = new List<XmlProduct>();
+
             var queryXML =
-                from g in root.Element("Generos").Elements("Genero")
+                from g in root.Element("XXX").Elements("YYY")
                 select g;
            
             try {
@@ -55,28 +57,40 @@ namespace TechnicalAdvisor
             }
             
 
-            foreach (var genero in queryXML)
-            {
-                // Console.WriteLine("{0}\t{1}", genero.Element("GeneroId").Value, genero.Element("Nome").Value);
-                int xmlId = ID++;
-                //int produtoID = 1+produtoId; //tentar descobrir pq precisa disso para funcionar!
-                var tituloDoBloco = genero.Element("GeneroId").Value;
-                var infosDiversas = genero.Element("Nome").Value;
-                // var linkDaImagem = genero.Element("LinkDaImagem").Value;
-                //var maisInfos = genero.Element("MaisInfos").Value;
-                var linkDaImagem = "MERDA";
-                var maisInfos = "MERDA";
+                foreach (var nOME in queryXML)
+                {
+                    int xmlId = ID++;
+                    
+                    var tituloDoBloco = nOME.Element("Description").Value;
+                    var infosDiversas = nOME.Element("LittleText").Value;
+                    // var linkDaImagem = genero.Element("LinkDaImagem").Value;
+                    //var maisInfos = genero.Element("MaisInfos").Value;
+                    var linkDaImagem = "PRECISO COLOCAR UMA IMAGEM!!!";
+                    var maisInfos = "_________";
 
-                XmlProduct xmlproduct = new XmlProduct(xmlId, xmlName, produtoId
-                    ,
-                    tituloDoBloco,
-                    infosDiversas,
-                    linkDaImagem,
-                    maisInfos
-                    );
-                
-                _xMLService.SaveThis(xmlproduct);
-            }
+                    XmlProduct xmlproduct = new XmlProduct(xmlId, xmlName, produtoId
+                        ,
+                        tituloDoBloco,
+                        infosDiversas,
+                        linkDaImagem,
+                        maisInfos
+                        );
+
+                    xmlProducts.Add(xmlproduct);
+                }
+
+            var xml1 = xmlProducts.FirstOrDefault();
+            xmlProducts.Remove(xml1);
+            var xml2 = xmlProducts.FirstOrDefault();
+            //xmlProducts.Remove(xml2);
+            //var xml3 = xmlProducts.FirstOrDefault();
+            //xmlProducts.Remove(xml3);
+
+            //xml1.InfosDiversas += xml2.InfosDiversas;
+            //xml1.InfosDiversas += xml3.InfosDiversas;
+
+            _xMLService.SaveThis(xml1);
+          
 
         }
 

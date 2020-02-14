@@ -201,7 +201,7 @@ namespace TechnicalAdvisor.Controllers
         {
 
             var product =_context.Product.First(x => x.Id == id); //Procurar no DB o produto que tenha esse id
-            var productXML =_context.XmlProduct.First(x => x.ProductId == id); //Procurar no DB um xml que seja relativo ao produto que tenha esse id
+            var productXML =_context.XmlProduct.LastOrDefault(x => x.ProductId == id); //Procurar no DB um xml que seja relativo ao produto que tenha esse id
             PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel(); //Criar uma viewmodel para inserir os dados tanto do produto, quanto do XML relativo a ele.
 
             //Agora vou associar os dados dos 2 objetos na viewmodel, e passar eles pra view

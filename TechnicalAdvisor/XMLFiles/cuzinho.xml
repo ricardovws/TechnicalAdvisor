@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<XML_Teste>
+  <Generos>
+    <Genero>
+      <GeneroId>1</GeneroId>
+      <Nome>Rock</Nome>
+    </Genero>
+    <Genero>
+      <GeneroId>2</GeneroId>
+      <Nome>Reggae</Nome>
+    </Genero>
+    <Genero>
+      <GeneroId>3</GeneroId>
+      <Nome>Classica</Nome>
+    </Genero>
+  </Generos>
+</XML_Teste>
