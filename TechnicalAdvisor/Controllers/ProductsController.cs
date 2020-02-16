@@ -200,6 +200,21 @@ namespace TechnicalAdvisor.Controllers
         public IActionResult ViewXML(int id)
         {
 
+
+            // ESSE MÉTODO PRECISA FAZER ISSO!!!
+            // procura e pega no DB um elementxml que seja vinculado a esse id, e dps disso pega e puxa o método takeandreadxml do
+            // product service, e devolve o manual
+            // pega o objecto manual e monta uma viewmodel e joga pra view
+            // **************************
+
+
+
+
+
+
+
+
+
             var product =_context.Product.First(x => x.Id == id); //Procurar no DB o produto que tenha esse id
             var productXML =_context.XmlProduct.LastOrDefault(x => x.ProductId == id); //Procurar no DB um xml que seja relativo ao produto que tenha esse id
             PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel(); //Criar uma viewmodel para inserir os dados tanto do produto, quanto do XML relativo a ele.

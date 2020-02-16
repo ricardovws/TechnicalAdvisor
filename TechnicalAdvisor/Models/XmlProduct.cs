@@ -17,6 +17,12 @@ namespace TechnicalAdvisor.Models
         public string LinkDaImagem { get; set; }
         public string MaisInfos { get; set; }
 
+        public XmlProduct(int id, string tituloDoBloco)
+        {
+            Id = id;
+            TituloDoBloco = tituloDoBloco;
+        }
+
         public XmlProduct(string fileName, int productId, string tituloDoBloco, string infosDiversas) : this(fileName, productId)
         {
             TituloDoBloco = tituloDoBloco;

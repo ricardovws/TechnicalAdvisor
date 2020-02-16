@@ -28,6 +28,13 @@ namespace TechnicalAdvisor
 
         public void LoadXML(int produtoId, string xmlName)  //Método que pega o XML e manda pro sistema de fato
         {
+            // ESSE MÉTODO PRECISA FAZER ISSO!!!
+            // ele pega produtoId e a string do nome do arquivo xml
+            // associa o o documento xml com o produto
+            // salva no DB o objeto que associa o documento xml com o produto
+            // já eras!
+            // **************************
+
             string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
 
 
@@ -106,6 +113,84 @@ namespace TechnicalAdvisor
             _xMLService.SaveThis(xml1);
           
         }
+
+        // Abaixo é um método para pegar arquivo xml já formatado, e montar ele na view.
+
+            public void TakeAndReadXML(int produtoId, string xmlName)
+        {
+
+
+            // ESSE MÉTODO PRECISA FAZER ISSO!!!
+            // recebe um produtoxml e abre o arquivo xml
+            // interpreta o arquivo xml e divide por classes
+            //na divisão de classes, ele começa dividindo pelas infos dos capitulos:
+            //   cria uma lista de strings com o nome do capitulo + nome da seção
+            //   cria lista de secoes com as infos dos capitulos
+            //   cria manual
+            //   manda manual pra controller
+
+            // **************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
+            
+            string extensionFile = ".xml";
+
+            string fullXMLPath = path + xmlName + extensionFile;
+
+            XElement root = XElement.Load(fullXMLPath);
+
+            List<XmlProduct> xmlProducts = new List<XmlProduct>();
+
+            int ID = 0;
+
+            var queryXML =
+                from g in root.Element("Secoes").Elements("Secao")
+                select g;
+            foreach (var node in queryXML)
+            {
+                int xmlID = ID++;
+
+                var tituloDoBloco = node.Element("TituloSecao").Value;
+
+
+                XmlProduct xmlproduct = new XmlProduct(xmlID, tituloDoBloco);
+                xmlProducts.Add(xmlproduct);
+
+                var queryXML2 =
+                from f in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo").Elements("Infos")
+                select f;
+                foreach(var node2 in queryXML2)
+                {
+                    var infosDiversas = node2.Element("string").Value;
+                    xmlproduct.InfosDiversas = infosDiversas;
+                }
+
+
+                xmlProducts.Add(xmlproduct);
+            }
+        }
+
+
+
+
+
+
+
 
         public Product FindProductById(int id)
         {
