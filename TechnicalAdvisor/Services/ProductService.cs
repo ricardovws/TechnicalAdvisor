@@ -26,12 +26,12 @@ namespace TechnicalAdvisor
             _context.SaveChanges();
         }
 
-        public void LoadXML(int produtoId, string xmlName)
+        public void LoadXML(int produtoId, string xmlName)  //Método que pega o XML e manda pro sistema de fato
         {
             string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
 
 
-            int ID = 0;
+            //int ID = 0; -->Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
             string extensionFile = ".xml";
 
             string fullXMLPath = path + xmlName + extensionFile;
@@ -43,45 +43,57 @@ namespace TechnicalAdvisor
             var queryXML =
                 from g in root.Element("XXX").Elements("YYY")
                 select g;
-           
-            try {
-                var verify = _context.XmlProduct.Any();
-                var lastXml = _context.XmlProduct.LastOrDefault();
 
-                ID = lastXml.Id+1;
-                 
-            }
-            catch
-            {
-                ID = 1;
-            }
-            
 
-                foreach (var nOME in queryXML)
+            //--> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
+            //try {
+            //    var verify = _context.XmlProduct.Any();
+            //    var lastXml = _context.XmlProduct.LastOrDefault();
+
+            //    ID = lastXml.Id+1;
+
+            //}
+            //catch
+            //{
+            //    ID = 1;
+            //}
+            //
+
+            foreach (var nOME in queryXML)
                 {
-                    int xmlId = ID++;
-                    
-                    var tituloDoBloco = nOME.Element("Description").Value;
-                    var infosDiversas = nOME.Element("LittleText").Value;
-                    // var linkDaImagem = genero.Element("LinkDaImagem").Value;
-                    //var maisInfos = genero.Element("MaisInfos").Value;
-                    var linkDaImagem = "PRECISO COLOCAR UMA IMAGEM!!!";
-                    var maisInfos = "_________";
+                //int xmlId = ID++; --> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
 
-                    XmlProduct xmlproduct = new XmlProduct(xmlId, xmlName, produtoId
+                var tituloDoBloco = nOME.Element("Description").Value;
+                var infosDiversas = nOME.Element("LittleText").Value;
+
+
+
+                XmlProduct xmlproduct = new XmlProduct(xmlName, produtoId
                         ,
                         tituloDoBloco,
-                        infosDiversas,
-                        linkDaImagem,
-                        maisInfos
+                        infosDiversas
                         );
 
                     xmlProducts.Add(xmlproduct);
                 }
-
             var xml1 = xmlProducts.FirstOrDefault();
             xmlProducts.Remove(xml1);
-            var xml2 = xmlProducts.FirstOrDefault();
+
+            var queryXML2 =
+               from g in root.Element("ZZZ").Elements("YYY")
+               select g;
+            foreach (var nOME in queryXML2)
+            {
+                //int xmlId = ID++; --> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
+
+                
+                var maisInfos = nOME.Element("Text").Value;
+                xml1.MaisInfos = maisInfos;
+            }
+
+            //var xml1 = xmlProducts.FirstOrDefault();
+            //xmlProducts.Remove(xml1);
+            //var xml2 = xmlProducts.FirstOrDefault();
             //xmlProducts.Remove(xml2);
             //var xml3 = xmlProducts.FirstOrDefault();
             //xmlProducts.Remove(xml3);
@@ -89,9 +101,10 @@ namespace TechnicalAdvisor
             //xml1.InfosDiversas += xml2.InfosDiversas;
             //xml1.InfosDiversas += xml3.InfosDiversas;
 
+            xml1.LinkDaImagem = "car.svg";
+
             _xMLService.SaveThis(xml1);
           
-
         }
 
         public Product FindProductById(int id)
@@ -107,16 +120,7 @@ namespace TechnicalAdvisor
             return xmlProduct;
         }
 
-        public void AddXmlToProduct(int productID)
-        {
-            var product = FindProductById(productID);
-            var xml = _xMLService.XmlObjectByProductId(productID);
-
-            product.XMLInfo = xml;
-
-            _context.Product.Update(product);
-            _context.SaveChanges();
-        }
+       
 
     }
 }

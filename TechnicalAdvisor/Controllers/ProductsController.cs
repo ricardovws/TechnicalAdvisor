@@ -255,11 +255,6 @@ namespace TechnicalAdvisor.Controllers
 
             _productService.LoadXML(loadProductXMLFormViewModel.ID, xmlName);
 
-            //Adiciona o objeto do xml no objeto do produto
-
-            var productID =loadProductXMLFormViewModel.ID;
-            _productService.AddXmlToProduct(productID);
-
             //Redireciona para a página index de produtos
             return RedirectToAction(nameof(Index));
             

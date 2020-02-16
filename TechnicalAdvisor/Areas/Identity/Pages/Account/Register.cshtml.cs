@@ -68,7 +68,12 @@ namespace TechnicalAdvisor.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new AppIdentityUser { UserName = Input.Email, Email = Input.Email };
-                string roleName = "User";
+
+                
+
+//                string roleName = "Admin"; // Primeiro role criado!!!
+                string roleName = "User"; // Usuário final
+
 
                 //await _appIdentityContext.CreateRole(roleName);
 
