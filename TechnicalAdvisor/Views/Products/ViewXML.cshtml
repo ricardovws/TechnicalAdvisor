@@ -3,7 +3,7 @@
     ViewData["Title"] = "ViewXML";
 }
 
-<h1>@Html.DisplayFor(model => model.TituloDoBloco)</h1>
+<h1>@Html.DisplayFor(model => model.Name)</h1>
 <hr />
 
 <div class="col-md-2">
@@ -56,7 +56,7 @@
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade active in" id="home">
                 <p></p>
-                <p>@Html.DisplayFor(model => model.InfosDiversas)</p>
+                <p>@Html.DisplayFor(model => model.Name)</p>
             </div>
             <div class="tab-pane fade" id="profile">
                 <p></p>
@@ -128,8 +128,12 @@
             <a href="#" class="list-group-item active">
                 Cras justo odio
             </a>
+           
             <a href="#" class="list-group-item">
-                Dapibus ac facilisis in
+                @foreach (var item in Model.Name)
+                {
+                    @Html.DisplayFor(model => item)
+                }
             </a>
             <a href="#" class="list-group-item">
                 Morbi leo risus
@@ -144,9 +148,12 @@
                     <h3 class="panel-title">Panel info</h3>
                 </div>
 
-
                 <div class="panel-body">
-                    @Html.DisplayFor(model => model.MaisInfos)
+
+                    @foreach (var item in Model.Paragraphs.text)
+                    {
+                        @Html.DisplayFor(model => item)
+                    }
                 </div>
             </div>
         </div>

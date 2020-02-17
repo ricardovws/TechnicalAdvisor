@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Models.PublicationNonDBModels;
 using TechnicalAdvisor.Models.ViewModels;
 using TechnicalAdvisor.Services;
 
@@ -41,7 +42,7 @@ namespace TechnicalAdvisor
             XmlProduct xmlProduct = new XmlProduct();
 
             xmlProduct.ProductId = loadProductXMLFormViewModel.ID;
-            xmlProduct.FileName = xmlName;
+            xmlProduct.FileName = fullXMLPath;
 
 
             // salva no DB o objeto que associa o documento xml com o produto
@@ -132,14 +133,50 @@ namespace TechnicalAdvisor
 
         // Abaixo é um método para pegar arquivo xml já formatado, e montar ele na view.
 
-            public void TakeAndReadXML(int produtoId, string xmlName)
+            public ManualParagraph TakeAndReadXML(XmlProduct xmlProduct)
         {
 
 
             // ESSE MÉTODO PRECISA FAZER ISSO!!!
             // recebe um produtoxml e abre o arquivo xml
-            // interpreta o arquivo xml e divide por classes
-            //na divisão de classes, ele começa dividindo pelas infos dos capitulos:
+
+            XElement root = XElement.Load(xmlProduct.FileName);
+
+            // interpreta o arquivo xml e divide por classes:
+
+            //divisão dos capítulos
+
+            ManualParagraph paragraph = new ManualParagraph();
+
+            var queryXML1 =
+              from a in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo").Elements("Infos")
+              select a;
+            foreach (var node in queryXML1)
+            {
+                List<string> paragraphs = new List<string>();
+                var para = node.Element("string").Value;
+                paragraphs.Add(para);
+
+
+                //var queryXML2 =
+                // from b in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo")
+                // select b;
+
+                //foreach (var nodes in queryXML2)
+                //{
+                //    var paragraphTitle = nodes.Element("TituloCapitulo").Value;
+                //    paragraphs.Add(para);
+                //}
+
+                //paragraph.text = paragraphs;
+                
+
+            }
+          
+            return paragraph;
+
+
+
             //   cria uma lista de strings com o nome do capitulo + nome da seção
             //   cria lista de secoes com as infos dos capitulos
             //   cria manual
@@ -160,45 +197,37 @@ namespace TechnicalAdvisor
 
 
 
-
-
-            string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
             
-            string extensionFile = ".xml";
 
-            string fullXMLPath = path + xmlName + extensionFile;
+            //List < XmlProduct > xmlProducts = new List<XmlProduct>();
 
-            XElement root = XElement.Load(fullXMLPath);
+            //int ID = 0;
 
-            List<XmlProduct> xmlProducts = new List<XmlProduct>();
+            //var queryXML =
+            //    from g in root.Element("Secoes").Elements("Secao")
+            //    select g;
+            //foreach (var node in queryXML)
+            //{
+            //    int xmlID = ID++;
 
-            int ID = 0;
-
-            var queryXML =
-                from g in root.Element("Secoes").Elements("Secao")
-                select g;
-            foreach (var node in queryXML)
-            {
-                int xmlID = ID++;
-
-                var tituloDoBloco = node.Element("TituloSecao").Value;
+            //    var tituloDoBloco = node.Element("TituloSecao").Value;
 
 
-                XmlProduct xmlproduct = new XmlProduct(xmlID, tituloDoBloco);
-                xmlProducts.Add(xmlproduct);
+            //    XmlProduct xmlproduct = new XmlProduct(xmlID, tituloDoBloco);
+            //    xmlProducts.Add(xmlproduct);
 
-                var queryXML2 =
-                from f in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo").Elements("Infos")
-                select f;
-                foreach(var node2 in queryXML2)
-                {
-                    var infosDiversas = node2.Element("string").Value;
-                    xmlproduct.InfosDiversas = infosDiversas;
-                }
+            //    var queryXML2 =
+            //    from f in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo").Elements("Infos")
+            //    select f;
+            //    foreach(var node2 in queryXML2)
+            //    {
+            //        var infosDiversas = node2.Element("string").Value;
+            //        xmlproduct.InfosDiversas = infosDiversas;
+            //    }
 
 
-                xmlProducts.Add(xmlproduct);
-            }
+            //    xmlProducts.Add(xmlproduct);
+            //}
         }
 
 

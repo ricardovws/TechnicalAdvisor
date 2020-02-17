@@ -202,9 +202,21 @@ namespace TechnicalAdvisor.Controllers
 
 
             // ESSE MÉTODO PRECISA FAZER ISSO!!!
-            // procura e pega no DB um elementxml que seja vinculado a esse id, e dps disso pega e puxa o método takeandreadxml do
+            // procura e pega no DB um elementxml que seja vinculado a esse id, 
+            var xmlproduct = _productService.XmlObjectByProductId(id);
+
+            //e dps disso pega e puxa o método takeandreadxml do
             // product service, e devolve o manual
+            var manual = _productService.TakeAndReadXML(xmlproduct);
+
+
             // pega o objecto manual e monta uma viewmodel e joga pra view
+
+            PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel("teste", manual);
+
+
+            return View(publicationProductViewModel);
+
             // **************************
 
 
@@ -215,19 +227,19 @@ namespace TechnicalAdvisor.Controllers
 
 
 
-            var product =_context.Product.First(x => x.Id == id); //Procurar no DB o produto que tenha esse id
-            var productXML =_context.XmlProduct.LastOrDefault(x => x.ProductId == id); //Procurar no DB um xml que seja relativo ao produto que tenha esse id
-            PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel(); //Criar uma viewmodel para inserir os dados tanto do produto, quanto do XML relativo a ele.
+            //var product =_context.Product.First(x => x.Id == id); //Procurar no DB o produto que tenha esse id
+            //var productXML =_context.XmlProduct.LastOrDefault(x => x.ProductId == id); //Procurar no DB um xml que seja relativo ao produto que tenha esse id
+            //PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel(); //Criar uma viewmodel para inserir os dados tanto do produto, quanto do XML relativo a ele.
 
-            //Agora vou associar os dados dos 2 objetos na viewmodel, e passar eles pra view
-            publicationProductViewModel.FileName = productXML.FileName;
-            publicationProductViewModel.ProductId = productXML.ProductId;
-            publicationProductViewModel.TituloDoBloco = productXML.TituloDoBloco;
-            publicationProductViewModel.InfosDiversas = productXML.InfosDiversas;
-            publicationProductViewModel.LinkDaImagem = productXML.LinkDaImagem;
-            publicationProductViewModel.MaisInfos = productXML.MaisInfos;
+            ////Agora vou associar os dados dos 2 objetos na viewmodel, e passar eles pra view
+            //publicationProductViewModel.FileName = productXML.FileName;
+            //publicationProductViewModel.ProductId = productXML.ProductId;
+            //publicationProductViewModel.TituloDoBloco = productXML.TituloDoBloco;
+            //publicationProductViewModel.InfosDiversas = productXML.InfosDiversas;
+            //publicationProductViewModel.LinkDaImagem = productXML.LinkDaImagem;
+            //publicationProductViewModel.MaisInfos = productXML.MaisInfos;
             
-            return View(publicationProductViewModel);
+            //return View(publicationProductViewModel);
         }
 
         ////POST
