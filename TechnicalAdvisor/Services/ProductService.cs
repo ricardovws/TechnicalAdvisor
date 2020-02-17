@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Models.ViewModels;
 using TechnicalAdvisor.Services;
 
 namespace TechnicalAdvisor
@@ -26,30 +27,45 @@ namespace TechnicalAdvisor
             _context.SaveChanges();
         }
 
-        public void LoadXML(int produtoId, string xmlName)  //Método que pega o XML e manda pro sistema de fato
+        public void LoadXML(LoadProductXMLFormViewModel loadProductXMLFormViewModel)  
         {
-            // ESSE MÉTODO PRECISA FAZER ISSO!!!
-            // ele pega produtoId e a string do nome do arquivo xml
-            // associa o o documento xml com o produto
+             // associa o documento xml com o produto
+
+            string xmlName = loadProductXMLFormViewModel.XmlName;
+
+
+            string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
+            string extensionFile = ".xml";
+            string fullXMLPath = path + xmlName + extensionFile;
+
+            XmlProduct xmlProduct = new XmlProduct();
+
+            xmlProduct.ProductId = loadProductXMLFormViewModel.ID;
+            xmlProduct.FileName = xmlName;
+
+
             // salva no DB o objeto que associa o documento xml com o produto
+
+            _xMLService.SaveThis(xmlProduct);
+
             // já eras!
             // **************************
 
-            string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
+            //string path = "C:\\Users\\Ricardo\\Documents\\TechnicalAdvisor\\TechnicalAdvisor\\XMLFiles\\";
 
 
-            //int ID = 0; -->Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
-            string extensionFile = ".xml";
+            ////int ID = 0; -->Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
+            //string extensionFile = ".xml";
 
-            string fullXMLPath = path + xmlName + extensionFile;
+            //string fullXMLPath = path + xmlName + extensionFile;
 
-            XElement root = XElement.Load(fullXMLPath);
+            //XElement root = XElement.Load(fullXMLPath);
 
-            List<XmlProduct> xmlProducts = new List<XmlProduct>();
+            //List<XmlProduct> xmlProducts = new List<XmlProduct>();
 
-            var queryXML =
-                from g in root.Element("XXX").Elements("YYY")
-                select g;
+            //var queryXML =
+            //    from g in root.Element("XXX").Elements("YYY")
+            //    select g;
 
 
             //--> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
@@ -66,37 +82,37 @@ namespace TechnicalAdvisor
             //}
             //
 
-            foreach (var nOME in queryXML)
-                {
-                //int xmlId = ID++; --> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
+            //foreach (var nOME in queryXML)
+            //    {
+            //    //int xmlId = ID++; --> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
 
-                var tituloDoBloco = nOME.Element("Description").Value;
-                var infosDiversas = nOME.Element("LittleText").Value;
+            //    var tituloDoBloco = nOME.Element("Description").Value;
+            //    var infosDiversas = nOME.Element("LittleText").Value;
 
 
 
-                XmlProduct xmlproduct = new XmlProduct(xmlName, produtoId
-                        ,
-                        tituloDoBloco,
-                        infosDiversas
-                        );
+            //    XmlProduct xmlproduct = new XmlProduct(xmlName, produtoId
+            //            ,
+            //            tituloDoBloco,
+            //            infosDiversas
+            //            );
 
-                    xmlProducts.Add(xmlproduct);
-                }
-            var xml1 = xmlProducts.FirstOrDefault();
-            xmlProducts.Remove(xml1);
+            //        xmlProducts.Add(xmlproduct);
+            //    }
+            //var xml1 = xmlProducts.FirstOrDefault();
+            //xmlProducts.Remove(xml1);
 
-            var queryXML2 =
-               from g in root.Element("ZZZ").Elements("YYY")
-               select g;
-            foreach (var nOME in queryXML2)
-            {
-                //int xmlId = ID++; --> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
+            //var queryXML2 =
+            //   from g in root.Element("ZZZ").Elements("YYY")
+            //   select g;
+            //foreach (var nOME in queryXML2)
+            //{
+            //    //int xmlId = ID++; --> Quando o banco é gerado novamente e recebe o seeding service, as vezes o Entity se perde, e não cria ID nas tabelas. Aí é preciso add esse trecho de código para funcionar.
 
                 
-                var maisInfos = nOME.Element("Text").Value;
-                xml1.MaisInfos = maisInfos;
-            }
+            //    var maisInfos = nOME.Element("Text").Value;
+            //    xml1.MaisInfos = maisInfos;
+            //}
 
             //var xml1 = xmlProducts.FirstOrDefault();
             //xmlProducts.Remove(xml1);
@@ -108,9 +124,9 @@ namespace TechnicalAdvisor
             //xml1.InfosDiversas += xml2.InfosDiversas;
             //xml1.InfosDiversas += xml3.InfosDiversas;
 
-            xml1.LinkDaImagem = "car.svg";
+            //xml1.LinkDaImagem = "car.svg";
 
-            _xMLService.SaveThis(xml1);
+            //_xMLService.SaveThis(xml1);
           
         }
 

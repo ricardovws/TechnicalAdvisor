@@ -257,18 +257,13 @@ namespace TechnicalAdvisor.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LoadXML(LoadProductXMLFormViewModel loadProductXMLFormViewModel, string xmlName)
+        public IActionResult LoadXML(LoadProductXMLFormViewModel loadProductXMLFormViewModel)
         {
 
 
-          
-            //Método para encontrar produto por id
-
-            var product = _productService.FindProductById(loadProductXMLFormViewModel.ID);
-
             //Pega arquivo xml e carrega infos pro banco
 
-            _productService.LoadXML(loadProductXMLFormViewModel.ID, xmlName);
+            _productService.LoadXML(loadProductXMLFormViewModel);
 
             //Redireciona para a página index de produtos
             return RedirectToAction(nameof(Index));
