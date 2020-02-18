@@ -9,5 +9,9 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
     {
         public string Name { get; set; }
         List<ManualSection> Sections { get; set; } = new List<ManualSection>();
+
+        public Manual()
+        {
+        }
     }
 }

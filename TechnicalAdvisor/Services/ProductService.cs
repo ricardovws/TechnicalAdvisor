@@ -148,31 +148,53 @@ namespace TechnicalAdvisor
 
             ManualParagraph paragraph = new ManualParagraph();
 
-            var queryXML1 =
-              from a in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo").Elements("Infos")
-              select a;
-            foreach (var node in queryXML1)
-            {
-                List<string> paragraphs = new List<string>();
-                var para = node.Element("string").Value;
-                paragraphs.Add(para);
+            //var queryXML1 =
+            //  from a in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter").
+            //  Elements("Paragraph").Elements("ManualParagraph")
+            //  .Elements("Text").Elements("string")
+            //  select a;
 
+            Manual manual = new Manual();
+            List<ManualSection> Sections = new List<ManualSection>();
 
-                //var queryXML2 =
-                // from b in root.Element("Secoes").Elements("Secao").Elements("Capitulos").Elements("Capitulo")
-                // select b;
-
-                //foreach (var nodes in queryXML2)
-                //{
-                //    var paragraphTitle = nodes.Element("TituloCapitulo").Value;
-                //    paragraphs.Add(para);
-                //}
-
-                //paragraph.text = paragraphs;
+            //seção
+            //var queryXML1 =
+            // from a in root.Element("Sections").Elements("ManualSection")
+            // select a;
+            
+            //foreach (var node1 in queryXML1)
+            //{
+            //    var sectionTitle = node1.Element("SectionTitle").Value;
+            //    ManualSection section = new ManualSection(sectionTitle);
                 
+            //    Sections.Add(section);
+                
+            //}
 
-            }
-          
+
+            //capítulo
+
+            var queryXML2 =
+            from a in root.Element("Sections").Elements("ManualSection").Elements("SectionTitle")
+            select a;
+
+            queryXML2.Where(x => x.Value == "Secao de Limpagem a seco");
+
+            //var queryXML2 =
+            //from a in root.Element("Sections").Elements("ManualSection").Elements("").
+            //Elements("Chapters").Elements("ManualChapter")
+
+            //select a;
+
+            //foreach (var node2 in queryXML2)
+            //{
+            //    var chapterTitle = node2.Element("ChapterTitle").Value;
+            //    ManualChapter chapter = new ManualChapter(chapterTitle);
+            //    Sections.Add(chapter);
+
+            //}
+
+
             return paragraph;
 
 
