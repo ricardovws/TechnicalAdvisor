@@ -6,12 +6,18 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
     {
         public string ChapterTitle { get; set; }
 
-        //public int ChapterID { get; set; }
+        public int NumberOfParagraphs { get; set; }
 
-        public List<string> text = new List<string>();
+        public string Texts { get; set; }
 
         public ManualParagraph()
         {
+        }
+
+        public ManualParagraph(string chapterTitle, int numberOfParagraphs)
+        {
+            ChapterTitle = chapterTitle;
+            NumberOfParagraphs = numberOfParagraphs;
         }
     }
 

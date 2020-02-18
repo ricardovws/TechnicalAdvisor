@@ -149,11 +149,12 @@
                 </div>
 
                 <div class="panel-body">
-
-                    @foreach (var item in Model.Paragraphs.text)
+                    
+                    @foreach (var item in Model.Paragraphs)
                     {
-                        @Html.DisplayFor(model => item)
+                        @Html.DisplayFor(model => item.Texts)
                     }
+                    
                 </div>
             </div>
         </div>
