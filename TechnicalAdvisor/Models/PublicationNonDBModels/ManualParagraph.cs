@@ -6,7 +6,7 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
     {
         public string ChapterTitle { get; set; }
 
-        public int NumberOfParagraphs { get; set; }
+        public string SectionTitle { get; set; }
 
         public string Texts { get; set; }
 
@@ -14,11 +14,7 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
         {
         }
 
-        public ManualParagraph(string chapterTitle, int numberOfParagraphs)
-        {
-            ChapterTitle = chapterTitle;
-            NumberOfParagraphs = numberOfParagraphs;
-        }
+    
     }
 
 

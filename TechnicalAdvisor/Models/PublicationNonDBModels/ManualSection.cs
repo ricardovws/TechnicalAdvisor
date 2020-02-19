@@ -7,7 +7,11 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
 
         public string Title { get; set; }
        // public int ID { get; set; }
-        List<ManualChapter> Chapters { get; set; } = new List<ManualChapter>();
+        public List<ManualChapter> Chapters { get; set; } 
+
+        public ManualSection()
+        {
+        }
 
         public ManualSection(string title)
         {

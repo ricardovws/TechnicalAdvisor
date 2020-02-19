@@ -60,44 +60,65 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
+
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.TypeOfProduct)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PublicationCode)
+                <p></p>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublicationVersion)
-            </th>
+
+
+            @*<th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
+
+       
         <tr>
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.TypeOfProduct)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PublicationCode)
+                <img src="~/images/gallardo.svg"
+                     width="240" height="120" />
+
+
+                @*Aqui tem um exemplo de como vai ser o sistema pra aparecer imagens
+        <div class="col-1">
+
+                <img src="~/images/@Html.DisplayFor(model=>model.LinkDaImagem)"/>
+
+            </div>*@
+
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublicationVersion)
-            </td>
+
+
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
                 <a asp-action="ViewXML" asp-route-id="@item.Id">View XML</a> |
-                <a asp-action="LoadXML" asp-route-id="@item.Id">Load XML</a> 
+                <a asp-action="LoadXML" asp-route-id="@item.Id">Load XML</a>
             </td>
         </tr>
-}
-    </tbody>
-</table>
+    }
+        </tbody>
+    </table>

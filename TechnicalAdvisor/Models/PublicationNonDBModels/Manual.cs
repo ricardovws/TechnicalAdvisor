@@ -8,10 +8,23 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
     public class Manual
     {
         public string Name { get; set; }
-        List<ManualSection> Sections { get; set; } = new List<ManualSection>();
+        
+        public List<ManualParagraph> Paragraphs { get; set; }
+
+        public List<ManualChapter> Chapters { get; set; }
+
+        public List<ManualSection> Sections { get; set; }
 
         public Manual()
         {
+        }
+
+        public Manual(string name, List<ManualParagraph> paragraphs, List<ManualChapter> chapters, List<ManualSection> sections)
+        {
+            Name = name;
+            Paragraphs = paragraphs;
+            Chapters = chapters;
+            Sections = sections;
         }
     }
 }

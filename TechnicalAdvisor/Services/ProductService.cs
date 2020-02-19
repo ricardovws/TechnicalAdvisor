@@ -44,6 +44,10 @@ namespace TechnicalAdvisor
 
             xmlProduct.ProductId = loadProductXMLFormViewModel.ID;
             xmlProduct.FileName = fullXMLPath;
+            var product = FindProductById(loadProductXMLFormViewModel.ID);
+            product.XmlProductId = xmlProduct.Id;
+            _context.Update(product);
+            _context.SaveChanges();
 
 
             // salva no DB o objeto que associa o documento xml com o produto
@@ -57,88 +61,72 @@ namespace TechnicalAdvisor
 
         // Abaixo é um método para pegar arquivo xml já formatado, e montar ele na view.
 
-            public List<ManualParagraph> TakeAndReadXML(XmlProduct xmlProduct)
+            public Manual TakeAndReadXML(XmlProduct xmlProduct)
         {
 
-
-          
             // recebe um produtoxml e abre o arquivo xml
 
             XElement root = XElement.Load(xmlProduct.FileName);
 
-            // interpreta o arquivo xml e divide por classes:
-
-
-            //divisão dos textos por parágrafos:
-
-            //caminho pra chegar no nó em que queremos pegar os textos dos paragrafos
-            List<ManualParagraph> infoAboutChaptersAndParagraphs = new List<ManualParagraph>();
+       
             var queryXML1 =
-              from a in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter")/*.*/
-              //Elements("Paragraph").Elements("ManualParagraph")
+              from a in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter").
+              Elements("Paragraph").Elements("ManualParagraph")
 
               select a;
 
-            //ele entra nos primeiros nós, onde irá pegar o nome do capitulo e o numero de paragrafos.
-            ManualChapter chapter = new ManualChapter();
+            //ele entra nos nós dos paragrafos, onde ele pega todas as infos necessarias para criar o objeto manualparagraph
+            List<ManualParagraph> paragraphs = new List<ManualParagraph>();
             foreach(var node in queryXML1)
             {
-                var chapterTitle = node.Element("ChapterTitle").Value;
-                var numberOfParagraphs = int.Parse(node.Element("NumberOfParagraphs").Value);
-                
-                infoAboutChaptersAndParagraphs.Add(new ManualParagraph(chapterTitle, numberOfParagraphs));
+                ManualParagraph paragraph = new ManualParagraph();
+                paragraph.SectionTitle = node.Element("SectionTitle").Value;
+                paragraph.ChapterTitle = node.Element("ChapterTitle").Value;
+                paragraph.Texts = node.Element("Text").Value;
+                paragraphs.Add(paragraph);
             }
 
+            //agora ele vai pegar e fazer uma lista com todos os capitulos e já vincular eles com os paragrafos 
             var queryXML2 =
              from b in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter")
-             .Elements("Paragraph").Elements("ManualParagraph")
-
+            
               select b;
-
-            List<string> texts = new List<string>();
+            List<ManualChapter> chapters = new List<ManualChapter>();
             foreach (var node2 in queryXML2)
             {
-                var text = node2.Element("Text").Value;
-
-                texts.Add(text);
+                ManualChapter chapter = new ManualChapter();
+                chapter.Title = node2.Element("ChapterTitle").Value;
+                //agora cada capitulo vai receber seus paragrafos
+                var paras = paragraphs.Where(x => x.ChapterTitle == chapter.Title).ToList();
+                chapter.Paragraph = paras;
+                chapters.Add(chapter);
             }
+            //Agora fará o mesmo com as seções
+            var queryXML3 =
+           from c in root.Element("Sections").Elements("ManualSection")
 
-            foreach(var paragraph in infoAboutChaptersAndParagraphs)
+           select c;
+            List<ManualSection> sections = new List<ManualSection>();
+            foreach (var sec in queryXML3)
             {
-                int numberPara = paragraph.NumberOfParagraphs;
-                for(int i = 0; i < numberPara; i++)
-                {
-                    var paras = texts.First();
+                ManualSection section = new ManualSection();
+                section.Title = sec.Element("SectionTitle").Value;
+                
+                //agora cada seção vai receber seus capitulos
+                var chapters_ = chapters.Where(x => x.SectionTitle == section.Title).ToList();
 
-                    texts.Remove(paras);
-
-                    paragraph.Texts = paras;
-                }
+                section.Chapters = chapters_;
+                
+                sections.Add(section);
                 
             }
 
-            //int n = 3; //Representa a quantidade de paragrafos do capitulo 
-            ////como a lista é de todas as infos do manual, agora precisamos dividir eles por objetos manualparagraph
-            //List<ManualParagraph> manualParagraphs = new List<ManualParagraph>();
-            //for(int i = 0; i < n; i++)
-            //{
-            //    var para = texts.First();
-            //    texts.Remove(para);
+            Manual manual = new Manual("Carro muito louco", paragraphs, chapters, sections);
 
-            //    ManualParagraph paragraph_ = new ManualParagraph { Para = para };
-            //    manualParagraphs.Add(paragraph_);
-            //}
-
-
-            return infoAboutChaptersAndParagraphs;
+            return manual
+;
 
         }
-
-
-
-
-
-
 
 
         public Product FindProductById(int id)

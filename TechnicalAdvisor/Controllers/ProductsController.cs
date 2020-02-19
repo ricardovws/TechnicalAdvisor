@@ -61,7 +61,28 @@ namespace TechnicalAdvisor.Controllers
 
             //}
 
-             return View(await _context.Product.ToListAsync());
+
+            var productInfos = await _context.Product.ToListAsync();
+            ProductIndexViewModel productIndexVIew = new ProductIndexViewModel();
+            foreach(var item in productInfos)
+            {
+
+                productIndexVIew.Id = item.Id;
+                productIndexVIew.Name = item.Name;
+                productIndexVIew.TypeOfProduct = item.TypeOfProduct;
+                productIndexVIew.PublicationCode = item.PublicationCode;
+                productIndexVIew.PublicationVersion = item.PublicationVersion;
+
+                
+                //var xmlProduct = _context.XmlProduct.First(x => x.ProductId == item.XmlProductId);
+               // string imagePath = xmlProduct.LinkDaImagem;
+               // productIndexVIew.ImagePath = imagePath;
+            }
+
+
+            //return View(productIndexVIew);
+
+            return View(await _context.Product.ToListAsync());
 
         }
 
@@ -212,7 +233,10 @@ namespace TechnicalAdvisor.Controllers
 
             // pega o objecto manual e monta uma viewmodel e joga pra view
 
-            PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel("teste", manual);
+            PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel
+                (manual.Name, manual.Paragraphs, manual.Chapters, manual.Sections) 
+            
+            ;
 
 
             return View(publicationProductViewModel);
