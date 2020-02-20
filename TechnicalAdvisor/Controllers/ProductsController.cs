@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechnicalAdvisor.Areas.Identity.Data;
 using TechnicalAdvisor.Models;
+using TechnicalAdvisor.Models.PublicationNonDBModels;
 using TechnicalAdvisor.Models.ViewModels;
 using TechnicalAdvisor.Services;
 
@@ -222,7 +223,7 @@ namespace TechnicalAdvisor.Controllers
         {
 
 
-            // ESSE MÉTODO PRECISA FAZER ISSO!!!
+            
             // procura e pega no DB um elementxml que seja vinculado a esse id, 
             var xmlproduct = _productService.XmlObjectByProductId(id);
 
@@ -230,6 +231,63 @@ namespace TechnicalAdvisor.Controllers
             // product service, e devolve o manual
             var manual = _productService.TakeAndReadXML(xmlproduct);
 
+
+            //entrando na parte do código que vai começar a se direcionar pra paginação
+
+            List<ManualParagraph> paragraphs = new List<ManualParagraph>();
+
+            paragraphs = manual.Paragraphs;
+
+            int totalLines = 0; //Número inicial de páginas do manual
+
+            foreach(var para in paragraphs)
+            {
+                var p = para.Texts.Count();
+                totalLines += p;
+
+            }
+            //agora é necessário dividir o numero total de paginas pelo numero total aceitável por página, que é arbitrário.
+            //só fazendo testes pra ver mesmo, eu vou colocar um que seja conveniente nesse momento.
+
+            int totalLinesOfAPage = 300; // numero de linhas maximo de uma pagina!
+
+
+            var NumberOfPages = totalLines / totalLinesOfAPage;
+
+            //cria listas que vao compor as paginas e que farão parte da instanciação do objeto "publicationProductViewModel"
+
+
+            for(int i = 0; i < NumberOfPages; i++)
+            {
+                List<ManualParagraph> page = new List<ManualParagraph>();
+                int AlreadyDone = 0;
+                while (AlreadyDone != totalLinesOfAPage )
+                {
+                    var text = paragraphs.First();
+                    paragraphs.Remove(text);
+                    page.Add(text);
+
+                    totalLines =-text.Texts.Count();
+                    AlreadyDone = text.Texts.Count();
+                    if (AlreadyDone < totalLinesOfAPage)
+                    {
+                        //continua fazendo!
+                    }
+                    else
+                    {
+                       AlreadyDone = 0;
+                    }
+                    
+                }
+
+
+
+
+            }
+
+
+            
+           
 
             // pega o objecto manual e monta uma viewmodel e joga pra view
 
