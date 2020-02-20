@@ -86,6 +86,33 @@ namespace TechnicalAdvisor
                 paragraphs.Add(paragraph);
             }
 
+            //entrando na parte do código que vai começar a se direcionar pra paginação
+
+            // conta o numero total de paginas do manual
+            int totalLines = 0; //Número inicial de páginas do manual
+
+            foreach (var para in paragraphs)
+            {
+                var p = para.Texts.Count();
+                totalLines += p;
+
+            }
+
+            //agora é necessário dividir o numero total de paginas pelo numero total aceitável por página, que é arbitrário.
+            //só fazendo testes pra ver mesmo, eu vou colocar um que seja conveniente nesse momento.
+
+            int totalLinesOfAPage = 50; // numero de linhas maximo de uma pagina!
+
+
+            var NumberOfPages = totalLines / totalLinesOfAPage;
+
+
+            //cria listas que vao compor as paginas e que farão parte da instanciação do objeto "publicationProductViewModel"
+
+            var pages = CreatePages(paragraphs, totalLinesOfAPage);
+
+            paragraphs = pages;
+
             //agora ele vai pegar e fazer uma lista com todos os capitulos e já vincular eles com os paragrafos 
             var queryXML2 =
              from b in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter")
@@ -123,8 +150,7 @@ namespace TechnicalAdvisor
 
             Manual manual = new Manual("Carro muito louco", paragraphs, chapters, sections);
 
-            return manual
-;
+            return manual;
 
         }
 
@@ -142,7 +168,36 @@ namespace TechnicalAdvisor
             return xmlProduct;
         }
 
-       
+
+        private List<ManualParagraph> CreatePages(List<ManualParagraph> pages, int totalLinesOfAPage)
+        {
+            List<ManualParagraph> page = new List<ManualParagraph>();
+                  
+            int AlreadyDone_text= 0;
+            int AlreadyDone_pages = 0;
+            int Page = 1;
+
+            foreach (var item in pages)
+            {
+                if (AlreadyDone_text < totalLinesOfAPage)
+                {
+                    ManualParagraph paragraph = item;
+                    paragraph.NumberOfPage = Page;
+                    page.Add(item);
+                    AlreadyDone_text += page.Count();
+                    
+                }
+                else
+                {
+                    Page++;
+                    AlreadyDone_pages++;
+                    AlreadyDone_text = 0;
+                }
+
+            }
+                       
+            return page;
+        }
 
     }
 }

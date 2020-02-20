@@ -140,6 +140,7 @@
             <div class="panel-body">
 
 
+
                 @foreach (var item in Model.Chapters)
                 {<div class="panel-heading">
                         <h3 class="panel-title">@Html.DisplayFor(model => item.Title)</h3>
@@ -147,11 +148,12 @@
                     <hr />
                     @foreach (var item2 in Model.Paragraphs)
                     {
+
                         @Html.DisplayFor(model => item2.Texts)
                     }
                     <hr />
-                }
-
+                } </div>
+                    
             </div>
         </div>
     </div>

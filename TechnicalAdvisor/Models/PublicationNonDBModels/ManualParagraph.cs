@@ -10,6 +10,8 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
 
         public string Texts { get; set; }
 
+        public int NumberOfPage { get; set; }
+
         public ManualParagraph()
         {
         }

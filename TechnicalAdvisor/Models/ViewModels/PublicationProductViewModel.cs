@@ -16,6 +16,7 @@ namespace TechnicalAdvisor.Models.ViewModels
 
         public List<ManualSection> Sections { get; set; }
 
+      
         public PublicationProductViewModel()
         {
         }
@@ -27,5 +28,7 @@ namespace TechnicalAdvisor.Models.ViewModels
             Chapters = chapters;
             Sections = sections;
         }
+
+        
     }
 }
