@@ -104,24 +104,24 @@
 
         @foreach (var item in Model.Sections)
         {
-    <a href="#" class="list-group-item">
-        @Html.DisplayFor(model => item.Title)
+            <a href="#" class="list-group-item">
+                @Html.DisplayFor(model => item.Title)
 
-        <div class="list-group">
+                <div class="list-group">
 
-            @foreach (var item_ in Model.Chapters)
-            {
-                <a href="#" class="list-group-item">
-                    @Html.DisplayFor(model => item_.Title)
+                    @foreach (var item_ in Model.Chapters)
+                    {
+                        <a href="#" class="list-group-item">
+                            @Html.DisplayFor(model => item_.Title)
 
-                </a>
-            }
+                        </a>
+                    }
 
-        </div>
+                </div>
 
-    </a>
+            </a>
         }
-   
+
     </div>
 </div>
 
@@ -152,11 +152,25 @@
                         @Html.DisplayFor(model => item2.Texts)
                     }
                     <hr />
-                } </div>
-                    
+                }
             </div>
+
         </div>
     </div>
+</div>
+
+
+<ul class="pagination">
+    <li class="disabled"><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul>
+
+
 </div>
 
 

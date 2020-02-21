@@ -15,8 +15,7 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
 
         public List<ManualSection> Sections { get; set; }
 
-        public List<Page> Pages { get; set; }
-
+  
         public Manual()
         {
         }
@@ -29,13 +28,5 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
             Sections = sections;
         }
 
-        public Manual(string name, List<ManualParagraph> paragraphs, List<ManualChapter> chapters, List<ManualSection> sections, List<Page> pages)
-        {
-            Name = name;
-            Paragraphs = paragraphs;
-            Chapters = chapters;
-            Sections = sections;
-            Pages = pages;
-        }
     }
 }

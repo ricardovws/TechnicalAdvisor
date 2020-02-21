@@ -101,7 +101,7 @@ namespace TechnicalAdvisor
             //agora é necessário dividir o numero total de paginas pelo numero total aceitável por página, que é arbitrário.
             //só fazendo testes pra ver mesmo, eu vou colocar um que seja conveniente nesse momento.
 
-            int totalLinesOfAPage = 50; // numero de linhas maximo de uma pagina!
+            int totalLinesOfAPage = 10; // numero de linhas maximo de uma pagina!
 
 
             var NumberOfPages = totalLines / totalLinesOfAPage;
@@ -111,7 +111,7 @@ namespace TechnicalAdvisor
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
 
-            paragraphs = pages;
+           // paragraphs = pages;
 
             //agora ele vai pegar e fazer uma lista com todos os capitulos e já vincular eles com os paragrafos 
             var queryXML2 =
@@ -148,7 +148,7 @@ namespace TechnicalAdvisor
                 
             }
 
-            Manual manual = new Manual("Carro muito louco", paragraphs, chapters, sections);
+            Manual manual = new Manual("Carro muito louco", pages, chapters, sections);
 
             return manual;
 

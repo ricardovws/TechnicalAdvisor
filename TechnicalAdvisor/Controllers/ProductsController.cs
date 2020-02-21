@@ -219,7 +219,7 @@ namespace TechnicalAdvisor.Controllers
 
 
         //GET
-        public IActionResult ViewXML(int id)
+        public PublicationProductViewModel ViewXML(int id)
         {
 
             // procura e pega no DB um elementxml que seja vinculado a esse id, 
@@ -233,25 +233,76 @@ namespace TechnicalAdvisor.Controllers
             // pega o objecto manual e monta uma viewmodel e joga pra view
 
             PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel
-                (manual.Name, manual.Paragraphs, manual.Chapters, manual.Sections); 
-            
-            
+                (manual.Name, manual.Paragraphs, manual.Chapters, manual.Sections);
 
-            return View(publicationProductViewModel);
+            
+            publicationProductViewModel.Page = 1;
+
+            return publicationProductViewModel;
 
            // return RedirectToAction(nameof(ShowPublication(publicationProductViewModel, 1)));
 
         }
 
-        public IActionResult NextPage(PublicationProductViewModel publicationProductViewModel, int page)
+        public IActionResult ShowPublicationFirst(int id)
         {
-            var currentPage = publicationProductViewModel.Paragraphs.Where(p => p.NumberOfPage == page).ToList();
+            PublicationProductViewModel publicationProductViewModel = ViewXML(id);
 
-            publicationProductViewModel.Paragraphs = currentPage;
+            PublicationProductViewModel view = new PublicationProductViewModel();
+            var currentPage = publicationProductViewModel.Paragraphs.
+                Where(p => p.NumberOfPage == publicationProductViewModel.Page).ToList();
+            view.Paragraphs = currentPage;
+            view.Sections = publicationProductViewModel.Sections;
+            view.Chapters = publicationProductViewModel.Chapters;
+            view.Page = publicationProductViewModel.Page;
+            view.Name = publicationProductViewModel.Name;
 
-            return View(publicationProductViewModel);
+            return View(view);
+
+            //return RedirectToAction(nameof(ShowPublication), new PublicationProductViewModel
+            //{
+            //    Name = view.Name,
+            //    Paragraphs = view.Paragraphs,
+            //    Chapters=view.Chapters,
+            //    Sections=view.Sections,
+            //    Page=view.Page
+
+            //});
+
         }
 
+        //GET
+        public IActionResult ShowPublication(PublicationProductViewModel publicationProductViewModel)
+        {
+            bool whatToDo = true; //só pra testar-lhe!!!
+            PublicationProductViewModel view = new PublicationProductViewModel();
+            if (whatToDo == true)
+            {
+                view.Page = publicationProductViewModel.Page;
+                view.Page++;
+                var currentPage = publicationProductViewModel.Paragraphs.
+              Where(p => p.NumberOfPage == view.Page).ToList();
+                view.Paragraphs = currentPage;
+                view.Sections = publicationProductViewModel.Sections;
+                
+                view.Name = publicationProductViewModel.Name;
+            }
+            else
+            {
+                view.Page = publicationProductViewModel.Page;
+                view.Page--;
+                var currentPage = publicationProductViewModel.Paragraphs.
+              Where(p => p.NumberOfPage == view.Page).ToList();
+                view.Paragraphs = currentPage;
+                view.Sections = publicationProductViewModel.Sections; 
+                
+                view.Name = publicationProductViewModel.Name;
+            }
+
+            return View(view);
+        }
+
+  
 
 
 

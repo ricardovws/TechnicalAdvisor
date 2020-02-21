@@ -16,7 +16,10 @@ namespace TechnicalAdvisor.Models.ViewModels
 
         public List<ManualSection> Sections { get; set; }
 
-      
+        
+        public int  Page { get; set; }
+
+
         public PublicationProductViewModel()
         {
         }
