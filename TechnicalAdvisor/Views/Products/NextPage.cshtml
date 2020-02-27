@@ -169,48 +169,39 @@
 
             <div class="panel-body">
 
-
-                @foreach (var item in Model.Texts)
-                {
-                    @Html.DisplayFor(model => item)
-
-                }
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <a asp-action="Index">Back to List</a>
-
-                        <a asp-action="NextPage">Next Page</a>
-
-                        <input type="submit" value="Previous" class="btn btn-default" />
-                    </div>
-                </div>
             </div>
+            @foreach (var item in Model.Texts)
+            {
+                @Html.DisplayFor(model => item)
+
+            }
+
         </div>
 
     </div>
 
 
+
+
+
+</div>
+
+    </div>
+    </div>
 </div>
 
 
 
-    
 
-
-
-
-
-@*<ul class="pagination">
-        <li class="disabled"><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-
-    </ul>*@
+<ul class="pagination">
+    <li class="disabled"><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul>
 
 
 

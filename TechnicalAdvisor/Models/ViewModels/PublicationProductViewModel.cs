@@ -8,6 +8,7 @@ namespace TechnicalAdvisor.Models.ViewModels
 {
     public class PublicationProductViewModel
     {
+        public int id { get; set; }
         public string Name { get; set; }
         public int NumberOfPage { get; set; }
 
@@ -19,7 +20,7 @@ namespace TechnicalAdvisor.Models.ViewModels
 
         public string Texts { get; set; }
 
-        public string Json { get; set; }
+        public string json { get; set; }
 
 
 

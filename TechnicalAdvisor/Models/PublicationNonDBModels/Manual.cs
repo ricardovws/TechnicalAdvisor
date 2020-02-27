@@ -15,7 +15,9 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
 
         public List<ManualSection> Sections { get; set; }
 
-  
+        public int CurrentPage { get; set; }
+
+
         public Manual()
         {
         }

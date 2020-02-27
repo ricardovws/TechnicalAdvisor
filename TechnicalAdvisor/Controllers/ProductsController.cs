@@ -218,26 +218,9 @@ namespace TechnicalAdvisor.Controllers
             return View();
         }
 
-
         public IActionResult ShowPublication(int id)
         {
-         var page = _productService.TakeIt(_productService.XmlObjectByProductId(id));
-      
-        // ManualParagraph texts = page.FirstOrDefault(p => p.Texts != null);
-            //var json =  JsonConvert.SerializeObject(manual);
-
-            // PublicationProductViewModel publication = new PublicationProductViewModel();
-
-            //foreach (var line in page)
-            //{
-
-            //    publication.Texts = line.Texts;
-            //}
-
-            //PublicationProductViewModel publications = new PublicationProductViewModel();
-            //publications.Json = json;
-
-
+            var page = _productService.TakeIt(_productService.XmlObjectByProductId(id));
             PublicationProductViewModel publication = new PublicationProductViewModel();
             int currentPage = 1;
             publication.NumberOfPage = currentPage;
@@ -250,16 +233,119 @@ namespace TechnicalAdvisor.Controllers
             var texts = concat.WriteText(text);
             publication.Texts = texts;
 
+            var json = JsonConvert.SerializeObject(page);
+
+            publication.json = json;
+            
+
             return View(publication);
 
+            //return RedirectToAction(nameof(NextPage), new { id=id, json=json});
         }
+
+
+        
+        public IActionResult NextPage(int id, string json)
+        {
+            
+            
+            var page = (Manual)JsonConvert.DeserializeObject(json);
+
+            page.CurrentPage++;
+            PublicationProductViewModel publications = new PublicationProductViewModel();
+            int currentPage = page.CurrentPage; 
+            publications.NumberOfPage = currentPage;
+            publications.Name = page.Name;
+            publications.Sections = page.Sections;
+            publications.Chapters = page.Chapters;
+            publications.Paragraphs = page.Paragraphs;
+            var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+            Concat concat = new Concat(text);
+            var texts = concat.WriteText(text);
+            publications.Texts = texts;
+
+            var _json = JsonConvert.SerializeObject(page);
+            publications.json = _json;
+
+            return View(publications);
+
+            //return RedirectToAction(nameof(Pagination));
+        }
+
+        ////POST
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult NextPage(PublicationProductViewModel publications)
+        //{
+
+        //    var page = (Manual)JsonConvert.DeserializeObject(publications.Json);
+
+        //    PublicationProductViewModel publication = new PublicationProductViewModel();
+        //    int currentPage = 1;
+        //    publication.NumberOfPage = currentPage;
+        //    publication.Name = page.Name;
+        //    publication.Sections = page.Sections;
+        //    publication.Chapters = page.Chapters;
+        //    publication.Paragraphs = page.Paragraphs;
+        //    var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+        //    Concat concat = new Concat(text);
+        //    var texts = concat.WriteText(text);
+        //    publication.Texts = texts;
+
+        //    // var json = JsonConvert.SerializeObject(page);
+
+
+        //    return View(publication);
+
+        //    //return RedirectToAction(nameof(Pagination));
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public IActionResult Pagination(string json)
+        //{
+        //    var page = (Manual)JsonConvert.DeserializeObject(json);
+
+
+        //    PublicationProductViewModel publication = new PublicationProductViewModel();
+        //    int currentPage = 1;
+        //    publication.NumberOfPage = currentPage;
+        //    publication.Name = page.Name;
+        //    publication.Sections = page.Sections;
+        //    publication.Chapters = page.Chapters;
+        //    publication.Paragraphs = page.Paragraphs;
+        //    var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+        //    Concat concat = new Concat(text);
+        //    var texts = concat.WriteText(text);
+        //    publication.Texts = texts;
+           
+            
+            
+        //    return View(publication);
+        //}
+
+
+
 
         ////POST
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public IActionResult ShowPublication(PublicationProductViewModel publications)
         //{
-            
+
         //    var page = (Manual)JsonConvert.DeserializeObject(publications.Json);
 
         //    PublicationProductViewModel publication = new PublicationProductViewModel();
@@ -268,7 +354,7 @@ namespace TechnicalAdvisor.Controllers
         //    publication.Sections = page.Sections;
         //    publication.Chapters = page.Chapters;
         //    publication.Paragraphs = page.Paragraphs;
-            
+
         //    return View(publication);
 
         //}
