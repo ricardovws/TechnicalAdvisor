@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TechnicalAdvisor.Areas.Identity.Data;
 using TechnicalAdvisor.Models;
 using TechnicalAdvisor.Models.PublicationNonDBModels;
@@ -218,91 +219,93 @@ namespace TechnicalAdvisor.Controllers
         }
 
 
-        //GET
-        public PublicationProductViewModel ViewXML(int id)
+        public IActionResult ShowPublication(int id)
         {
+         var page = _productService.TakeIt(_productService.XmlObjectByProductId(id));
+      
+        // ManualParagraph texts = page.FirstOrDefault(p => p.Texts != null);
+            //var json =  JsonConvert.SerializeObject(manual);
 
-            // procura e pega no DB um elementxml que seja vinculado a esse id, 
-            var xmlproduct = _productService.XmlObjectByProductId(id);
+            // PublicationProductViewModel publication = new PublicationProductViewModel();
 
-            //e dps disso pega e puxa o método takeandreadxml do
-            // product service, e devolve o manual
-            var manual = _productService.TakeAndReadXML(xmlproduct);
-
-
-            // pega o objecto manual e monta uma viewmodel e joga pra view
-
-            PublicationProductViewModel publicationProductViewModel = new PublicationProductViewModel
-                (manual.Name, manual.Paragraphs, manual.Chapters, manual.Sections);
-
-            
-            publicationProductViewModel.Page = 1;
-
-            return publicationProductViewModel;
-
-           // return RedirectToAction(nameof(ShowPublication(publicationProductViewModel, 1)));
-
-        }
-
-        public IActionResult ShowPublicationFirst(int id)
-        {
-            PublicationProductViewModel publicationProductViewModel = ViewXML(id);
-
-            PublicationProductViewModel view = new PublicationProductViewModel();
-            var currentPage = publicationProductViewModel.Paragraphs.
-                Where(p => p.NumberOfPage == publicationProductViewModel.Page).ToList();
-            view.Paragraphs = currentPage;
-            view.Sections = publicationProductViewModel.Sections;
-            view.Chapters = publicationProductViewModel.Chapters;
-            view.Page = publicationProductViewModel.Page;
-            view.Name = publicationProductViewModel.Name;
-
-            return View(view);
-
-            //return RedirectToAction(nameof(ShowPublication), new PublicationProductViewModel
+            //foreach (var line in page)
             //{
-            //    Name = view.Name,
-            //    Paragraphs = view.Paragraphs,
-            //    Chapters=view.Chapters,
-            //    Sections=view.Sections,
-            //    Page=view.Page
 
-            //});
+            //    publication.Texts = line.Texts;
+            //}
+
+            //PublicationProductViewModel publications = new PublicationProductViewModel();
+            //publications.Json = json;
+
+
+            PublicationProductViewModel publication = new PublicationProductViewModel();
+            int currentPage = 1;
+            publication.NumberOfPage = currentPage;
+            publication.Name = page.Name;
+            publication.Sections = page.Sections;
+            publication.Chapters = page.Chapters;
+            publication.Paragraphs = page.Paragraphs;
+            var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+            Concat concat = new Concat(text);
+            var texts = concat.WriteText(text);
+            publication.Texts = texts;
+
+            return View(publication);
 
         }
 
-        //GET
-        public IActionResult ShowPublication(PublicationProductViewModel publicationProductViewModel)
-        {
-            bool whatToDo = true; //só pra testar-lhe!!!
-            PublicationProductViewModel view = new PublicationProductViewModel();
-            if (whatToDo == true)
-            {
-                view.Page = publicationProductViewModel.Page;
-                view.Page++;
-                var currentPage = publicationProductViewModel.Paragraphs.
-              Where(p => p.NumberOfPage == view.Page).ToList();
-                view.Paragraphs = currentPage;
-                view.Sections = publicationProductViewModel.Sections;
-                
-                view.Name = publicationProductViewModel.Name;
-            }
-            else
-            {
-                view.Page = publicationProductViewModel.Page;
-                view.Page--;
-                var currentPage = publicationProductViewModel.Paragraphs.
-              Where(p => p.NumberOfPage == view.Page).ToList();
-                view.Paragraphs = currentPage;
-                view.Sections = publicationProductViewModel.Sections; 
-                
-                view.Name = publicationProductViewModel.Name;
-            }
+        ////POST
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ShowPublication(PublicationProductViewModel publications)
+        //{
+            
+        //    var page = (Manual)JsonConvert.DeserializeObject(publications.Json);
 
-            return View(view);
-        }
+        //    PublicationProductViewModel publication = new PublicationProductViewModel();
 
-  
+        //    publication.NumberOfPage = 1;
+        //    publication.Sections = page.Sections;
+        //    publication.Chapters = page.Chapters;
+        //    publication.Paragraphs = page.Paragraphs;
+            
+        //    return View(publication);
+
+        //}
+
+        ////GET
+        //public IActionResult ShowPublication(PublicationProductViewModel publicationProductViewModel)
+        //{
+        //    bool whatToDo = true; //só pra testar-lhe!!!
+        //    PublicationProductViewModel view = new PublicationProductViewModel();
+        //    if (whatToDo == true)
+        //    {
+        //        view.Page = publicationProductViewModel.Page;
+        //        view.Page++;
+        //        var currentPage = publicationProductViewModel.Paragraphs.
+        //      Where(p => p.NumberOfPage == view.Page).ToList();
+        //        view.Paragraphs = currentPage;
+        //        view.Sections = publicationProductViewModel.Sections;
+
+        //        view.Name = publicationProductViewModel.Name;
+        //    }
+        //    else
+        //    {
+        //        view.Page = publicationProductViewModel.Page;
+        //        view.Page--;
+        //        var currentPage = publicationProductViewModel.Paragraphs.
+        //      Where(p => p.NumberOfPage == view.Page).ToList();
+        //        view.Paragraphs = currentPage;
+        //        view.Sections = publicationProductViewModel.Sections; 
+
+        //        view.Name = publicationProductViewModel.Name;
+        //    }
+
+        //    return View(view);
+        //}
+
+
+
 
 
 

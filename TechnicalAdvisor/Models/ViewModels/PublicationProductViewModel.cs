@@ -9,29 +9,20 @@ namespace TechnicalAdvisor.Models.ViewModels
     public class PublicationProductViewModel
     {
         public string Name { get; set; }
+        public int NumberOfPage { get; set; }
 
-        public List<ManualParagraph> Paragraphs { get; set; }
-
-        public List<ManualChapter> Chapters { get; set; }
+        public int XmlProductId { get; set; }
 
         public List<ManualSection> Sections { get; set; }
+        public List<ManualChapter> Chapters { get; set; }
+        public List<ManualParagraph> Paragraphs { get; set; }
 
-        
-        public int  Page { get; set; }
+        public string Texts { get; set; }
+
+        public string Json { get; set; }
 
 
-        public PublicationProductViewModel()
-        {
-        }
 
-        public PublicationProductViewModel(string name, List<ManualParagraph> paragraphs, List<ManualChapter> chapters, List<ManualSection> sections)
-        {
-            Name = name;
-            Paragraphs = paragraphs;
-            Chapters = chapters;
-            Sections = sections;
-        }
 
-        
     }
 }

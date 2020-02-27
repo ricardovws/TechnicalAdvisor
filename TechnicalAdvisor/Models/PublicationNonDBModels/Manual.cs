@@ -20,6 +20,12 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
         {
         }
 
+        public Manual(string name, List<ManualParagraph> paragraphs)
+        {
+            Name = name;
+            Paragraphs = paragraphs;
+        }
+
         public Manual(string name, List<ManualParagraph> paragraphs, List<ManualChapter> chapters, List<ManualSection> sections)
         {
             Name = name;

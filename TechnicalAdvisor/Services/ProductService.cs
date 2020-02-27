@@ -44,31 +44,35 @@ namespace TechnicalAdvisor
 
             xmlProduct.ProductId = loadProductXMLFormViewModel.ID;
             xmlProduct.FileName = fullXMLPath;
-            var product = FindProductById(loadProductXMLFormViewModel.ID);
-            product.XmlProductId = xmlProduct.Id;
-            _context.Update(product);
-            _context.SaveChanges();
+       
+            //try {
 
+            //    var getId = _context.XmlProduct.Last(i => i.Id != 0);
+            //    xmlProduct.Id = getId.Id++;
+            //}
 
-            // salva no DB o objeto que associa o documento xml com o produto
+            //catch
+            //{
+               
+            //    xmlProduct.Id = 1;
 
-            _xMLService.SaveThis(xmlProduct);
+            //}
+
+            _xMLService.SaveThis(xmlProduct); // salva no DB o objeto que associa o documento xml com o produto
 
             // já eras!
           
           
         }
 
-        // Abaixo é um método para pegar arquivo xml já formatado, e montar ele na view.
-
-            public Manual TakeAndReadXML(XmlProduct xmlProduct)
+        public Manual TakeIt(XmlProduct xmlProduct)
         {
 
             // recebe um produtoxml e abre o arquivo xml
 
             XElement root = XElement.Load(xmlProduct.FileName);
 
-       
+
             var queryXML1 =
               from a in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter").
               Elements("Paragraph").Elements("ManualParagraph")
@@ -77,7 +81,7 @@ namespace TechnicalAdvisor
 
             //ele entra nos nós dos paragrafos, onde ele pega todas as infos necessarias para criar o objeto manualparagraph
             List<ManualParagraph> paragraphs = new List<ManualParagraph>();
-            foreach(var node in queryXML1)
+            foreach (var node in queryXML1)
             {
                 ManualParagraph paragraph = new ManualParagraph();
                 paragraph.SectionTitle = node.Element("SectionTitle").Value;
@@ -85,6 +89,34 @@ namespace TechnicalAdvisor
                 paragraph.Texts = node.Element("Text").Value;
                 paragraphs.Add(paragraph);
             }
+            //agora ele vai montar as listas de seções, capítulos e de parágrafos!!!
+
+            //montando a lista de capítulos:
+            var queryXML2 =
+             from a in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter")
+            select a;
+            List<ManualChapter> chapters = new List<ManualChapter>();
+            foreach(var node2 in queryXML2)
+            {
+                ManualChapter chapter = new ManualChapter();
+                chapter.Title = node2.Element("ChapterTitle").Value;
+                chapters.Add(chapter);
+            }
+
+            //montando a lista de seções:
+            var queryXML3 =
+            from a in root.Element("Sections").Elements("ManualSection")
+            select a;
+            List<ManualSection> sections = new List<ManualSection>();
+            foreach (var node3 in queryXML3)
+            {
+                ManualSection section = new ManualSection();
+                section.Title = node3.Element("SectionTitle").Value;
+                sections.Add(section);
+            }
+
+            //agora termina e continua o restante do código...
+            //
 
             //entrando na parte do código que vai começar a se direcionar pra paginação
 
@@ -101,59 +133,22 @@ namespace TechnicalAdvisor
             //agora é necessário dividir o numero total de paginas pelo numero total aceitável por página, que é arbitrário.
             //só fazendo testes pra ver mesmo, eu vou colocar um que seja conveniente nesse momento.
 
-            int totalLinesOfAPage = 10; // numero de linhas maximo de uma pagina!
+            int totalLinesOfAPage = 50; // numero de linhas maximo de uma pagina!
 
 
-            var NumberOfPages = totalLines / totalLinesOfAPage;
+            //var NumberOfPages = totalLines / totalLinesOfAPage;
 
 
             //cria listas que vao compor as paginas e que farão parte da instanciação do objeto "publicationProductViewModel"
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
-
-           // paragraphs = pages;
-
-            //agora ele vai pegar e fazer uma lista com todos os capitulos e já vincular eles com os paragrafos 
-            var queryXML2 =
-             from b in root.Element("Sections").Elements("ManualSection").Elements("Chapters").Elements("ManualChapter")
-            
-              select b;
-            List<ManualChapter> chapters = new List<ManualChapter>();
-            foreach (var node2 in queryXML2)
-            {
-                ManualChapter chapter = new ManualChapter();
-                chapter.Title = node2.Element("ChapterTitle").Value;
-                //agora cada capitulo vai receber seus paragrafos
-                var paras = paragraphs.Where(x => x.ChapterTitle == chapter.Title).ToList();
-                chapter.Paragraph = paras;
-                chapters.Add(chapter);
-            }
-            //Agora fará o mesmo com as seções
-            var queryXML3 =
-           from c in root.Element("Sections").Elements("ManualSection")
-
-           select c;
-            List<ManualSection> sections = new List<ManualSection>();
-            foreach (var sec in queryXML3)
-            {
-                ManualSection section = new ManualSection();
-                section.Title = sec.Element("SectionTitle").Value;
-                
-                //agora cada seção vai receber seus capitulos
-                var chapters_ = chapters.Where(x => x.SectionTitle == section.Title).ToList();
-
-                section.Chapters = chapters_;
-                
-                sections.Add(section);
-                
-            }
-
-            Manual manual = new Manual("Carro muito louco", pages, chapters, sections);
+            Manual manual = new Manual("Carro loucaço", pages, chapters, sections);
 
             return manual;
 
         }
 
+      
 
         public Product FindProductById(int id)
         {
@@ -169,35 +164,37 @@ namespace TechnicalAdvisor
         }
 
 
-        private List<ManualParagraph> CreatePages(List<ManualParagraph> pages, int totalLinesOfAPage)
+        private List<ManualParagraph> CreatePages(List<ManualParagraph> paragraphs, int totalLinesOfAPage)
         {
-            List<ManualParagraph> page = new List<ManualParagraph>();
-                  
+            List<ManualParagraph> list = new List<ManualParagraph>();
             int AlreadyDone_text= 0;
             int AlreadyDone_pages = 0;
             int Page = 1;
 
-            foreach (var item in pages)
+            foreach (var page in paragraphs)
             {
                 if (AlreadyDone_text < totalLinesOfAPage)
                 {
-                    ManualParagraph paragraph = item;
+                    ManualParagraph paragraph = page;
                     paragraph.NumberOfPage = Page;
-                    page.Add(item);
-                    AlreadyDone_text += page.Count();
-                    
+                    AlreadyDone_text += paragraph.Texts.Count();
+                    list.Add(paragraph);
+
                 }
                 else
                 {
-                    Page++;
+                    ManualParagraph paragraph = page;
+                    paragraph.NumberOfPage = Page++;
                     AlreadyDone_pages++;
                     AlreadyDone_text = 0;
+                    list.Add(paragraph);
                 }
 
             }
                        
-            return page;
+            return list;
         }
 
+   
     }
 }

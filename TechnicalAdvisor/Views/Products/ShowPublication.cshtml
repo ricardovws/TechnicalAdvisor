@@ -29,7 +29,7 @@
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="home">
             <p></p>
-            <p>@Html.DisplayFor(model => model.Name)</p>
+            <p>@Html.DisplayFor(model => model.NumberOfPage)</p>
         </div>
         <div class="tab-pane fade" id="profile">
             <p></p>
@@ -94,7 +94,6 @@
 <hr />
 
 
-
 <div class="col-md-2">
 
     <div class="list-group">
@@ -130,6 +129,37 @@
 
 
 
+@*<div class="row">
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel info</h3>
+                </div>
+
+                <div class="panel-body">
+
+
+
+                    @foreach (var item in Model.Chapters)
+                    {<div class="panel-heading">
+                            <h3 class="panel-title">@Html.DisplayFor(model => item.Title)</h3>
+                        </div>
+                        <hr />
+                        @foreach (var item2 in Model.Paragraphs)
+                        {
+
+                            @Html.DisplayFor(model => item2.Texts)
+                        }
+                        <hr />
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+
+
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-primary">
@@ -139,25 +169,28 @@
 
             <div class="panel-body">
 
-
-
-                @foreach (var item in Model.Chapters)
-                {<div class="panel-heading">
-                        <h3 class="panel-title">@Html.DisplayFor(model => item.Title)</h3>
-                    </div>
-                    <hr />
-                    @foreach (var item2 in Model.Paragraphs)
+                </div>
+                    @foreach (var item in Model.Texts)
                     {
+                        @Html.DisplayFor(model => item)
 
-                        @Html.DisplayFor(model => item2.Texts)
                     }
-                    <hr />
-                }
+
+                </div>
+
             </div>
+          
+          
+
+           
 
         </div>
+
+    </div>
     </div>
 </div>
+
+
 
 
 <ul class="pagination">
@@ -171,7 +204,7 @@
 </ul>
 
 
-</div>
+
 
 
 

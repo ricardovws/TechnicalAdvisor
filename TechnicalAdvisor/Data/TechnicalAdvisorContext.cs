@@ -24,5 +24,7 @@ namespace TechnicalAdvisor.Models
 
         public DbSet<XmlProduct> XmlProduct { get; set; }
 
+        
+
     }
 }
