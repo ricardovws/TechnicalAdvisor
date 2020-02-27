@@ -264,12 +264,23 @@ namespace TechnicalAdvisor.Controllers
 
             var pages = BuildPage(id, manual);
 
-            return RedirectToAction(nameof(ShowPublication), new { Name=pages.Name,Texts=pages.Texts
-            ,NumberOfPage=pages.NumberOfPage
-            ,Sections=pages.Sections
-            ,Chapters=pages.Chapters
-            ,Paragraphs=pages.Paragraphs
-            
+            //return RedirectToAction(nameof(ShowPublication), new { Name=pages.Name,Texts=pages.Texts
+            //,NumberOfPage=pages.NumberOfPage
+            //,Sections=pages.Sections
+            //,Chapters=pages.Chapters
+            //,Paragraphs=pages.Paragraphs
+
+            //});
+
+            return RedirectToAction(nameof(ShowPublication), new
+            {
+                Name = pages.Name,
+                Texts = pages.Texts
+         ,
+                NumberOfPage = pages.NumberOfPage
+         //,
+         //     json = pages.json
+        
             });
 
 
