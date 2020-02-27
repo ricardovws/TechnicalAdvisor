@@ -218,58 +218,61 @@ namespace TechnicalAdvisor.Controllers
             return View();
         }
 
-        public IActionResult ShowPublication(int id)
+        public IActionResult ShowPublicationFirst(int id)
         {
-            var page = _productService.TakeIt(_productService.XmlObjectByProductId(id));
-            PublicationProductViewModel publication = new PublicationProductViewModel();
-            int currentPage = 1;
-            publication.NumberOfPage = currentPage;
-            publication.Name = page.Name;
-            publication.Sections = page.Sections;
-            publication.Chapters = page.Chapters;
-            publication.Paragraphs = page.Paragraphs;
-            var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
-            Concat concat = new Concat(text);
-            var texts = concat.WriteText(text);
-            publication.Texts = texts;
+            var manual = _productService.TakeIt(_productService.XmlObjectByProductId(id));
 
-            var json = JsonConvert.SerializeObject(page);
+            var pages = BuildPage(id, manual);
+ 
+            return View(pages);
+        }
 
-            publication.json = json;
+        public IActionResult ShowPublication(PublicationProductViewModel publication)
+        {
             
-
             return View(publication);
-
-            //return RedirectToAction(nameof(NextPage), new { id=id, json=json});
         }
 
 
-        
-        public IActionResult NextPage(int id, string json)
-        {
-            
-            
-            var page = (Manual)JsonConvert.DeserializeObject(json);
 
-            page.CurrentPage++;
-            PublicationProductViewModel publications = new PublicationProductViewModel();
-            int currentPage = page.CurrentPage; 
-            publications.NumberOfPage = currentPage;
-            publications.Name = page.Name;
-            publications.Sections = page.Sections;
-            publications.Chapters = page.Chapters;
-            publications.Paragraphs = page.Paragraphs;
-            var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+        private PublicationProductViewModel BuildPage(int id, Manual manual)
+        {
+           
+            PublicationProductViewModel publication = new PublicationProductViewModel();
+            publication.NumberOfPage = manual.CurrentPage;
+            publication.Name = manual.Name;
+            publication.Sections = manual.Sections;
+            publication.Chapters = manual.Chapters;
+            publication.Paragraphs = manual.Paragraphs;
+            var text = manual.Paragraphs.Where(p => p.NumberOfPage == manual.CurrentPage).ToList();
             Concat concat = new Concat(text);
             var texts = concat.WriteText(text);
-            publications.Texts = texts;
+            publication.Texts = texts; 
+            publication.json = manual.Json;
+            publication.id = id;
 
-            var _json = JsonConvert.SerializeObject(page);
-            publications.json = _json;
+            return publication;
+        }
 
-            return View(publications);
+        public IActionResult NextPage(int id)
+        {
 
-            //return RedirectToAction(nameof(Pagination));
+
+            var manual = _productService.TakeIt(_productService.XmlObjectByProductId(id));
+
+            manual.CurrentPage++;
+
+            var pages = BuildPage(id, manual);
+
+            return RedirectToAction(nameof(ShowPublication), new { Name=pages.Name,Texts=pages.Texts
+            ,NumberOfPage=pages.NumberOfPage
+            ,Sections=pages.Sections
+            ,Chapters=pages.Chapters
+            ,Paragraphs=pages.Paragraphs
+            
+            });
+
+
         }
 
         ////POST

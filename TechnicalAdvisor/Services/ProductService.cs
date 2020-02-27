@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,7 +144,8 @@ namespace TechnicalAdvisor
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
             Manual manual = new Manual("Carro loucaço", pages, chapters, sections);
-
+            manual.CurrentPage = 1;
+            var json = JsonConvert.SerializeObject(manual);
             return manual;
 
         }
