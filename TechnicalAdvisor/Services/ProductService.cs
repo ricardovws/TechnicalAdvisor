@@ -144,9 +144,10 @@ namespace TechnicalAdvisor
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
             Manual manual = new Manual("Carro loucaço", pages, chapters, sections);
-            manual.CurrentPage = 1;
             var json = JsonConvert.SerializeObject(manual);
+
             manual.Json = json;
+
             return manual;
 
         }

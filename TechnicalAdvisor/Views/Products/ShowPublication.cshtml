@@ -91,7 +91,7 @@
 
 
 
-@*<hr />
+<hr />
 
 
 <div class="col-md-2">
@@ -122,45 +122,11 @@
         }
 
     </div>
-</div>*@
+</div>
 
 
 
-
-
-
-@*<div class="row">
-        <div class="col-md-9">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel info</h3>
-                </div>
-
-                <div class="panel-body">
-
-
-
-                    @foreach (var item in Model.Chapters)
-                    {<div class="panel-heading">
-                            <h3 class="panel-title">@Html.DisplayFor(model => item.Title)</h3>
-                        </div>
-                        <hr />
-                        @foreach (var item2 in Model.Paragraphs)
-                        {
-
-                            @Html.DisplayFor(model => item2.Texts)
-                        }
-                        <hr />
-                    }
-                </div>
-
-            </div>
-        </div>
-    </div>*@
-
-
-
-@*<div class="row">
+<div class="row">
     <div class="col-md-9">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -179,7 +145,7 @@
                 <div class="row">
                     <div class="col-md-12">
                        
-                        <a asp-action="NextPage" asp-route-id="@Model">Next Page</a>
+                        <a asp-action="NextPage" asp-route-id="@Model.id">Next Page</a>
 
                         <input type="submit" value="Previous" class="btn btn-default" />
                     </div>
@@ -190,7 +156,7 @@
     </div>
 
 
-</div>*@
+</div>
 
 
 

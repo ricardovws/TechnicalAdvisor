@@ -218,202 +218,38 @@ namespace TechnicalAdvisor.Controllers
             return View();
         }
 
-        public IActionResult ShowPublicationFirst(int id)
+        public IActionResult ShowPublication(int id)
         {
-            var manual = _productService.TakeIt(_productService.XmlObjectByProductId(id));
+            var page = _productService.TakeIt(_productService.XmlObjectByProductId(id));
 
-            var pages = BuildPage(id, manual);
- 
-            return View(pages);
-        }
+            //var json=page.Json;
 
-        public IActionResult ShowPublication(PublicationProductViewModel publication)
-        {
+           // var json = JsonConvert.SerializeObject(page);
+
+            Manual man = JsonConvert.DeserializeObject<Manual>(page.Json);
+
+            PublicationProductViewModel publication = new PublicationProductViewModel();
+            int currentPage = 1;
+            publication.NumberOfPage = currentPage;
+            publication.Name = man.Name;
+            publication.Sections = man.Sections;
+            publication.Chapters = man.Chapters;
+            publication.Paragraphs = man.Paragraphs;
+            var text = man.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+            Concat concat = new Concat(text);
+            var texts = concat.WriteText(text);
+            publication.Texts = texts;
+            publication.id = id;
             
+          
+
+            //publication.json = json;
+
+
             return View(publication);
         }
 
-
-
-        private PublicationProductViewModel BuildPage(int id, Manual manual)
-        {
-           
-            PublicationProductViewModel publication = new PublicationProductViewModel();
-            publication.NumberOfPage = manual.CurrentPage;
-            publication.Name = manual.Name;
-            publication.Sections = manual.Sections;
-            publication.Chapters = manual.Chapters;
-            publication.Paragraphs = manual.Paragraphs;
-            var text = manual.Paragraphs.Where(p => p.NumberOfPage == manual.CurrentPage).ToList();
-            Concat concat = new Concat(text);
-            var texts = concat.WriteText(text);
-            publication.Texts = texts; 
-            publication.json = manual.Json;
-            publication.id = id;
-
-            return publication;
-        }
-
-        public IActionResult NextPage(int id)
-        {
-
-
-            var manual = _productService.TakeIt(_productService.XmlObjectByProductId(id));
-
-            manual.CurrentPage++;
-
-            var pages = BuildPage(id, manual);
-
-            //return RedirectToAction(nameof(ShowPublication), new { Name=pages.Name,Texts=pages.Texts
-            //,NumberOfPage=pages.NumberOfPage
-            //,Sections=pages.Sections
-            //,Chapters=pages.Chapters
-            //,Paragraphs=pages.Paragraphs
-
-            //});
-
-            return RedirectToAction(nameof(ShowPublication), new
-            {
-                Name = pages.Name,
-                Texts = pages.Texts
-         ,
-                NumberOfPage = pages.NumberOfPage
-         //,
-         //     json = pages.json
-        
-            });
-
-
-        }
-
-        ////POST
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult NextPage(PublicationProductViewModel publications)
-        //{
-
-        //    var page = (Manual)JsonConvert.DeserializeObject(publications.Json);
-
-        //    PublicationProductViewModel publication = new PublicationProductViewModel();
-        //    int currentPage = 1;
-        //    publication.NumberOfPage = currentPage;
-        //    publication.Name = page.Name;
-        //    publication.Sections = page.Sections;
-        //    publication.Chapters = page.Chapters;
-        //    publication.Paragraphs = page.Paragraphs;
-        //    var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
-        //    Concat concat = new Concat(text);
-        //    var texts = concat.WriteText(text);
-        //    publication.Texts = texts;
-
-        //    // var json = JsonConvert.SerializeObject(page);
-
-
-        //    return View(publication);
-
-        //    //return RedirectToAction(nameof(Pagination));
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public IActionResult Pagination(string json)
-        //{
-        //    var page = (Manual)JsonConvert.DeserializeObject(json);
-
-
-        //    PublicationProductViewModel publication = new PublicationProductViewModel();
-        //    int currentPage = 1;
-        //    publication.NumberOfPage = currentPage;
-        //    publication.Name = page.Name;
-        //    publication.Sections = page.Sections;
-        //    publication.Chapters = page.Chapters;
-        //    publication.Paragraphs = page.Paragraphs;
-        //    var text = page.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
-        //    Concat concat = new Concat(text);
-        //    var texts = concat.WriteText(text);
-        //    publication.Texts = texts;
-           
-            
-            
-        //    return View(publication);
-        //}
-
-
-
-
-        ////POST
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult ShowPublication(PublicationProductViewModel publications)
-        //{
-
-        //    var page = (Manual)JsonConvert.DeserializeObject(publications.Json);
-
-        //    PublicationProductViewModel publication = new PublicationProductViewModel();
-
-        //    publication.NumberOfPage = 1;
-        //    publication.Sections = page.Sections;
-        //    publication.Chapters = page.Chapters;
-        //    publication.Paragraphs = page.Paragraphs;
-
-        //    return View(publication);
-
-        //}
-
-        ////GET
-        //public IActionResult ShowPublication(PublicationProductViewModel publicationProductViewModel)
-        //{
-        //    bool whatToDo = true; //só pra testar-lhe!!!
-        //    PublicationProductViewModel view = new PublicationProductViewModel();
-        //    if (whatToDo == true)
-        //    {
-        //        view.Page = publicationProductViewModel.Page;
-        //        view.Page++;
-        //        var currentPage = publicationProductViewModel.Paragraphs.
-        //      Where(p => p.NumberOfPage == view.Page).ToList();
-        //        view.Paragraphs = currentPage;
-        //        view.Sections = publicationProductViewModel.Sections;
-
-        //        view.Name = publicationProductViewModel.Name;
-        //    }
-        //    else
-        //    {
-        //        view.Page = publicationProductViewModel.Page;
-        //        view.Page--;
-        //        var currentPage = publicationProductViewModel.Paragraphs.
-        //      Where(p => p.NumberOfPage == view.Page).ToList();
-        //        view.Paragraphs = currentPage;
-        //        view.Sections = publicationProductViewModel.Sections; 
-
-        //        view.Name = publicationProductViewModel.Name;
-        //    }
-
-        //    return View(view);
-        //}
-
-
-
-
-
-
-
-
-
-
-
+    
         //GET
         public IActionResult LoadXML(int productId)
         {
