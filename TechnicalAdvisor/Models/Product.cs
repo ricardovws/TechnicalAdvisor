@@ -14,7 +14,9 @@ namespace TechnicalAdvisor.Models
         public double PublicationVersion { get; set; }
         public Company Company { get; set; }
         public int XmlProductId { get; set; }
-        
+
+        public string Json { get; set; }
+
 
         public Product()
         {

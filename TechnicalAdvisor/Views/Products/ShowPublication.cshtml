@@ -144,10 +144,14 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                       
-                        <a asp-action="NextPage" asp-route-id="@Model.id">Next Page</a>
 
-                        <input type="submit" value="Previous" class="btn btn-default" />
+                        <a asp-action="PreviousPage" asp-route-id="@Model.id"
+                           input type="submit" value="Previous" class="btn btn-default">Previous Page</a>
+
+                         
+                        <a asp-action="NextPage" asp-route-id="@Model.id"
+                           input type="submit" value="Previous" class="btn btn-default">Next Page</a>
+
                     </div>
                 </div>
             </div>

@@ -30,6 +30,15 @@ namespace TechnicalAdvisor
             _context.SaveChanges();
         }
 
+
+        public void LoadPublication(LoadProductXMLFormViewModel publication)
+        {
+            LoadXML(publication); //estrutura o xml e salva referencia no DB
+            LoadJson(XmlObjectByProductId(publication.ID)); //cria o Json e salva no DB
+            return;
+        }
+
+
         public void LoadXML(LoadProductXMLFormViewModel loadProductXMLFormViewModel)  
         {
              // associa o documento xml com o produto
@@ -66,7 +75,7 @@ namespace TechnicalAdvisor
           
         }
 
-        public Manual TakeIt(XmlProduct xmlProduct)
+        public void LoadJson(XmlProduct xmlProduct)
         {
 
             // recebe um produtoxml e abre o arquivo xml
@@ -146,9 +155,14 @@ namespace TechnicalAdvisor
             Manual manual = new Manual("Carro loucaço", pages, chapters, sections);
             var json = JsonConvert.SerializeObject(manual);
 
-            manual.Json = json;
+            var product = FindProductById(xmlProduct.ProductId);
 
-            return manual;
+            product.Json = json;
+
+            _context.Product.Update(product);
+            _context.SaveChanges();
+      
+            return;
 
         }
 

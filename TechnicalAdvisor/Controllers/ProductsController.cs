@@ -218,40 +218,82 @@ namespace TechnicalAdvisor.Controllers
             return View();
         }
 
-        public IActionResult ShowPublication(int id)
+        public IActionResult ShowPublicationFirst(int id)
         {
-            var page = _productService.TakeIt(_productService.XmlObjectByProductId(id));
 
-            //var json=page.Json;
+            var exclude = _context.Pagination.Where(p => p.id != 0);
+            _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
 
-           // var json = JsonConvert.SerializeObject(page);
+            Pagination pagination = new Pagination(id, 1); //Current page é 1
+            
+            _context.Pagination.Add(pagination);
+            _context.SaveChanges();
+            
+            var page = BuildPage(id, pagination.CurrentPage);
 
-            Manual man = JsonConvert.DeserializeObject<Manual>(page.Json);
+            return View(page);
+        }
 
+      
+        public IActionResult ShowPublication(int id, int NumberOfPage)
+        {
+       
+            var page = BuildPage(id, NumberOfPage);
+
+            return View(page);
+        }
+
+        //fazer melhorias na paginação!!!
+
+        public IActionResult NextPage(int id, int currentPage)
+        {
+            var manual = _context.Pagination.First(i => i.ProductId == id);
+            var NumberOfPage = manual.CurrentPage;
+            NumberOfPage++;
+            manual.CurrentPage = NumberOfPage;
+            _context.Pagination.Update(manual);
+            _context.SaveChanges();
+            var page = BuildPage(id, NumberOfPage);
+            return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage });
+
+        }
+
+        public IActionResult PreviousPage(int id, int currentPage)
+        {
+            var manual = _context.Pagination.First(i => i.ProductId == id);
+            var NumberOfPage = manual.CurrentPage;
+            NumberOfPage--;
+            manual.CurrentPage = NumberOfPage;
+            _context.Pagination.Update(manual);
+            _context.SaveChanges();
+            var page = BuildPage(id, NumberOfPage);
+            return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage });
+
+        }
+
+
+        private PublicationProductViewModel BuildPage(int id, int currentPage)
+        {
+            var page = _productService.FindProductById(id);
+            Manual manual = JsonConvert.DeserializeObject<Manual>(page.Json);
             PublicationProductViewModel publication = new PublicationProductViewModel();
-            int currentPage = 1;
             publication.NumberOfPage = currentPage;
-            publication.Name = man.Name;
-            publication.Sections = man.Sections;
-            publication.Chapters = man.Chapters;
-            publication.Paragraphs = man.Paragraphs;
-            var text = man.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
+            publication.Name = manual.Name;
+            publication.Sections = manual.Sections;
+            publication.Chapters = manual.Chapters;
+            publication.Paragraphs = manual.Paragraphs;
+            var text = manual.Paragraphs.Where(p => p.NumberOfPage == currentPage).ToList();
             Concat concat = new Concat(text);
             var texts = concat.WriteText(text);
             publication.Texts = texts;
             publication.id = id;
-            
-          
 
-            //publication.json = json;
-
-
-            return View(publication);
+            return (publication);
         }
 
-    
+
         //GET
-        public IActionResult LoadXML(int productId)
+        private IActionResult LoadPublication(int productId)
         {
 
             //Gera view para colocar os dados do produto e carregar o xml
@@ -267,13 +309,13 @@ namespace TechnicalAdvisor.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LoadXML(LoadProductXMLFormViewModel loadProductXMLFormViewModel)
+        private IActionResult LoadPublication(LoadProductXMLFormViewModel loadProductXMLFormViewModel)
         {
 
 
-            //Pega arquivo xml e carrega infos pro banco
+            //Pega arquivo xml, cria Json e carrega infos pro banco
 
-            _productService.LoadXML(loadProductXMLFormViewModel);
+            _productService.LoadPublication(loadProductXMLFormViewModel);
 
             //Redireciona para a página index de produtos
             return RedirectToAction(nameof(Index));

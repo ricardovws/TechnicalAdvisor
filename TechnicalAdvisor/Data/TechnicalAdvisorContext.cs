@@ -24,7 +24,9 @@ namespace TechnicalAdvisor.Models
 
         public DbSet<XmlProduct> XmlProduct { get; set; }
 
-        
+        public DbSet<Pagination> Pagination { get; set; }
+
+
 
     }
 }

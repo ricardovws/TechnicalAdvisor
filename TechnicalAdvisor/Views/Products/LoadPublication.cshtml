@@ -9,7 +9,7 @@
     <h1></h1>
     <h1></h1>
     <div class="col-md-4">
-        <form asp-action="LoadXML">
+        <form asp-action="LoadPublication">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label hidden asp-for="XmlName" class="control-label"></label>
@@ -17,7 +17,7 @@
                 <span asp-validation-for="XmlName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Load XML" class="btn btn-default" />
+                <input type="submit" value="Load Publication" class="btn btn-default" />
             </div>
         </form>
     </div>
