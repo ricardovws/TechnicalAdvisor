@@ -17,7 +17,7 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
 
         public string Json { get; set; }
 
-        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
 
 
         public Manual()

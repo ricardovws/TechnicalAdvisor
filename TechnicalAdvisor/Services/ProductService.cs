@@ -143,16 +143,17 @@ namespace TechnicalAdvisor
             //agora é necessário dividir o numero total de paginas pelo numero total aceitável por página, que é arbitrário.
             //só fazendo testes pra ver mesmo, eu vou colocar um que seja conveniente nesse momento.
 
-            int totalLinesOfAPage = 50; // numero de linhas maximo de uma pagina!
+            int totalLinesOfAPage = 1000; // numero de linhas maximo de uma pagina!
 
 
-            //var NumberOfPages = totalLines / totalLinesOfAPage;
+            var numberOfPages = totalLines / totalLinesOfAPage;
 
 
             //cria listas que vao compor as paginas e que farão parte da instanciação do objeto "publicationProductViewModel"
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
             Manual manual = new Manual("Carro loucaço", pages, chapters, sections);
+            //manual.TotalPages = numberOfPages;
             var json = JsonConvert.SerializeObject(manual);
 
             var product = FindProductById(xmlProduct.ProductId);

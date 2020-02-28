@@ -77,8 +77,8 @@ namespace TechnicalAdvisor.Controllers
 
                 
                 //var xmlProduct = _context.XmlProduct.First(x => x.ProductId == item.XmlProductId);
-               // string imagePath = xmlProduct.LinkDaImagem;
-               // productIndexVIew.ImagePath = imagePath;
+                //string imagePath = xmlProduct.LinkDaImagem;
+                //productIndexVIew.ImagePath = imagePath;
             }
 
 
@@ -218,31 +218,31 @@ namespace TechnicalAdvisor.Controllers
             return View();
         }
 
-        public IActionResult ShowPublicationFirst(int id)
+        public IActionResult ShowPublication(int id, int NumberOfPage)
         {
-
-            var exclude = _context.Pagination.Where(p => p.id != 0);
-            _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
-
-            Pagination pagination = new Pagination(id, 1); //Current page é 1
+            Pagination pagination = new Pagination();
+            if (NumberOfPage <= 0)
+            {
+                var exclude = _context.Pagination.Where(p => p.id != 0);
+                _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
+                _context.SaveChanges();
+                //pagination.id = id;
+                pagination.ProductId=id; 
+                pagination.CurrentPage = 1; //Current page é 1
+            }
             
+            else
+            {
+                pagination.CurrentPage = NumberOfPage;
+            }
             _context.Pagination.Add(pagination);
             _context.SaveChanges();
-            
             var page = BuildPage(id, pagination.CurrentPage);
 
             return View(page);
         }
 
       
-        public IActionResult ShowPublication(int id, int NumberOfPage)
-        {
-       
-            var page = BuildPage(id, NumberOfPage);
-
-            return View(page);
-        }
-
         //fazer melhorias na paginação!!!
 
         public IActionResult NextPage(int id, int currentPage)
@@ -251,6 +251,7 @@ namespace TechnicalAdvisor.Controllers
             var NumberOfPage = manual.CurrentPage;
             NumberOfPage++;
             manual.CurrentPage = NumberOfPage;
+            //ViewData["Page"] = "active";
             _context.Pagination.Update(manual);
             _context.SaveChanges();
             var page = BuildPage(id, NumberOfPage);
@@ -278,6 +279,7 @@ namespace TechnicalAdvisor.Controllers
             Manual manual = JsonConvert.DeserializeObject<Manual>(page.Json);
             PublicationProductViewModel publication = new PublicationProductViewModel();
             publication.NumberOfPage = currentPage;
+            //publication.TotalPages = manual.TotalPages;
             publication.Name = manual.Name;
             publication.Sections = manual.Sections;
             publication.Chapters = manual.Chapters;
@@ -293,7 +295,7 @@ namespace TechnicalAdvisor.Controllers
 
 
         //GET
-        private IActionResult LoadPublication(int productId)
+        public IActionResult LoadPublication(int productId)
         {
 
             //Gera view para colocar os dados do produto e carregar o xml
@@ -309,7 +311,7 @@ namespace TechnicalAdvisor.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        private IActionResult LoadPublication(LoadProductXMLFormViewModel loadProductXMLFormViewModel)
+        public IActionResult LoadPublication(LoadProductXMLFormViewModel loadProductXMLFormViewModel)
         {
 
 

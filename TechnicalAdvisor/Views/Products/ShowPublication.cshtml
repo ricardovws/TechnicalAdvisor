@@ -108,13 +108,13 @@
 
                 <div class="list-group">
 
-                    @foreach (var item_ in Model.Chapters)
-                    {
-                        <a href="#" class="list-group-item">
-                            @Html.DisplayFor(model => item_.Title)
+                    @*@foreach (var item_ in Model.Chapters)
+                        {
+                            <a href="#" class="list-group-item">
+                                @Html.DisplayFor(model => item_.Title)
 
-                        </a>
-                    }
+                            </a>
+                        }*@
 
                 </div>
 
@@ -141,19 +141,19 @@
                     @Html.DisplayFor(model => item)
 
                 }
-                
-                <div class="row">
+
+                @*<div class="row">
                     <div class="col-md-12">
 
                         <a asp-action="PreviousPage" asp-route-id="@Model.id"
                            input type="submit" value="Previous" class="btn btn-default">Previous Page</a>
 
-                         
+
                         <a asp-action="NextPage" asp-route-id="@Model.id"
                            input type="submit" value="Previous" class="btn btn-default">Next Page</a>
 
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
 
@@ -163,26 +163,36 @@
 </div>
 
 
-
+<ul class="pagination">
+    <li>
+        <a asp-action="PreviousPage" asp-route-id="@Model.id"
+           input type="submit" value="Previous" class="btn btn-default">&laquo;Previous Page</a>
+    </li>
     
+    <li><a href="#">1</a></li>
+    <li class="active"><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
 
+    <li><a asp-action="NextPage" asp-route-id="@Model.id" 
+           input type="submit" value="Previous" class="btn btn-default">Next Page&raquo;</a>
+    </li>
 
+</ul>
 
 
 
 @*<ul class="pagination">
-        <li class="disabled"><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
+    <li class="disabled"><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a asp-action="NextPage" asp-route-id="@Model.id" input type="submit" value="Previous" class="btn btn-default">Next Page&raquo;</a></li>
 
-    </ul>*@
-
-
-
+</ul>*@
 
 
 

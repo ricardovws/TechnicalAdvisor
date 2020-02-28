@@ -11,9 +11,7 @@ namespace TechnicalAdvisor.Models.ViewModels
         public int id { get; set; }
         public string Name { get; set; }
         public int NumberOfPage { get; set; }
-
-        public int XmlProductId { get; set; }
-
+        public int TotalPages { get; set; }
         public List<ManualSection> Sections { get; set; }
         public List<ManualChapter> Chapters { get; set; }
         public List<ManualParagraph> Paragraphs { get; set; }
