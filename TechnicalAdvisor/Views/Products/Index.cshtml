@@ -96,16 +96,17 @@
                 @Html.DisplayFor(modelItem => item.TypeOfProduct)
             </td>
             <td>
-                <img src="~/images/gallardo.svg"
-                     width="240" height="120" />
+                @*<img src="~/images/gallardo.svg"
+                     width="240" height="120" />*@
 
 
-                @*Aqui tem um exemplo de como vai ser o sistema pra aparecer imagens
+                @*Aqui tem um exemplo de como vai ser o sistema pra aparecer imagens*@
         <div class="col-1">
 
-                <img src="~/images/@Html.DisplayFor(model=>model.LinkDaImagem)"/>
+                <img src="~/images/@Html.DisplayFor(modelItem => item.PictureName)"
+                     width="240" height="120"/>
 
-            </div>*@
+            </div>
 
             </td>
 

@@ -12,7 +12,8 @@ namespace TechnicalAdvisor.Models.ViewModels
         public string Name { get; set; }
         public string TypeOfProduct { get; set; }
         public string PublicationCode { get; set; }
-        
+        public string PictureName { get; set; }
+
 
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechnicalAdvisor.Models;
 
 namespace TechnicalAdvisor.Migrations
 {
     [DbContext(typeof(TechnicalAdvisorContext))]
-    partial class TechnicalAdvisorContextModelSnapshot : ModelSnapshot
+    [Migration("20200229181153_implemntando campo de imagem no cadastro de produto")]
+    partial class implemntandocampodeimagemnocadastrodeproduto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
