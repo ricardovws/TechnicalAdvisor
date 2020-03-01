@@ -89,6 +89,34 @@ namespace TechnicalAdvisor.Controllers
 
         }
 
+        public IActionResult Search(string somethingToSearch)
+        {
+            //NullReferenceException
+
+
+            string word = somethingToSearch.ToUpper(); //palavra que está sendo usada para busca convertida pra maiuscula
+            
+            //faz uma lista de todos os produtos que o nome ou o tipo de produto são iguais a palavra procurada
+            var list = _context.Product.Where(p => p.Name.ToUpper().StartsWith(word) 
+            || 
+            p.TypeOfProduct.ToUpper().StartsWith(word)).ToList();
+
+         
+
+
+            return View(list);
+
+
+        }
+
+
+        public IActionResult NothingFound()
+        {
+
+            return View();
+        }
+
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
