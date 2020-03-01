@@ -27,22 +27,24 @@ namespace TechnicalAdvisor.Models
         {
         }
 
-        public Product(string name, string typeOfProduct, string publicationCode, Company company)
+        public Product(string name, string typeOfProduct, string publicationCode, Company company, string pictureName)
         {
             Name = name;
             TypeOfProduct = typeOfProduct;
             PublicationCode = publicationCode;
             Company = company;
+            PictureName = pictureName;
         }
 
-        public Product(int id, string name, string typeOfProduct, string publicationCode, Company company)
+        public Product(int id, string name, string typeOfProduct, string publicationCode, Company company, string pictureName)
         {
             Id = id;
             Name = name;
             TypeOfProduct = typeOfProduct;
             PublicationCode = publicationCode;
-            PublicationVersion = 0.0;
             Company = company;
+            PictureName = pictureName;
+            PublicationVersion = 0.0;
         }
     }
 }

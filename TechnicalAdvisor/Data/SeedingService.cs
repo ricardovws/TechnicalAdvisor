@@ -67,15 +67,15 @@ namespace TechnicalAdvisor.Data
             
 
             //Products
-            Product p1 = new Product("RX-8000", "Pistola de Hádrons", "RMO-897500589", c1);
-            Product p2 = new Product("TY-899", "Punheteira Pneumática", "R999-TY67KJ89", c1);
-            Product p3 = new Product("JJK-009", "Estourador de Rabos Pneumático", "R-TY9999k", c1);
-            Product p4 = new Product("JsssssJK-009", "Boqueteador Sismico", "R9k-1.0", c1);
+            Product p1 = new Product("RX-8000", "Pistola de Hádrons", "RMO-897500589", c1, "no_image.png");
+            Product p2 = new Product("TY-899", "Punheteira Pneumática", "R999-TY67KJ89", c1, "no_image.png");
+            Product p3 = new Product("JJK-009", "Estourador de Rabos Pneumático", "R-TY9999k", c1, "no_image.png");
+            Product p4 = new Product("JsssssJK-009", "Boqueteador Sismico", "R9k-1.0", c1, "no_image.png");
 
-            Product p6 = new Product("RX-8000", "Pistola de Hádrons", "RMO-897500589", c2);
-            Product p7 = new Product("TY-899", "Punheteira Pneumática", "R999-TY67KJ89", c2);
-            Product p8 = new Product("JJK-009", "Estourador de Rabos Pneumático", "R-TY9999k", c2);
-            Product p9 = new Product("JsssssJK-009", "Boqueteador Sismico", "R9k-1.0", c2);
+            Product p6 = new Product("RX-8000", "Pistola de Hádrons", "RMO-897500589", c2, "no_image.png");
+            Product p7 = new Product("TY-899", "Punheteira Pneumática", "R999-TY67KJ89", c2, "no_image.png");
+            Product p8 = new Product("JJK-009", "Estourador de Rabos Pneumático", "R-TY9999k", c2, "no_image.png");
+            Product p9 = new Product("JsssssJK-009", "Boqueteador Sismico", "R9k-1.0", c2, "no_image.png");
 
             //Users
 

@@ -10,10 +10,11 @@ namespace TechnicalAdvisor.Models
         public int id { get; set; }
         public int ProductId { get; set; }
         public int CurrentPage { get; set; }
-        //public DateTime WhoIsUsing { get; set; }
-       
-        
-        
+        public int TotalPages { get; set; }
+//public DateTime WhoIsUsing { get; set; }
+
+
+
         public Pagination()
         {
         }

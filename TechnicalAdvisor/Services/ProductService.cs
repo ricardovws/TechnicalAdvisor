@@ -146,14 +146,11 @@ namespace TechnicalAdvisor
             int totalLinesOfAPage = 1000; // numero de linhas maximo de uma pagina!
 
 
-            var numberOfPages = totalLines / totalLinesOfAPage;
-
-
             //cria listas que vao compor as paginas e que farão parte da instanciação do objeto "publicationProductViewModel"
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
             Manual manual = new Manual("Carro loucaço", pages, chapters, sections);
-            //manual.TotalPages = numberOfPages;
+            manual.TotalPages = manual.Paragraphs.FirstOrDefault(p => p != null).TotalPages;
             var json = JsonConvert.SerializeObject(manual);
 
             var product = FindProductById(xmlProduct.ProductId);
@@ -210,7 +207,11 @@ namespace TechnicalAdvisor
                 }
 
             }
-                       
+            foreach(var totalpages in list)
+            {
+                totalpages.TotalPages = AlreadyDone_pages;
+            }
+            
             return list;
         }
 

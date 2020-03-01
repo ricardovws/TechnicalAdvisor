@@ -12,6 +12,8 @@ namespace TechnicalAdvisor.Models.PublicationNonDBModels
 
         public int NumberOfPage { get; set; }
 
+        public int TotalPages { get; set; }
+
         public ManualParagraph()
         {
         }

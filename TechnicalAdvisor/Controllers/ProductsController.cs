@@ -74,6 +74,7 @@ namespace TechnicalAdvisor.Controllers
                 productIndexVIew.TypeOfProduct = item.TypeOfProduct;
                 productIndexVIew.PublicationCode = item.PublicationCode;
                 productIndexVIew.PublicationVersion = item.PublicationVersion;
+                
 
                 
                 //var xmlProduct = _context.XmlProduct.First(x => x.ProductId == item.XmlProductId);
@@ -149,7 +150,7 @@ namespace TechnicalAdvisor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,TypeOfProduct,PublicationCode,PublicationVersion")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,TypeOfProduct,PublicationCode,PublicationVersion,PictureName")] Product product)
         {
             if (id != product.Id)
             {
@@ -218,28 +219,55 @@ namespace TechnicalAdvisor.Controllers
             return View();
         }
 
-        public IActionResult ShowPublication(int id, int NumberOfPage)
+        public IActionResult ShowPublication(int id, int NumberOfPage, int TotalPages)
         {
-            Pagination pagination = new Pagination();
-            if (NumberOfPage <= 0)
+
+            if (NumberOfPage == 0 && TotalPages == 0)
             {
-                var exclude = _context.Pagination.Where(p => p.id != 0);
-                _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
-                _context.SaveChanges();
-                //pagination.id = id;
-                pagination.ProductId=id; 
-                pagination.CurrentPage = 1; //Current page é 1
+                var firstPage = BuildPage(id, 1);
+                return View(firstPage);
             }
-            
+
+
+
+
+
+
+
+
             else
             {
-                pagination.CurrentPage = NumberOfPage;
-            }
-            _context.Pagination.Add(pagination);
-            _context.SaveChanges();
-            var page = BuildPage(id, pagination.CurrentPage);
+                Pagination pagination = new Pagination();
+                pagination.TotalPages = TotalPages;
+                if (NumberOfPage <= 0 || TotalPages == 0)
+                {
+                    var exclude = _context.Pagination.Where(p => p.id != 0);
+                    _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
+                    _context.SaveChanges();
+                    //pagination.id = id;
+                    pagination.ProductId = id;
+                    //precisa pegar o numero de paginas total do manual e comparar com a pagina atual, para saber se pode avançar mais ou nao
+                    pagination.CurrentPage = 1; //Current page é 1
+                }
+                else if (NumberOfPage >= TotalPages && TotalPages != 0)
+                {
+                    pagination.CurrentPage = TotalPages;
+                }
 
-            return View(page);
+
+                else
+                {
+                    pagination.CurrentPage = NumberOfPage;
+                }
+
+                _context.Pagination.Add(pagination);
+                _context.SaveChanges();
+                var page = BuildPage(id, pagination.CurrentPage);
+
+
+                return View(page);
+            }
+            
         }
 
       
@@ -247,25 +275,26 @@ namespace TechnicalAdvisor.Controllers
 
         public IActionResult NextPage(int id, int currentPage)
         {
-            var manual = _context.Pagination.First(i => i.ProductId == id);
-            var NumberOfPage = manual.CurrentPage;
+            var pagination = _context.Pagination.First(i => i.ProductId == id);
+            var NumberOfPage = pagination.CurrentPage;
             NumberOfPage++;
-            manual.CurrentPage = NumberOfPage;
+            pagination.CurrentPage = NumberOfPage;
             //ViewData["Page"] = "active";
-            _context.Pagination.Update(manual);
+            _context.Pagination.Update(pagination);
             _context.SaveChanges();
             var page = BuildPage(id, NumberOfPage);
-            return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage });
+            var TotalPages = page.TotalPages;
+            return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage, TotalPages = TotalPages });
 
         }
 
         public IActionResult PreviousPage(int id, int currentPage)
         {
-            var manual = _context.Pagination.First(i => i.ProductId == id);
-            var NumberOfPage = manual.CurrentPage;
+            var pagination = _context.Pagination.First(i => i.ProductId == id);
+            var NumberOfPage = pagination.CurrentPage;
             NumberOfPage--;
-            manual.CurrentPage = NumberOfPage;
-            _context.Pagination.Update(manual);
+            pagination.CurrentPage = NumberOfPage;
+            _context.Pagination.Update(pagination);
             _context.SaveChanges();
             var page = BuildPage(id, NumberOfPage);
             return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage });
@@ -279,7 +308,7 @@ namespace TechnicalAdvisor.Controllers
             Manual manual = JsonConvert.DeserializeObject<Manual>(page.Json);
             PublicationProductViewModel publication = new PublicationProductViewModel();
             publication.NumberOfPage = currentPage;
-            //publication.TotalPages = manual.TotalPages;
+            publication.TotalPages = manual.TotalPages;
             publication.Name = manual.Name;
             publication.Sections = manual.Sections;
             publication.Chapters = manual.Chapters;

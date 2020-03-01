@@ -216,7 +216,16 @@ namespace TechnicalAdvisor.Controllers
             product.TypeOfProduct = formProduct.TypeOfProduct;
             product.PublicationCode = formProduct.PublicationCode;
             string extension = ".svg";
-            product.PictureName = formProduct.PictureName+extension;
+            product.PictureName = "no_image.png";
+            string pictureName = formProduct.PictureName;
+            if (pictureName != null)
+            {
+                product.PictureName = pictureName + extension;
+            }
+            else
+            {
+                
+            }
             _productService.AddProduct(product);
            
             return RedirectToAction(nameof(Index));
