@@ -221,6 +221,8 @@ namespace TechnicalAdvisor.Controllers
 
         public IActionResult ShowPublication(int id, int NumberOfPage, int TotalPages)
         {
+            Pagination pagination = new Pagination();
+            PublicationProductViewModel page = new PublicationProductViewModel();
 
             if (NumberOfPage == 0 && TotalPages == 0)
             {
@@ -229,60 +231,66 @@ namespace TechnicalAdvisor.Controllers
             }
 
 
+            else if (NumberOfPage <= 0)
+            {
 
+                page = ChangePage(pagination, id, 1);  //Current page é 1
+                return View(page);
+            }
 
+            else if (NumberOfPage >= TotalPages)
+            {
 
-
-
+              
+               page = ChangePage(pagination, id, TotalPages); //Current page é o total de páginas
+                return View(page);
+            }
 
             else
             {
-                Pagination pagination = new Pagination();
-                pagination.TotalPages = TotalPages;
-                if (NumberOfPage <= 0 || TotalPages == 0)
-                {
-                    var exclude = _context.Pagination.Where(p => p.id != 0);
-                    _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
-                    _context.SaveChanges();
-                    //pagination.id = id;
-                    pagination.ProductId = id;
-                    //precisa pegar o numero de paginas total do manual e comparar com a pagina atual, para saber se pode avançar mais ou nao
-                    pagination.CurrentPage = 1; //Current page é 1
-                }
-                else if (NumberOfPage >= TotalPages && TotalPages != 0)
-                {
-                    pagination.CurrentPage = TotalPages;
-                }
 
-
-                else
-                {
-                    pagination.CurrentPage = NumberOfPage;
-                }
-
-                _context.Pagination.Add(pagination);
-                _context.SaveChanges();
-                var page = BuildPage(id, pagination.CurrentPage);
-
-
+                page = ChangePage(pagination, id, NumberOfPage); //Current page é o número da pagina atual
                 return View(page);
             }
-            
+
+          
         }
 
-      
+
+        private PublicationProductViewModel ChangePage(Pagination pagination, int id, int CurrentPage)
+        {
+            var exclude = _context.Pagination.Where(p => p.id != 0);
+            _context.Pagination.RemoveRange(exclude); //limpar DB antes de começar um novo
+            _context.SaveChanges();
+            pagination.ProductId = id;
+            //precisa pegar o numero de paginas total do manual e comparar com a pagina atual, para saber se pode avançar mais ou nao
+            pagination.CurrentPage = CurrentPage; //
+            _context.Pagination.Add(pagination);
+            _context.SaveChanges();
+            var page = BuildPage(id, pagination.CurrentPage);
+            return page;
+
+        }
+
+
         //fazer melhorias na paginação!!!
 
         public IActionResult NextPage(int id, int currentPage)
         {
-            var pagination = _context.Pagination.First(i => i.ProductId == id);
-            var NumberOfPage = pagination.CurrentPage;
+            var pag=_context.Pagination.FirstOrDefault(p => p.CurrentPage != 0);
+            Pagination pagination = new Pagination();
+            PublicationProductViewModel page = new PublicationProductViewModel();
+            var NumberOfPage = pag.CurrentPage;
+            if (NumberOfPage == 0)
+            {
+                NumberOfPage = 1;
+            }
             NumberOfPage++;
             pagination.CurrentPage = NumberOfPage;
             //ViewData["Page"] = "active";
             _context.Pagination.Update(pagination);
             _context.SaveChanges();
-            var page = BuildPage(id, NumberOfPage);
+            page = BuildPage(id, NumberOfPage);
             var TotalPages = page.TotalPages;
             return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage, TotalPages = TotalPages });
 
@@ -297,7 +305,8 @@ namespace TechnicalAdvisor.Controllers
             _context.Pagination.Update(pagination);
             _context.SaveChanges();
             var page = BuildPage(id, NumberOfPage);
-            return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage });
+            var TotalPages = page.TotalPages;
+            return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage, TotalPages = TotalPages });
 
         }
 
