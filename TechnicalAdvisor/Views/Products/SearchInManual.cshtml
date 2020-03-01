@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TechnicalAdvisor.Models.Product>
+﻿@model TechnicalAdvisor.Models.PublicationNonDBModels.ManualParagraph
 @{
     ViewData["Title"] = "SearchInManual";
 }
@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Home</a>
+            <a class="navbar-brand" href="/Products/ShowPublication/1#">Home</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -52,4 +52,38 @@
         </div>
     </div>
 </nav>
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+            <th>#</th>
+            @*<th>@Html.DisplayNameFor(model => model.NumberOfPage)</th>
+        <th>@Html.DisplayNameFor(model => model.SectionTitle)</th>
+        <th>@Html.DisplayNameFor(model => model.ChapterTitle)</th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Texts)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var item in Model)
+        {*@
+        <tr>
+
+            @*<td>
+                @Html.DisplayFor(modelItem => item.NumberOfPage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChapterTitle)
+            </td>*@
+            <td>
+                @Html.DisplayFor(model => model.Texts)
+            </td>
+        </tr>
+            
+        @*}*@
+        </tbody>
+</table>
 

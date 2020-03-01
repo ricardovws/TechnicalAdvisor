@@ -120,26 +120,48 @@ namespace TechnicalAdvisor.Controllers
 
 
         //aqui é o método para realizar busca dentro do manual
-        public IActionResult SearchInManual(string somethingToSearch)
+        public IActionResult SearchInManual(int id, string somethingToSearch)
         {
-            //NullReferenceException
             try
             {
-                string word = somethingToSearch.ToUpper(); //palavra que está sendo usada para busca convertida pra maiuscula
+                var currentPage = _context.Pagination.FirstOrDefault(p => p.ProductId == id).CurrentPage;
+                var page = BuildPage(id, currentPage);
+                var paragraphs = page.Texts;
+                var lookingFor = paragraphs.IndexOf(somethingToSearch);
 
-                //faz uma lista de todos os produtos que o nome ou o tipo de produto são iguais a palavra procurada
-                var list = _context.Product.Where(p => p.Name.ToUpper().StartsWith(word)
-                ||
-                p.TypeOfProduct.ToUpper().StartsWith(word)).ToList();
+                if (lookingFor < 0)
+                {
+                    return RedirectToAction(nameof(NothingFound));
 
-                return View(list);
+                }
+
+                var replaceText = paragraphs.Replace(somethingToSearch, "<strong>" + somethingToSearch + "</strong>");
+                ManualParagraph paragraphInTheSearch = new ManualParagraph();
+                paragraphInTheSearch.Texts = replaceText;
+                //paragraphInTheSearch.SectionTitle = page.NumberOfPage;
+                //paragraphInTheSearch.NumberOfPage = page.NumberOfPage;
+                //paragraphInTheSearch.ChapterTitle = page.ChapterTitle;
+
+                return View(paragraphInTheSearch);
+
             }
-            catch (NullReferenceException)
+
+            catch (ArgumentNullException)
             {
                 return RedirectToAction(nameof(NothingFound));
             }
 
         }
+        //vai pegar id e procurar pagination com ele
+        //no pagination, vai pegar a pagina atual
+        //vai pegar o paragraph que tenha essa pagina
+        //vai entrar dentro de texts
+        //vai aplicar algum metodo de string...
+        //IndexOf(String)
+        //vai pegar a posição da palavra
+        //vai copiar o texto todo, e substituir essa palavra por ela mesmo
+        //só que marcada em html.
+        //mostrar tabela com as infos todas lá e panz.
 
 
 

@@ -5,8 +5,9 @@
 
 <h1>@Html.DisplayFor(model => model.Name)</h1>
 <hr />
-
-
+<p></p>
+<p></p>
+<h1><strong>Punhetinha de</strong><small>verão.</small></h1>
 
 
 <hr />
@@ -29,7 +30,7 @@
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="home">
             <p></p>
-            <p>@Html.DisplayFor(model => model.NumberOfPage)</p>
+            <p>ESSE CARRO É MUITO MALUCO MESMO. A PÁGINA É @Html.DisplayFor(model => model.NumberOfPage)</p>
         </div>
         <div class="tab-pane fade" id="profile">
             <p></p>
@@ -56,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Home</a>
+            <a class="navbar-brand" href="/Products/ShowPublication/1#">Home</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -83,7 +84,7 @@
 
 
             @*mecanismo de busca*@
-            <form asp-action="SearchInManual" class="navbar-form navbar-left" role="search">
+            <form asp-action="SearchInManual" asp-route-id="@Model.id"  class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search" name="somethingToSearch">
                 </div>
