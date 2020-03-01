@@ -56,7 +56,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="#">Home</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -76,15 +76,25 @@
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
+
+
+
+
+
+
+            @*mecanismo de busca*@
+            <form asp-action="SearchInManual" class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search" name="somethingToSearch">
                 </div>
+
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
     </div>
 </nav>
+
+
 
 
 
@@ -143,17 +153,17 @@
                 }
 
                 @*<div class="row">
-                    <div class="col-md-12">
+                        <div class="col-md-12">
 
-                        <a asp-action="PreviousPage" asp-route-id="@Model.id"
-                           input type="submit" value="Previous" class="btn btn-default">Previous Page</a>
+                            <a asp-action="PreviousPage" asp-route-id="@Model.id"
+                               input type="submit" value="Previous" class="btn btn-default">Previous Page</a>
 
 
-                        <a asp-action="NextPage" asp-route-id="@Model.id"
-                           input type="submit" value="Previous" class="btn btn-default">Next Page</a>
+                            <a asp-action="NextPage" asp-route-id="@Model.id"
+                               input type="submit" value="Previous" class="btn btn-default">Next Page</a>
 
-                    </div>
-                </div>*@
+                        </div>
+                    </div>*@
             </div>
         </div>
 
@@ -168,14 +178,15 @@
         <a asp-action="PreviousPage" asp-route-id="@Model.id"
            input type="submit" value="Previous" class="btn btn-default">&laquo;Previous Page</a>
     </li>
-    
+
     <li><a href="#">1</a></li>
     <li class="active"><a href="#">2</a></li>
     <li><a href="#">3</a></li>
     <li><a href="#">4</a></li>
     <li><a href="#">5</a></li>
 
-    <li><a asp-action="NextPage" asp-route-id="@Model.id" 
+    <li>
+        <a asp-action="NextPage" asp-route-id="@Model.id"
            input type="submit" value="Previous" class="btn btn-default">Next Page&raquo;</a>
     </li>
 
@@ -184,15 +195,15 @@
 
 
 @*<ul class="pagination">
-    <li class="disabled"><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a asp-action="NextPage" asp-route-id="@Model.id" input type="submit" value="Previous" class="btn btn-default">Next Page&raquo;</a></li>
+        <li class="disabled"><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a asp-action="NextPage" asp-route-id="@Model.id" input type="submit" value="Previous" class="btn btn-default">Next Page&raquo;</a></li>
 
-</ul>*@
+    </ul>*@
 
 
 

@@ -66,7 +66,7 @@ namespace TechnicalAdvisor.Controllers
 
             var productInfos = await _context.Product.ToListAsync();
             ProductIndexViewModel productIndexVIew = new ProductIndexViewModel();
-            foreach(var item in productInfos)
+            foreach (var item in productInfos)
             {
 
                 productIndexVIew.Id = item.Id;
@@ -74,9 +74,9 @@ namespace TechnicalAdvisor.Controllers
                 productIndexVIew.TypeOfProduct = item.TypeOfProduct;
                 productIndexVIew.PublicationCode = item.PublicationCode;
                 productIndexVIew.PublicationVersion = item.PublicationVersion;
-                
 
-                
+
+
                 //var xmlProduct = _context.XmlProduct.First(x => x.ProductId == item.XmlProductId);
                 //string imagePath = xmlProduct.LinkDaImagem;
                 //productIndexVIew.ImagePath = imagePath;
@@ -89,32 +89,62 @@ namespace TechnicalAdvisor.Controllers
 
         }
 
+
+        //esse é o método para fazer a busca geral de produtos, tanto por nome, quanto por tipo.
         public IActionResult Search(string somethingToSearch)
         {
             //NullReferenceException
+            try
+            {
+                string word = somethingToSearch.ToUpper(); //palavra que está sendo usada para busca convertida pra maiuscula
 
+                //faz uma lista de todos os produtos que o nome ou o tipo de produto são iguais a palavra procurada
+                var list = _context.Product.Where(p => p.Name.ToUpper().StartsWith(word)
+                ||
+                p.TypeOfProduct.ToUpper().StartsWith(word)).ToList();
 
-            string word = somethingToSearch.ToUpper(); //palavra que está sendo usada para busca convertida pra maiuscula
+                return View(list);
+            }
+            catch(NullReferenceException)
+            {
+                return RedirectToAction(nameof(NothingFound));
+            }
             
-            //faz uma lista de todos os produtos que o nome ou o tipo de produto são iguais a palavra procurada
-            var list = _context.Product.Where(p => p.Name.ToUpper().StartsWith(word) 
-            || 
-            p.TypeOfProduct.ToUpper().StartsWith(word)).ToList();
-
-         
-
-
-            return View(list);
-
-
         }
-
-
+       
         public IActionResult NothingFound()
         {
 
             return View();
         }
+
+
+        //aqui é o método para realizar busca dentro do manual
+        public IActionResult SearchInManual(string somethingToSearch)
+        {
+            //NullReferenceException
+            try
+            {
+                string word = somethingToSearch.ToUpper(); //palavra que está sendo usada para busca convertida pra maiuscula
+
+                //faz uma lista de todos os produtos que o nome ou o tipo de produto são iguais a palavra procurada
+                var list = _context.Product.Where(p => p.Name.ToUpper().StartsWith(word)
+                ||
+                p.TypeOfProduct.ToUpper().StartsWith(word)).ToList();
+
+                return View(list);
+            }
+            catch (NullReferenceException)
+            {
+                return RedirectToAction(nameof(NothingFound));
+            }
+
+        }
+
+
+
+
+
 
 
         // GET: Products/Details/5

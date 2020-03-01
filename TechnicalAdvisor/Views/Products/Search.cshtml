@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="/Products/Index">Home</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -58,73 +58,74 @@
 
 
 
-
-@*<p>
-        <a asp-action="Create">Create New</a>
-    </p>*@
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.TypeOfProduct)
-            </th>
-            <th>
-                <p></p>
-            </th>
-
-
-            @*<th>
-                    @Html.DisplayNameFor(model => model.ImagePath)
-                </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-
-
+<nav class="navbar navbar-inverse">
+    @*<p>
+            <a asp-action="Create">Create New</a>
+        </p>*@
+    <table class="table table-striped table-hover">
+        <thead>
             <tr>
 
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeOfProduct)
-                </td>
-                <td>
-                    @*<img src="~/images/gallardo.svg"
-                        width="240" height="120" />*@
+                <th>
+                    @Html.DisplayNameFor(model => model.TypeOfProduct)
+                </th>
+                <th>
+                    <p></p>
+                </th>
 
 
-                    @*Aqui tem um exemplo de como vai ser o sistema pra aparecer imagens*@
-                    <div class="col-1">
-
-                        <img src="~/images/@Html.DisplayFor(modelItem => item.PictureName)"
-                             width="240" height="120" />
-
-                    </div>
-
-                </td>
-
-
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-action="ShowPublication" asp-route-id="@item.Id">View Publication</a> |
-                    <a asp-action="LoadPublication" asp-route-id="@item.Id">Load Publication</a>
-                </td>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.ImagePath)
+                    </th>*@
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+
+                <tr>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeOfProduct)
+                    </td>
+                    <td>
+                        @*<img src="~/images/gallardo.svg"
+                            width="240" height="120" />*@
+
+
+                        @*Aqui tem um exemplo de como vai ser o sistema pra aparecer imagens*@
+                        <div class="col-1">
+
+                            <img src="~/images/@Html.DisplayFor(modelItem => item.PictureName)"
+                                 width="240" height="120" />
+
+                        </div>
+
+                    </td>
+
+
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                        <a asp-action="ShowPublication" asp-route-id="@item.Id">View Publication</a> |
+                        <a asp-action="LoadPublication" asp-route-id="@item.Id">Load Publication</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </nav>
