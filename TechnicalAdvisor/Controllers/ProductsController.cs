@@ -135,7 +135,10 @@ namespace TechnicalAdvisor.Controllers
 
                 }
 
+
+               
                 var replaceText = paragraphs.Replace(somethingToSearch, "<strong>" + somethingToSearch + "</strong>");
+                //var replaceText = paragraphs.Replace(somethingToSearch, "<strong>" + somethingToSearch + "</strong>");
                 ManualParagraph paragraphInTheSearch = new ManualParagraph();
                 paragraphInTheSearch.Texts = replaceText;
                 //paragraphInTheSearch.SectionTitle = page.NumberOfPage;
@@ -143,7 +146,7 @@ namespace TechnicalAdvisor.Controllers
                 //paragraphInTheSearch.ChapterTitle = page.ChapterTitle;
 
                 return View(paragraphInTheSearch);
-
+                
             }
 
             catch (ArgumentNullException)

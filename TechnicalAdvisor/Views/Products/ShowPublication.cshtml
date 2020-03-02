@@ -174,7 +174,7 @@
 </div>
 
 
-<ul class="pagination">
+@*<ul class="pagination">
     <li>
         <a asp-action="PreviousPage" asp-route-id="@Model.id"
            input type="submit" value="Previous" class="btn btn-default">&laquo;Previous Page</a>
@@ -191,6 +191,11 @@
            input type="submit" value="Previous" class="btn btn-default">Next Page&raquo;</a>
     </li>
 
+</ul>*@
+
+<ul class="pager">
+    <li class="previous"><a asp-action="PreviousPage" asp-route-id="@Model.id">&larr; Previous Page</a></li>
+    <li class="next"><a asp-action="NextPage" asp-route-id="@Model.id">Next Page &rarr;</a></li>
 </ul>
 
 
