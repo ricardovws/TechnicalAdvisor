@@ -124,28 +124,85 @@ namespace TechnicalAdvisor.Controllers
         {
             try
             {
+                //vai procurar primeiro na página atual
                 var currentPage = _context.Pagination.FirstOrDefault(p => p.ProductId == id).CurrentPage;
                 var page = BuildPage(id, currentPage);
                 var paragraphs = page.Texts;
-                var lookingFor = paragraphs.IndexOf(somethingToSearch);
-
-                if (lookingFor < 0)
+                //var lookingFor = paragraphs.IndexOf(somethingToSearch);
+                var lookingFor = paragraphs.Contains(somethingToSearch);
+                
+                if //(lookingFor < 0) 
+                (lookingFor == false)
                 {
                     return RedirectToAction(nameof(NothingFound));
 
                 }
 
-                //var replaceText = paragraphs.Replace(somethingToSearch, "<strong>" + somethingToSearch + "</strong>");
+                //método para contar quantas incidencias da palavra buscada foram encontradas na página:
+
+                int times = 0;
+                var texts = paragraphs.Split(' ');
+           
+                foreach(var text in texts)
+                {
+                    if
+                         (text == somethingToSearch)
+                    {
+
+                        times++;
+                    }
+
+
+                   else if (text.EndsWith(","))
+                    {
+                        var littleText = text.Split(",");
+                        foreach(var little in littleText)
+                        {
+                            var x = littleText[0];
+                            if (x == somethingToSearch)
+                            {
+                                times++;
+                                break;
+                              
+                            }
+                        }
+                    }
+
+                    else if (text.EndsWith("."))
+                    {
+                        var littleText = text.Split(".");
+                        foreach (var little in littleText)
+                        {
+                            var x = littleText[0];
+                            if (x == somethingToSearch)
+                            {
+                                times++;
+                                break;
+
+                            }
+                        }
+                    }
+
+
+                }
+
                 SearchInManualViewModel viewModel = new SearchInManualViewModel();
-                viewModel.NumberPage = currentPage;
-                viewModel.ChapterTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).ChapterTitle;
-                viewModel.SectionTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).SectionTitle;
-                viewModel.WordSearch = somethingToSearch;
-                viewModel.Times = 2;
 
-
-                return View(viewModel);
-                
+                if (times == 0)
+                {
+                    return RedirectToAction(nameof(NothingFound));
+                }
+                else
+                {
+                    
+                    viewModel.NumberPage = currentPage;
+                    viewModel.ChapterTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).ChapterTitle;
+                    viewModel.SectionTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).SectionTitle;
+                    viewModel.WordSearch = somethingToSearch;
+                    viewModel.Times = times;
+                    return View(viewModel);
+                }
+   
             }
 
             catch (ArgumentNullException)
@@ -154,16 +211,7 @@ namespace TechnicalAdvisor.Controllers
             }
 
         }
-        //vai pegar id e procurar pagination com ele
-        //no pagination, vai pegar a pagina atual
-        //vai pegar o paragraph que tenha essa pagina
-        //vai entrar dentro de texts
-        //vai aplicar algum metodo de string...
-        //IndexOf(String)
-        //vai pegar a posição da palavra
-        //vai copiar o texto todo, e substituir essa palavra por ela mesmo
-        //só que marcada em html.
-        //mostrar tabela com as infos todas lá e panz.
+       
         
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
