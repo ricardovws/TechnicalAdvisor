@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TechnicalAdvisor.Models.PublicationNonDBModels;
 
 namespace TechnicalAdvisor.Models.ViewModels
 {
@@ -15,6 +16,5 @@ namespace TechnicalAdvisor.Models.ViewModels
         public int Times { get; set; }
         public string Texts { get; set; }
 
-        public int MyProperty { get; set; }
     }
 }

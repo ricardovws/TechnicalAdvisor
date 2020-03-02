@@ -183,7 +183,6 @@ namespace TechnicalAdvisor.Controllers
                         }
                     }
 
-
                 }
 
                 SearchInManualViewModel viewModel = new SearchInManualViewModel();
@@ -211,8 +210,93 @@ namespace TechnicalAdvisor.Controllers
             }
 
         }
-       
+
+        public IActionResult SearchInAllManual(int id, string somethingToSearch)
+        {
+            //vai procurar primeiro na página atual
+            var currentPage = _context.Pagination.FirstOrDefault(p => p.ProductId == id).CurrentPage;
+            var page = BuildPage(id, currentPage);
+            var pages = page.Paragraphs;
+
+            List<SearchInManualViewModel> viewModels = new List<SearchInManualViewModel>();
+
+            
+            ///////////aqui ele começa a procurar dentro de cada paragraph
+            foreach (var pag in pages)
+            {
+                int times = 0;
+                var text = pag.Texts;
+                var contains = text.Contains(somethingToSearch);
+                if (contains == false)
+                {
+                    //return RedirectToAction(nameof(NothingFound));
+                    ;
+                }
+
+                else
+                {
+                    var texts = text.Split(' '); //entra em cada text e separa por espaços em branco
+                    foreach(var _text in texts)
+                    {
+                        if
+                        (_text == somethingToSearch) //verifica se cada palavra bate
+                        {
+
+                            times++;
+                        }
+
+                        else if (_text.EndsWith(","))
+                        {
+                            var littleText = _text.Split(",");
+                            foreach (var little in littleText)
+                            {
+                                var x = littleText[0];
+                                if (x == somethingToSearch)
+                                {
+                                    times++;
+                                    break;
+
+                                }
+                            }
+                        }
+
+                        else if (_text.EndsWith("."))
+                        {
+                            var littleText = _text.Split(".");
+                            foreach (var little in littleText)
+                            {
+                                var x = littleText[0];
+                                if (x == somethingToSearch)
+                                {
+                                    times++;
+                                    break;
+
+                                }
+                            }
+                        }
+
+                    }
+                   
+                }
+                ///////////termina a busca dentro dos paragraphs
+                ///
+                SearchInManualViewModel viewModel = new SearchInManualViewModel();
+                viewModel.Times = times;
+                viewModel.NumberPage = pag.NumberOfPage;
+                viewModel.SectionTitle = pag.SectionTitle;
+                viewModel.ChapterTitle = pag.ChapterTitle;
+                
+                viewModel.WordSearch = somethingToSearch;
+                viewModels.Add(viewModel);
+            }
+
         
+                return View(viewModels);
+          
+        }
+
+
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
