@@ -135,17 +135,16 @@ namespace TechnicalAdvisor.Controllers
 
                 }
 
-
-               
-                var replaceText = paragraphs.Replace(somethingToSearch, "<strong>" + somethingToSearch + "</strong>");
                 //var replaceText = paragraphs.Replace(somethingToSearch, "<strong>" + somethingToSearch + "</strong>");
-                ManualParagraph paragraphInTheSearch = new ManualParagraph();
-                paragraphInTheSearch.Texts = replaceText;
-                //paragraphInTheSearch.SectionTitle = page.NumberOfPage;
-                //paragraphInTheSearch.NumberOfPage = page.NumberOfPage;
-                //paragraphInTheSearch.ChapterTitle = page.ChapterTitle;
+                SearchInManualViewModel viewModel = new SearchInManualViewModel();
+                viewModel.NumberPage = currentPage;
+                viewModel.ChapterTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).ChapterTitle;
+                viewModel.SectionTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).SectionTitle;
+                viewModel.WordSearch = somethingToSearch;
+                viewModel.Times = 2;
 
-                return View(paragraphInTheSearch);
+
+                return View(viewModel);
                 
             }
 
@@ -165,13 +164,7 @@ namespace TechnicalAdvisor.Controllers
         //vai copiar o texto todo, e substituir essa palavra por ela mesmo
         //só que marcada em html.
         //mostrar tabela com as infos todas lá e panz.
-
-
-
-
-
-
-
+        
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -326,7 +319,6 @@ namespace TechnicalAdvisor.Controllers
             {
               
                page = ChangePage(pagination, id, TotalPages, TotalPages); //Current page é o total de páginas
-
                 return View(page);
             }
 

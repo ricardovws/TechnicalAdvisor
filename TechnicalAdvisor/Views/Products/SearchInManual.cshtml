@@ -1,4 +1,4 @@
-﻿@model TechnicalAdvisor.Models.PublicationNonDBModels.ManualParagraph
+﻿@model TechnicalAdvisor.Models.ViewModels.SearchInManualViewModel
 @{
     ViewData["Title"] = "SearchInManual";
 }
@@ -52,30 +52,59 @@
         </div>
     </div>
 </nav>
-<ul class="breadcrumb">
+
+
+<p>Your search about <strong>@Html.DisplayFor(model => model.WordSearch)</strong> was found in:</p>
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Page #@Html.DisplayFor(model => model.NumberPage)  —  It appears @Html.DisplayFor(model => model.Times) times in this page.
+        </h3> 
+    </div>
+    <div class="panel-body">
+        <p><strong>Chapter: </strong>@Html.DisplayFor(model => model.ChapterTitle)</p>
+        <p></p>
+        <p><strong>Section: </strong>@Html.DisplayFor(model => model.SectionTitle)</p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<ul class="breadcrumb">
     <li><a href="#">Home</a></li>
     <li><a href="#">Library</a></li>
     <li class="active">Data</li>
-</ul>
-<table class="table table-striped table-hover ">
+</ul>*@
+@*<table class="table table-striped table-hover ">
     
     <thead>
         <tr>
             <th>#</th>
-            @*<th>@Html.DisplayNameFor(model => model.NumberOfPage)</th>
+            <th>@Html.DisplayNameFor(model => model.NumberOfPage)</th>
         <th>@Html.DisplayNameFor(model => model.SectionTitle)</th>
-        <th>@Html.DisplayNameFor(model => model.ChapterTitle)</th>*@
+        <th>@Html.DisplayNameFor(model => model.ChapterTitle)</th>
             <th>
                 @Html.DisplayNameFor(model => model.Texts)
             </th>
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var item in Model)
-        {*@
+        @foreach (var item in Model)
+        {
         <tr>
 
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.NumberOfPage)
             </td>
             <td>
@@ -83,13 +112,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ChapterTitle)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(model => model.Texts)
             </td>
         </tr>
             
-        @*}*@
+        }
         </tbody>
-</table>
+</table>*@
 

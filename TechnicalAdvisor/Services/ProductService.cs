@@ -149,7 +149,7 @@ namespace TechnicalAdvisor
             //cria listas que vao compor as paginas e que farão parte da instanciação do objeto "publicationProductViewModel"
 
             var pages = CreatePages(paragraphs, totalLinesOfAPage);
-            Manual manual = new Manual("<strong>Carro loucaço</strong>", pages, chapters, sections);
+            Manual manual = new Manual("Carro loucaço>", pages, chapters, sections);
             manual.TotalPages = manual.Paragraphs.FirstOrDefault(p => p != null).TotalPages;
             var json = JsonConvert.SerializeObject(manual);
 
