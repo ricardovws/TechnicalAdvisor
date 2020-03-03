@@ -505,6 +505,10 @@ namespace TechnicalAdvisor.Controllers
             _context.SaveChanges();
             page = BuildPage(id, NumberOfPage);
             var TotalPages = page.TotalPages;
+            if (NumberOfPage > TotalPages)
+            {
+                NumberOfPage = TotalPages;
+            }
             return RedirectToAction(nameof(ShowPublication), new { id = id, NumberOfPage = NumberOfPage, TotalPages = TotalPages });
 
         }

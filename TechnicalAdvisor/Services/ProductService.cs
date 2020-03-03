@@ -209,7 +209,8 @@ namespace TechnicalAdvisor
             }
             foreach(var totalpages in list)
             {
-                totalpages.TotalPages = AlreadyDone_pages;
+                //  totalpages.TotalPages = AlreadyDone_pages;
+                totalpages.TotalPages = Page;
             }
             
             return list;
