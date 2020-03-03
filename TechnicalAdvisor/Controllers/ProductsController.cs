@@ -120,98 +120,98 @@ namespace TechnicalAdvisor.Controllers
 
 
         //aqui é o método para realizar busca dentro do manual
-        public IActionResult SearchInManual(int id, string somethingToSearch)
-        {
-            try
-            {
-                //vai procurar primeiro na página atual
-                var currentPage = _context.Pagination.FirstOrDefault(p => p.ProductId == id).CurrentPage;
-                var page = BuildPage(id, currentPage);
-                var paragraphs = page.Texts;
-                //var lookingFor = paragraphs.IndexOf(somethingToSearch);
-                var lookingFor = paragraphs.Contains(somethingToSearch);
-                
-                if //(lookingFor < 0) 
-                (lookingFor == false)
-                {
-                    return RedirectToAction(nameof(NothingFound));
+        //public IActionResult SearchInManual(int id, string somethingToSearch)
+        //{
+        //    try
+        //    {
+        //        //vai procurar primeiro na página atual
+        //        var currentPage = _context.Pagination.FirstOrDefault(p => p.ProductId == id).CurrentPage;
+        //        var page = BuildPage(id, currentPage);
+        //        var paragraphs = page.Texts;
+        //        //var lookingFor = paragraphs.IndexOf(somethingToSearch);
+        //        var lookingFor = paragraphs.Contains(somethingToSearch);
 
-                }
+        //        if //(lookingFor < 0) 
+        //        (lookingFor == false)
+        //        {
+        //            return RedirectToAction(nameof(NothingFound));
 
-                //método para contar quantas incidencias da palavra buscada foram encontradas na página:
+        //        }
 
-                int times = 0;
-                var texts = paragraphs.Split(' ');
-           
-                foreach(var text in texts)
-                {
-                    if
-                         (text == somethingToSearch)
-                    {
+        //        //método para contar quantas incidencias da palavra buscada foram encontradas na página:
 
-                        times++;
-                    }
+        //        int times = 0;
+        //        var texts = paragraphs.Split(' ');
 
+        //        foreach(var text in texts)
+        //        {
+        //            if
+        //                 (text == somethingToSearch)
+        //            {
 
-                   else if (text.EndsWith(","))
-                    {
-                        var littleText = text.Split(",");
-                        foreach(var little in littleText)
-                        {
-                            var x = littleText[0];
-                            if (x == somethingToSearch)
-                            {
-                                times++;
-                                break;
-                              
-                            }
-                        }
-                    }
-
-                    else if (text.EndsWith("."))
-                    {
-                        var littleText = text.Split(".");
-                        foreach (var little in littleText)
-                        {
-                            var x = littleText[0];
-                            if (x == somethingToSearch)
-                            {
-                                times++;
-                                break;
-
-                            }
-                        }
-                    }
-
-                }
-
-                SearchInManualViewModel viewModel = new SearchInManualViewModel();
-
-                if (times == 0)
-                {
-                    return RedirectToAction(nameof(NothingFound));
-                }
-                else
-                {
-                    
-                    viewModel.NumberPage = currentPage;
-                    viewModel.ChapterTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).ChapterTitle;
-                    viewModel.SectionTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).SectionTitle;
-                    viewModel.WordSearch = somethingToSearch;
-                    viewModel.Times = times;
-                    return View(viewModel);
-                }
-   
-            }
-
-            catch (ArgumentNullException)
-            {
-                return RedirectToAction(nameof(NothingFound));
-            }
-
-        }
+        //                times++;
+        //            }
 
 
+        //           else if (text.EndsWith(","))
+        //            {
+        //                var littleText = text.Split(",");
+        //                foreach(var little in littleText)
+        //                {
+        //                    var x = littleText[0];
+        //                    if (x == somethingToSearch)
+        //                    {
+        //                        times++;
+        //                        break;
+
+        //                    }
+        //                }
+        //            }
+
+        //            else if (text.EndsWith("."))
+        //            {
+        //                var littleText = text.Split(".");
+        //                foreach (var little in littleText)
+        //                {
+        //                    var x = littleText[0];
+        //                    if (x == somethingToSearch)
+        //                    {
+        //                        times++;
+        //                        break;
+
+        //                    }
+        //                }
+        //            }
+
+        //        }
+
+        //        SearchInManualViewModel viewModel = new SearchInManualViewModel();
+
+        //        if (times == 0)
+        //        {
+        //            return RedirectToAction(nameof(NothingFound));
+        //        }
+        //        else
+        //        {
+
+        //            viewModel.NumberPage = currentPage;
+        //            viewModel.ChapterTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).ChapterTitle;
+        //            viewModel.SectionTitle = page.Paragraphs.First(f => f.NumberOfPage == currentPage).SectionTitle;
+        //            viewModel.WordSearch = somethingToSearch;
+        //            viewModel.Times = times;
+        //            return View(viewModel);
+        //        }
+
+        //    }
+
+        //    catch (ArgumentNullException)
+        //    {
+        //        return RedirectToAction(nameof(NothingFound));
+        //    }
+
+        //}
+
+        //aqui é o método para realizar busca dentro do manual
         public IActionResult SearchInAllManual(int id, string somethingToSearch)
         {
             //vai procurar primeiro na página atual
@@ -227,8 +227,9 @@ namespace TechnicalAdvisor.Controllers
             {
                 int times = 0;
                 var text = pag.Texts;
+                try
+                {
                 var contains = text.Contains(somethingToSearch);
-                try { 
                 if (contains == false)
                 {
                     //return RedirectToAction(nameof(NothingFound));
@@ -249,6 +250,20 @@ namespace TechnicalAdvisor.Controllers
 
                         else if (_text.EndsWith(","))
                         {
+                            if (_text.EndsWith("."))
+                                {
+                                    var _littleText = _text.Split(".");
+                                    foreach (var little in _littleText)
+                                    {
+                                        var x = _littleText[0];
+                                        if (x == somethingToSearch)
+                                        {
+                                            times++;
+                                            break;
+
+                                        }
+                                    }
+                                }
                             var littleText = _text.Split(",");
                             foreach (var little in littleText)
                             {
@@ -262,20 +277,21 @@ namespace TechnicalAdvisor.Controllers
                             }
                         }
 
-                        else if (_text.EndsWith("."))
-                        {
-                            var littleText = _text.Split(".");
-                            foreach (var little in littleText)
-                            {
-                                var x = littleText[0];
-                                if (x == somethingToSearch)
-                                {
-                                    times++;
-                                    break;
+                        //else if (_text.EndsWith("."))
+                        //{
+                               
+                        //    var littleText = _text.Split(".");
+                        //    foreach (var little in littleText)
+                        //    {
+                        //        var x = littleText[0];
+                        //        if (x == somethingToSearch)
+                        //        {
+                        //            times++;
+                        //            break;
 
-                                }
-                            }
-                        }
+                        //        }
+                        //    }
+                        //}
 
                     }
 
@@ -294,6 +310,23 @@ namespace TechnicalAdvisor.Controllers
                 
                 viewModel.WordSearch = somethingToSearch;
                 viewModels.Add(viewModel);
+
+                ///aqui é para melhorar a forma em que os dados serão enviados para a view. Irá melhorar a exibição também.
+                foreach(var model in viewModels)
+                {
+
+                    var newModel = viewModels.FirstOrDefault();
+                    //viewModels.Remove(newModel);
+                    int numberOfPage = newModel.NumberPage;
+                    
+                    
+
+                }
+
+
+
+
+
             }
 
             bool check = NotFoundHere(viewModels);
