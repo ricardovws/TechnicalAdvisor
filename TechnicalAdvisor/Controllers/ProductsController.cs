@@ -211,22 +211,24 @@ namespace TechnicalAdvisor.Controllers
 
         }
 
+
         public IActionResult SearchInAllManual(int id, string somethingToSearch)
         {
             //vai procurar primeiro na página atual
             var currentPage = _context.Pagination.FirstOrDefault(p => p.ProductId == id).CurrentPage;
-            var page = BuildPage(id, currentPage);
+            var page = BuildPage(id, currentPage); //monta a página
             var pages = page.Paragraphs;
 
             List<SearchInManualViewModel> viewModels = new List<SearchInManualViewModel>();
 
-            
+
             ///////////aqui ele começa a procurar dentro de cada paragraph
             foreach (var pag in pages)
             {
                 int times = 0;
                 var text = pag.Texts;
                 var contains = text.Contains(somethingToSearch);
+                try { 
                 if (contains == false)
                 {
                     //return RedirectToAction(nameof(NothingFound));
@@ -236,7 +238,7 @@ namespace TechnicalAdvisor.Controllers
                 else
                 {
                     var texts = text.Split(' '); //entra em cada text e separa por espaços em branco
-                    foreach(var _text in texts)
+                    foreach (var _text in texts)
                     {
                         if
                         (_text == somethingToSearch) //verifica se cada palavra bate
@@ -276,7 +278,11 @@ namespace TechnicalAdvisor.Controllers
                         }
 
                     }
-                   
+
+                } }
+                catch (ArgumentNullException)
+                {
+                    return RedirectToAction(nameof(NothingFound));
                 }
                 ///////////termina a busca dentro dos paragraphs
                 ///
@@ -290,12 +296,39 @@ namespace TechnicalAdvisor.Controllers
                 viewModels.Add(viewModel);
             }
 
+            bool check = NotFoundHere(viewModels);
+            if(check == true)
+            {
+                return RedirectToAction(nameof(NothingFound));
+            }
         
                 return View(viewModels);
           
         }
 
+        public bool NotFoundHere(List<SearchInManualViewModel> viewModels)
+        {
+            var nothing = 0;
+            foreach (var view in viewModels)
+            {
 
+                if (view.Times == 0)
+                {
+                    ;
+                }
+                else
+                {
+                    nothing++;
+                }
+            }
+
+            if (nothing == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
