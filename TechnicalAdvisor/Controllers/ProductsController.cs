@@ -312,16 +312,13 @@ namespace TechnicalAdvisor.Controllers
                 viewModels.Add(viewModel);
 
                 ///aqui é para melhorar a forma em que os dados serão enviados para a view. Irá melhorar a exibição também.
-                foreach(var model in viewModels)
-                {
+                //foreach(var model in viewModels)
+                //{
 
-                    var newModel = viewModels.FirstOrDefault();
-                    //viewModels.Remove(newModel);
-                    int numberOfPage = newModel.NumberPage;
-                    
-                    
-
-                }
+                //    var newModel = viewModels.FirstOrDefault();
+                //    //viewModels.Remove(newModel);
+                //    int numberOfPage = newModel.NumberPage;
+                //}
 
 
 
