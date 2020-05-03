@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Identity\Pages\_Layout_identity_loginPage.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Companies\CreateDealer.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

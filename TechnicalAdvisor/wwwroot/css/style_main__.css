@@ -1,0 +1,26 @@
+body {
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.body-content{
+    padding-top: 90px;
+}
+
+.navbar{
+    min-height: 130px;
+}
+
+.navbar-inverse {
+    background-color: rgba(0, 0, 0, 0.445);
+}
+
+.navbar-fixed-top{
+    border-width:0 0 3px;
+}
+
+#logo-client-header {
+    width: 8%;
+}

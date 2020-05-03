@@ -28,10 +28,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                
+
                 @*<a asp-area="" asp-controller="Companies" asp-action="Index" class="navbar-brand">
-                    <img id="logo-client-header" src="~/images/logo__client.png" />
-                </a>*@
+                        <img id="logo-client-header" src="~/images/logo__client.png" />
+                    </a>*@
 
                 <div class="navbar-brand">
                     <img id="logo-client-header" src="~/images/logo__client.png" />
@@ -39,19 +39,19 @@
 
             </div>
 
-            <div class="navbar-collapse collapse">
-                <partial name="_LoginPartial"/>
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
-                    <li><a asp-area="" asp-controller="Dealers" asp-action="Index">Dealers</a></li>
-                    <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
-                </ul>
-            </div>
+            @*<div class="navbar-collapse collapse">
+                    <partial name="_LoginPartial"/>
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
+                        <li><a asp-area="" asp-controller="Dealers" asp-action="Index">Dealers</a></li>
+                        <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
+                    </ul>
+                </div>*@
 
         </div>
 
-       
+
     </nav>
 
     <partial name="_CookieConsentPartial" />
