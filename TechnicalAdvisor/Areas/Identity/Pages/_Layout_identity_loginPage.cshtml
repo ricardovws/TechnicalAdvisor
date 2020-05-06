@@ -7,6 +7,7 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-readable.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap">
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/style_main__.css" />
 
@@ -18,8 +19,11 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>
+<body style="font-family: 'Montserrat', sans-serif;">
     <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-brand">
+            <img class="logo-client-header" src="~/images/logo__client.png" />
+        </div>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -30,24 +34,22 @@
                 </button>
 
                 @*<a asp-area="" asp-controller="Companies" asp-action="Index" class="navbar-brand">
-                        <img id="logo-client-header" src="~/images/logo__client.png" />
-                    </a>*@
-
-                <div class="navbar-brand">
                     <img id="logo-client-header" src="~/images/logo__client.png" />
-                </div>
+                </a>*@
+
+
 
             </div>
 
             @*<div class="navbar-collapse collapse">
-                    <partial name="_LoginPartial"/>
-                    <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
-                        <li><a asp-area="" asp-controller="Dealers" asp-action="Index">Dealers</a></li>
-                        <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
-                    </ul>
-                </div>*@
+                <partial name="_LoginPartial"/>
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
+                    <li><a asp-area="" asp-controller="Dealers" asp-action="Index">Dealers</a></li>
+                    <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
+                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
+                </ul>
+            </div>*@
 
         </div>
 
@@ -58,10 +60,17 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer class="teste">
-            <p>&copy; 2020 - TechnicalAdvisor</p>
-        </footer>
+        <div class="mainFooter">
+            <footer class="_footer">
+                <img class="logo-footer" src="~/images/logo_luedtke.png" />
+                <p class="zero_margin_para">&copy; 2020 - TechnicalAdvisor | Luedtke Assessoria Industrial</p>
+                @*<ul>
+                <li><img class="logo-footer" src="~/images/logo_luedtke.png" /></li>
+                <li><p>&copy; 2020 - TechnicalAdvisor | Luedtke Assessoria Industrial</p></li>
+            </ul>*@
+
+            </footer>
+        </div>
     </div>
 
     <environment include="Development">
