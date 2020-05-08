@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body style="font-family: 'Montserrat', sans-serif;">
+<body style="font-family: 'Montserrat', sans-serif; overflow: hidden;">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-brand">
             <img class="logo-client-header" src="~/images/logo__client.png" />
@@ -59,19 +59,21 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
-        @RenderBody()
-        <div class="mainFooter">
-            <footer class="_footer">
-                <img class="logo-footer" src="~/images/logo_luedtke.png" />
-                <p class="zero_margin_para">&copy; 2020 - TechnicalAdvisor | Luedtke Assessoria Industrial</p>
-                @*<ul>
-                <li><img class="logo-footer" src="~/images/logo_luedtke.png" /></li>
-                <li><p>&copy; 2020 - TechnicalAdvisor | Luedtke Assessoria Industrial</p></li>
-            </ul>*@
+       
+            @RenderBody()
+      
+            <div class="mainFooter">
+                <footer class="_footer">
+                    <img class="logo-footer" src="~/images/logo_luedtke.png" />
+                    <p class="zero_margin_para">&copy; 2020 - TechnicalAdvisor | Luedtke Assessoria Industrial</p>
+                    @*<ul>
+                    <li><img class="logo-footer" src="~/images/logo_luedtke.png" /></li>
+                    <li><p>&copy; 2020 - TechnicalAdvisor | Luedtke Assessoria Industrial</p></li>
+                </ul>*@
 
-            </footer>
+                </footer>
+            </div>
         </div>
-    </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

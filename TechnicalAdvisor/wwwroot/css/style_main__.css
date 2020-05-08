@@ -5,9 +5,6 @@ body {
     background-repeat: no-repeat;
 }
 
-.body-content{
-    padding-top: 7em;
-}
 
 .navbar{
     min-height: 130px;
@@ -28,6 +25,8 @@ body {
 .logo-client-header {
     width: 9%;
 }
+
+
 
 .mainFooter {
     display: flex;
@@ -64,4 +63,57 @@ body {
 .zero_margin_para{
     margin: auto 0px auto;
 
+}
+
+.centralize_login_box {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+}
+
+.login_box {
+    text-align: center;
+    background-color: rgba(245, 245, 245, 0.644);
+    border-radius: 2em;
+    border-style: solid;
+    border-width: .2em;
+    border-color: black;
+}
+
+h4 {
+    font-size: x-large;
+}
+
+hr {
+    width: 75%;
+    border-color:black;
+    
+}
+
+.form-group{
+    display: flex;
+    justify-content: center;
+}
+
+.form-control {
+    width: 40%;
+}
+
+.checkbox_size {
+    transform: scale(1.25);
+}
+
+.btn-default {
+    
+    border-radius: .5em;
+    border-width: .15em;
+    color: whitesmoke;
+    background-color: tomato;
+    font-weight: bold;
 }
