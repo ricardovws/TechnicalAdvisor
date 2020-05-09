@@ -4,134 +4,201 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/Products/Index">Home</a>
-        </div>
+@* Caixa de busca!!! *@
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
+<div class="centralize__">
+    <div class="main_search_box col-md-4">
 
-            @*aqui é o campo de busca!!!!!*@
+        <section class="search_box">
+
+            <h1>
+                Buscador de manuais
+            </h1>
+
+            <hr />
+
             <div>
-                <form asp-action="Search" class="navbar-form navbar-left" role="search">
+                <form asp-action="Search" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search" name="somethingToSearch">
+                        <input type="text" class="form-control"
+                               placeholder="&#128270; Você pode fazer a busca por produto, modelo específico ou número do chassi."
+                               name="somethingToSearch">
                     </div>
-
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Buscar &#128269;</button>
                 </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+
+@* Lista com todos os manuais!!! *@
+
+
+<div class="listOfResults">
+    
+    <div class="listOfResultsHeader">
+        <a href="https://www.google.com" type="button">
+            <i class="tooltip search_icon tooltip small material-icons" 
+              title="Realizar nova busca!">
+            search</i>
+        </a>
+
+        <h2>Lista de resultados:</h2>
+
+        <p></p>
+    </div>
+
+    <ul class="searchResultsList">
+        <li class="publicationLineInfo">
+            <div>
+                <img class="product_image" src="~/images/gallardo.svg" />
+            </div>
+            <div class="publicationLineInfo__">
+                    <h3>Carro loucaço</h3>
+                <ul class="publicationLineInfoDetails">
+                    <li>
+                        <a href="https://www.google.com" type="button">
+                            <i class="tooltip small material-icons">insert_drive_file</i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.bing.com" type="button">
+                            <i class="tooltip small material-icons">grid_on</i>
+                        </a>
+                    </li>
                 </ul>
             </div>
-        </div>
-    </div>
-</nav>
+
+        </li>
+
+        <li class="publicationLineInfo">
+            <div>
+                <img class="product_image" src="~/images/car.svg" />
+            </div>
+            <div class="publicationLineInfo__">
+                    <h3>Carro semi-merda</h3>
+                <div>
+                    <ul class="publicationLineInfoDetails">
+                        <li>
+                            <a href="https://www.google.com" type="button">
+                                <i class="tooltip small material-icons">insert_drive_file</i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://www.bing.com" type="button">
+                                <i class="tooltip small material-icons">grid_on</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </li>
+
+        <li class="publicationLineInfo">
+            <div>
+                <img class="product_image" src="~/images/gallardo.svg" />
+            </div>
+            <div class="publicationLineInfo__">
+                    <h3>Carro loucaço</h3>
+                <div>
+                    <ul class="publicationLineInfoDetails">
+                        <li>
+                            <a href="https://www.google.com" type="button">
+                                <i class="tooltip small material-icons">insert_drive_file</i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://www.bing.com" type="button">
+                                <i class="tooltip small material-icons">grid_on</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<p class="end_space"></p>
 
 
+@* Backup, registros de como a lista era. *@
 
-
-
-
-<nav class="navbar navbar-inverse">
-    @*<p>
+@*<nav class="navbar navbar-inverse">
+        <p>
             <a asp-action="Create">Create New</a>
-        </p>*@
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.TypeOfProduct)
-                </th>
-                <th>
-                    <p></p>
-                </th>
-
-
-                @*<th>
-                        @Html.DisplayNameFor(model => model.ImagePath)
-                    </th>*@
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-
-
+        </p>
+        <table class="table table-striped table-hover">
+            <thead>
                 <tr>
 
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TypeOfProduct)
+                    </th>
+                    <th>
+                        <p></p>
+                    </th>
 
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TypeOfProduct)
-                    </td>
-                    <td>
-                        @*<img src="~/images/gallardo.svg"
-                            width="240" height="120" />*@
-
-
-                        @*Aqui tem um exemplo de como vai ser o sistema pra aparecer imagens*@
-                        <div class="col-1">
-
-                            <img src="~/images/@Html.DisplayFor(modelItem => item.PictureName)"
-                                 width="240" height="120" />
-
-                        </div>
-
-                    </td>
-
-
-
-                    <td>
-
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                        <a asp-action="ShowPublication" asp-route-id="@item.Id">View Publication</a> |
-                        <a asp-action="LoadPublication" asp-route-id="@item.Id">Load Publication</a>
-
-                    </td>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+
+                    <tr>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TypeOfProduct)
+                        </td>
+                        <td>
 
 
 
-    </table>
-</nav>
+
+                            <div class="col-1">
+
+                                <img src="~/images/@Html.DisplayFor(modelItem => item.PictureName)"
+                                     width="240" height="120" />
+
+                            </div>
+
+                        </td>
+
+
+
+                        <td>
+
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                            <a asp-action="ShowPublication" asp-route-id="@item.Id">View Publication</a> |
+                            <a asp-action="LoadPublication" asp-route-id="@item.Id">Load Publication</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+
+
+        </table>
+    </nav>*@

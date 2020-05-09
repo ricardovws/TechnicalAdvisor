@@ -97,12 +97,14 @@ hr {
 }
 
 .form-group{
-    display: flex;
+    display: block;
     justify-content: center;
 }
 
 .form-control {
-    width: 40%;
+    display: inline-block;
+    width: 65%;
+    border-color: #595353;
 }
 
 .checkbox_size {
@@ -116,4 +118,8 @@ hr {
     color: whitesmoke;
     background-color: tomato;
     font-weight: bold;
+}
+
+.text-danger {
+    display: block;
 }

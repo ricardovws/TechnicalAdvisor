@@ -1,0 +1,208 @@
+body {
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    /*overflow: hidden;*/
+}
+
+
+.navbar{
+    min-height: 130px;
+}
+
+.navbar-inverse {
+    background-color: rgba(0, 0, 0, 0.445);
+}
+
+.navbar-fixed-top{
+    border-width:0 0 3px;
+}
+
+.navbar-brand{
+    height: auto;
+}
+
+.logo-client-header {
+    width: 9%;
+}
+
+
+
+.mainFooter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.445);
+    background-attachment: fixed;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    padding-right: 1em;
+    border-top-width: thin;
+    border-top-color: white;
+    border-top-style: solid;
+}
+
+._footer {
+    color: whitesmoke;
+    font-size: medium;
+    display: flex;
+    justify-content: flex-end;
+    vertical-align: middle;
+    
+}
+
+.logo-footer {
+    width: 7%;
+    margin-right: 1em;
+}
+
+.zero_margin_para{
+    margin: auto 0px auto;
+
+}
+
+h4 {
+    font-size: x-large;
+}
+
+hr {
+    width: 75%;
+    border-color: black;
+}
+
+.btn-default {
+    border-radius: .5em;
+    border-width: .15em;
+    color: whitesmoke;
+    background-color: tomato;
+    font-weight: bold;
+}
+
+
+/*Acima é comum para todos*/
+
+
+/*Abaixo é só para o index*/
+
+.centralize__ {
+    display: flex;
+    justify-content: center;
+
+    
+}
+
+
+
+.main_search_box {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+}
+
+
+.search_box {
+    text-align: center;
+    background-color: rgba(245, 245, 245, 0.80);
+    border-radius: 2em;
+    border-style: solid;
+    border-width: .2em;
+    border-color: black;
+    padding-bottom: 1em;
+    padding-top: .5em;
+}
+
+hr {
+    width: 85%;
+    border-width: .15em;
+}
+
+.form-group {
+    display: flex;
+    justify-content: center;
+}
+
+.form-control{
+    width: 79%;
+    border-color: black;
+}
+
+h2 {
+    color:whitesmoke;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.searchResultsList {
+    padding-inline-start: unset;
+}
+
+.listOfResults {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    padding-top: .1em;
+    padding-bottom: 1em;
+    border-radius: 1.5em;
+}
+
+.listOfResultsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: .65em;
+}
+
+.product_image {
+    width: 80%;
+}
+
+.publicationLineInfo {
+    color: whitesmoke;
+    display: flex;
+    background-color: rgba(245, 245, 245, 0.80);
+    border-radius: 1em;
+    margin: 1em;
+    border-style: solid;
+    padding: .5em;
+
+}
+
+.publicationLineInfo:hover {
+    background-color: rgba(245, 245, 245, 1);
+    color: black;
+}
+
+.publicationLineInfo__{
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+}
+
+.tooltip {
+    opacity: 1;
+    position: unset;
+}
+
+.material-icons {
+    font-size: 30px;
+}
+
+.search_icon {
+    font-size: 40px;
+}
+
+.publicationLineInfoDetails {
+    display: flex;
+    list-style: none;
+    padding-top: 1em;
+}
+
+.end_space {
+    padding-top: 9em;
+}
