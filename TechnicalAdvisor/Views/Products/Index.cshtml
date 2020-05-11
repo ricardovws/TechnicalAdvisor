@@ -8,125 +8,187 @@
 
 @* Caixa de busca!!! *@
 
-<div class="centralize__">
-    <div class="main_search_box col-md-4">
+    <div class="centralize__">
+        <div class="main_search_box col-md-4">
 
-        <section class="search_box">
+            <section class="search_box">
 
-            <h1>
-                Buscador de manuais
-            </h1>
+                <h1>
+                    Buscador de manuais
+                </h1>
 
-            <hr />
+                <hr />
 
-            <div>
-                <form asp-action="Search" role="search">
+                <div>
+                    @*<form asp-action="" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control"
+                                       placeholder="&#128270; Você pode fazer a busca por produto, modelo específico ou número do chassi."
+                                       name="somethingToSearch">
+                            </div>
+                            <button type="submit" class="btn btn-default">Buscar &#128269;</button>
+                        </form>*@
                     <div class="form-group">
                         <input type="text" class="form-control"
                                placeholder="&#128270; Você pode fazer a busca por produto, modelo específico ou número do chassi."
                                name="somethingToSearch">
                     </div>
-                    <button type="submit" class="btn btn-default">Buscar &#128269;</button>
-                </form>
-            </div>
+                    <button id="search-button" type="submit" class="btn btn-default">Buscar &#128269;</button>
+                    
 
-        </section>
+                </div>
+
+            </section>
+        </div>
     </div>
-</div>
-
 
 @* Lista com todos os manuais!!! *@
 
 
-<div class="listOfResults">
-    
-    <div class="listOfResultsHeader">
-        <a href="https://www.google.com" type="button">
-            <i class="tooltip search_icon tooltip small material-icons" 
-              title="Realizar nova busca!">
-            search</i>
-        </a>
+    <div class="listOfResults">
 
-        <h2>Lista de resultados:</h2>
+        <div class="listOfResultsHeader">
+            <a id="search-button_again">
+                <i class="tooltip search_icon small material-icons"
+                   title="Realizar nova busca!">
+                    search
+                </i>
+            </a>
 
-        <p></p>
-    </div>
+            <h2 id="resultsHeader">Lista de resultados:</h2>
 
-    <ul class="searchResultsList">
-        <li class="publicationLineInfo">
-            <div>
-                <img class="product_image" src="~/images/gallardo.svg" />
-            </div>
-            <div class="publicationLineInfo__">
+            <p></p>
+        </div>
+
+        <ul class="searchResultsList">
+            <li class="publicationLineInfo">
+                <div>
+                    <img class="product_image" src="~/images/gallardo.svg" />
+                </div>
+                <div class="publicationLineInfo__">
                     <h3>Carro loucaço</h3>
-                <ul class="publicationLineInfoDetails">
-                    <li>
-                        <a href="https://www.google.com" type="button">
-                            <i class="tooltip small material-icons">insert_drive_file</i>
-                        </a>
-                    </li>
+                    <ul class="publicationLineInfoDetails">
+                        <li>
+                            <a href="https://www.google.com" type="button">
+                                <i class="tooltip small material-icons"
+                                   title="Acessar manual">
+                                    insert_drive_file
+                                </i>
+                            </a>
+                        </li>
 
-                    <li>
-                        <a href="https://www.bing.com" type="button">
-                            <i class="tooltip small material-icons">grid_on</i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                        <li>
+                            <a href="https://www.bing.com" type="button">
+                                <i class="tooltip small material-icons"
+                                   title="Acessar tabela de manutenção">
+                                    grid_on
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-        </li>
+            </li>
 
-        <li class="publicationLineInfo">
-            <div>
-                <img class="product_image" src="~/images/car.svg" />
-            </div>
-            <div class="publicationLineInfo__">
+            <li class="publicationLineInfo">
+                <div>
+                    <img class="product_image" src="~/images/car.svg" />
+                </div>
+                <div class="publicationLineInfo__">
                     <h3>Carro semi-merda</h3>
-                <div>
-                    <ul class="publicationLineInfoDetails">
-                        <li>
-                            <a href="https://www.google.com" type="button">
-                                <i class="tooltip small material-icons">insert_drive_file</i>
-                            </a>
-                        </li>
+                    <div>
+                        <ul class="publicationLineInfoDetails">
+                            <li>
+                                <a href="https://www.google.com" type="button">
+                                    <i class="tooltip small material-icons">insert_drive_file</i>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="https://www.bing.com" type="button">
-                                <i class="tooltip small material-icons">grid_on</i>
-                            </a>
-                        </li>
-                    </ul>
+                            <li>
+                                <a href="https://www.bing.com" type="button">
+                                    <i class="tooltip small material-icons">grid_on</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-        </li>
+            </li>
 
-        <li class="publicationLineInfo">
-            <div>
-                <img class="product_image" src="~/images/gallardo.svg" />
-            </div>
-            <div class="publicationLineInfo__">
+            <li class="publicationLineInfo">
+                <div>
+                    <img class="product_image" src="~/images/gallardo.svg" />
+                </div>
+                <div class="publicationLineInfo__">
                     <h3>Carro loucaço</h3>
-                <div>
-                    <ul class="publicationLineInfoDetails">
-                        <li>
-                            <a href="https://www.google.com" type="button">
-                                <i class="tooltip small material-icons">insert_drive_file</i>
-                            </a>
-                        </li>
+                    <div>
+                        <ul class="publicationLineInfoDetails">
+                            <li>
+                                <a href="https://www.google.com" type="button">
+                                    <i class="tooltip small material-icons">insert_drive_file</i>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="https://www.bing.com" type="button">
-                                <i class="tooltip small material-icons">grid_on</i>
-                            </a>
-                        </li>
-                    </ul>
+                            <li>
+                                <a href="https://www.bing.com" type="button">
+                                    <i class="tooltip small material-icons">grid_on</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<p class="end_space"></p>
+            </li>
+
+            <li class="publicationLineInfo">
+                <div>
+                    <img class="product_image" src="~/images/gallardo.svg" />
+                </div>
+                <div class="publicationLineInfo__">
+                    <h3>Carro loucaço</h3>
+                    <div>
+                        <ul class="publicationLineInfoDetails">
+                            <li>
+                                <a href="https://www.google.com" type="button">
+                                    <i class="tooltip small material-icons">insert_drive_file</i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://www.bing.com" type="button">
+                                    <i class="tooltip small material-icons">grid_on</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <li class="publicationLineInfo">
+                <div>
+                    <img class="product_image" src="~/images/gallardo.svg" />
+                </div>
+                <div class="publicationLineInfo__">
+                    <h3>Carro loucaço</h3>
+                    <div>
+                        <ul class="publicationLineInfoDetails">
+                            <li>
+                                <a href="https://www.google.com" type="button">
+                                    <i class="tooltip small material-icons">insert_drive_file</i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://www.bing.com" type="button">
+                                    <i class="tooltip small material-icons">grid_on</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <p class="end_space"></p>
 
 
 @* Backup, registros de como a lista era. *@

@@ -108,6 +108,7 @@ hr {
 
 
 .search_box {
+   
     text-align: center;
     background-color: rgba(245, 245, 245, 0.80);
     border-radius: 2em;
@@ -139,17 +140,20 @@ h2 {
     font-size: xx-large;
 }
 
+
 .searchResultsList {
     padding-inline-start: unset;
 }
 
 .listOfResults {
+    display: none;
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     padding-top: .1em;
     padding-bottom: 1em;
     border-radius: 1.5em;
 }
+
 
 .listOfResultsHeader {
     display: flex;
