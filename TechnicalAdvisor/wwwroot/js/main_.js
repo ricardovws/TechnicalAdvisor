@@ -12,6 +12,7 @@ $("#search-button_again").click(searchAgain);
 
 function showSearchList() {
 
+    
     $(".listOfResults").stop().slideToggle();
     $(".search_box").toggle();
     //$(".search_box").css("display", "none");
@@ -23,6 +24,7 @@ function showSearchList() {
     )
     
     $(".main_search_box").css("height", "20vh");
+    $("body").css("overflow", "auto");
     }
 
 function searchAgain() {
@@ -38,4 +40,5 @@ function searchAgain() {
     )
     $("input").val('');
     $("input").focus();
+    $("body").css("overflow", "hidden");
 }    

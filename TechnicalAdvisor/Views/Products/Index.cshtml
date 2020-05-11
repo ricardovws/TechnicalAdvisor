@@ -34,7 +34,7 @@
                                name="somethingToSearch">
                     </div>
                     <button id="search-button" type="submit" class="btn btn-default">Buscar &#128269;</button>
-                    
+
 
                 </div>
 
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-@* Lista com todos os manuais!!! *@
+    @* Lista com todos os manuais!!! *@
 
 
     <div class="listOfResults">
@@ -61,135 +61,42 @@
         </div>
 
         <ul class="searchResultsList">
-            <li class="publicationLineInfo">
-                <div>
-                    <img class="product_image" src="~/images/gallardo.svg" />
-                </div>
-                <div class="publicationLineInfo__">
-                    <h3>Carro loucaço</h3>
-                    <ul class="publicationLineInfoDetails">
-                        <li>
-                            <a href="https://www.google.com" type="button">
-                                <i class="tooltip small material-icons"
-                                   title="Acessar manual">
-                                    insert_drive_file
-                                </i>
-                            </a>
-                        </li>
 
-                        <li>
-                            <a href="https://www.bing.com" type="button">
-                                <i class="tooltip small material-icons"
-                                   title="Acessar tabela de manutenção">
-                                    grid_on
-                                </i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-            </li>
-
-            <li class="publicationLineInfo">
-                <div>
-                    <img class="product_image" src="~/images/car.svg" />
-                </div>
-                <div class="publicationLineInfo__">
-                    <h3>Carro semi-merda</h3>
+            @foreach (var item in Model)
+            {
+                <li class="publicationLineInfo">
                     <div>
+                        <img class="product_image" src="~/images/gallardo.svg" />
+                    </div>
+                    <div class="publicationLineInfo__">
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
                         <ul class="publicationLineInfoDetails">
                             <li>
                                 <a href="https://www.google.com" type="button">
-                                    <i class="tooltip small material-icons">insert_drive_file</i>
+                                    <i class="tooltip small material-icons"
+                                       title="Acessar manual">
+                                        insert_drive_file
+                                    </i>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="https://www.bing.com" type="button">
-                                    <i class="tooltip small material-icons">grid_on</i>
+                                    <i class="tooltip small material-icons"
+                                       title="Acessar tabela de manutenção">
+                                        grid_on
+                                    </i>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                </div>
 
-            </li>
+                </li>
+            }
 
-            <li class="publicationLineInfo">
-                <div>
-                    <img class="product_image" src="~/images/gallardo.svg" />
-                </div>
-                <div class="publicationLineInfo__">
-                    <h3>Carro loucaço</h3>
-                    <div>
-                        <ul class="publicationLineInfoDetails">
-                            <li>
-                                <a href="https://www.google.com" type="button">
-                                    <i class="tooltip small material-icons">insert_drive_file</i>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="https://www.bing.com" type="button">
-                                    <i class="tooltip small material-icons">grid_on</i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-
-            <li class="publicationLineInfo">
-                <div>
-                    <img class="product_image" src="~/images/gallardo.svg" />
-                </div>
-                <div class="publicationLineInfo__">
-                    <h3>Carro loucaço</h3>
-                    <div>
-                        <ul class="publicationLineInfoDetails">
-                            <li>
-                                <a href="https://www.google.com" type="button">
-                                    <i class="tooltip small material-icons">insert_drive_file</i>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="https://www.bing.com" type="button">
-                                    <i class="tooltip small material-icons">grid_on</i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-
-            <li class="publicationLineInfo">
-                <div>
-                    <img class="product_image" src="~/images/gallardo.svg" />
-                </div>
-                <div class="publicationLineInfo__">
-                    <h3>Carro loucaço</h3>
-                    <div>
-                        <ul class="publicationLineInfoDetails">
-                            <li>
-                                <a href="https://www.google.com" type="button">
-                                    <i class="tooltip small material-icons">insert_drive_file</i>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="https://www.bing.com" type="button">
-                                    <i class="tooltip small material-icons">grid_on</i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
         </ul>
     </div>
     <p class="end_space"></p>
-
 
 @* Backup, registros de como a lista era. *@
 
